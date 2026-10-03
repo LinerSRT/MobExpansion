@@ -1,0 +1,11 @@
+/build/
+/.vscode/
+/.idea/
+/.gradle/
+/neoforge-client/build/
+/neoforge-client/run/
+/neoforge-server/run/
+/neoforge-server/build/
+/neoforge-client/src/generated/resources/.cache/
+/neoforge-server/src/generated/resources/.cache/
+/graphify-out/

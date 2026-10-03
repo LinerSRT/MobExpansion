@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.mcskill.mobexpansion.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "LevelChunkSectionAccessor",
+    "ChunkBlockEntityInfoAccessor",
+    "ClientboundLevelChunkPacketDataMixin",
+    "PlayerChunkSenderMixin",
+    "ServerCommonPacketListenerImplMixin",
+    "ClientboundSectionBlocksUpdatePacketMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

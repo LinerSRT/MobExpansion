@@ -1,0 +1,137 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"idle": {
+			"loop": true,
+			"animation_length": 1.35,
+			"bones": {
+				"redstone_projectile": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"1.35": {
+							"vector": [360, 360, 360]
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.75": {
+							"vector": [0, -0.5, 0]
+						},
+						"1.35": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"projectile_spark": {
+					"rotation": {
+						"0.0": {
+							"vector": [360, 360, 360]
+						},
+						"1.35": {
+							"vector": [0, 0, 0]
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.4": {
+							"vector": [0, -1, 0]
+						},
+						"1.35": {
+							"vector": [0, 0, 0]
+						}
+					},
+					"scale": {
+						"0.0": {
+							"vector": [0.2, 0.2, 0.2]
+						},
+						"0.2": {
+							"vector": [1, 1, 1]
+						},
+						"0.45": {
+							"vector": [0.2, 0.2, 0.2]
+						},
+						"0.75": {
+							"vector": [1, 1, 1]
+						},
+						"0.9": {
+							"vector": [0.2, 0.2, 0.2]
+						},
+						"1.1": {
+							"vector": [1, 1, 1]
+						},
+						"1.35": {
+							"vector": [0.2, 0.2, 0.2]
+						}
+					}
+				}
+			}
+		},
+		"spawn": {
+			"animation_length": 0.15,
+			"override_previous_animation": true,
+			"bones": {
+				"redstone_projectile": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.15": {
+							"vector": [0, 0, 0]
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.15": {
+							"vector": [0, 0, 0]
+						}
+					},
+					"scale": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.15": {
+							"vector": [1, 1, 1]
+						}
+					}
+				},
+				"projectile_spark": {
+					"rotation": {
+						"0.0": {
+							"vector": [360, 360, 360]
+						},
+						"0.15": {
+							"vector": [360, 360, 360]
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.15": {
+							"vector": [0, 0, 0]
+						}
+					},
+					"scale": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.1": {
+							"vector": [1, 1, 1]
+						},
+						"0.15": {
+							"vector": [0.2, 0.2, 0.2]
+						}
+					}
+				}
+			}
+		}
+	}
+}

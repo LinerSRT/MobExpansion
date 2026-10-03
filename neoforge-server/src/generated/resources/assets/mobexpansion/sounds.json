@@ -1,0 +1,37 @@
+{
+  "sentinel.gm1": {
+    "sounds": [
+      "mobexpansion:sentinel/gm1"
+    ]
+  },
+  "sentinel.gm2": {
+    "sounds": [
+      "mobexpansion:sentinel/gm2"
+    ]
+  },
+  "sentinel.gm3": {
+    "sounds": [
+      "mobexpansion:sentinel/gm3"
+    ]
+  },
+  "sentinel.gm4": {
+    "sounds": [
+      "mobexpansion:sentinel/gm4"
+    ]
+  },
+  "sentinel.gm5": {
+    "sounds": [
+      "mobexpansion:sentinel/gm5"
+    ]
+  },
+  "sentinel.gm6": {
+    "sounds": [
+      "mobexpansion:sentinel/gm6"
+    ]
+  },
+  "sentinel.gm7": {
+    "sounds": [
+      "mobexpansion:sentinel/gm7"
+    ]
+  }
+}

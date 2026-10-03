@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "mobexpansion:block/mob_spawner"
+    }
+  }
+}

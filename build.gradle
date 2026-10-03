@@ -1,0 +1,64 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'idea'
+    id 'net.neoforged.moddev' version '2.0.78' apply false
+}
+version = mod_version
+group = mod_group_id
+
+allprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+    apply plugin: 'idea'
+    version = mod_version
+    group = mod_group_id
+    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+    }
+    tasks.withType(Javadoc).configureEach {
+        options.encoding = 'UTF-8'
+    }
+    buildscript {
+        repositories {
+            mavenCentral()
+        }
+    }
+}
+subprojects {
+    repositories {
+        mavenLocal()
+        maven { url "https://cursemaven.com" }
+        maven { url "https://maven.blamejared.com/" }
+        maven { url = "https://api.modrinth.com/maven" }
+        maven {
+            name = 'GeckoLib'
+            url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+            content {
+                includeGroup("software.bernie.geckolib")
+            }
+        }
+        maven {
+            url 'http://dogforce-games.com/maven'
+            allowInsecureProtocol = true
+        }
+        maven {
+            url = uri("https://sonatype.mcskill.net/repository/maven-releases/")
+            credentials {
+                username = System.getenv("MCSKILL_MAVEN_USER")
+                        ?: System.getenv("MCS_SONA_USER")
+                        ?: System.getenv("MAVEN_USER")
+                        ?: error("MCSKILL_MAVEN_USER, MCS_SONA_USER or MAVEN_USER is not set in ENV")
+                password = System.getenv("MCSKILL_MAVEN_PASSWORD")
+                        ?: System.getenv("MCS_SONA_PASSWORD")
+                        ?: System.getenv("MAVEN_PASSWORD")
+                        ?: error("MCSKILL_MAVEN_PASSWORD, MCS_SONA_PASSWORD or MAVEN_PASSWORD is not set in ENV")
+            }
+        }
+    }
+}
+
+tasks.named('jar') {
+    enabled = false
+}
