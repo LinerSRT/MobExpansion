@@ -11,6 +11,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
 
 @EventBusSubscriber(modid = Core.MODID)
 public final class MobExAttributeEvents {
@@ -20,6 +21,11 @@ public final class MobExAttributeEvents {
     @SubscribeEvent
     public static void onServerAboutToStart(ServerAboutToStartEvent event) {
         VanillaAttributeLimits.expand();
+        EntityAttributesConfigIO.reload();
+        EntityLootConfigIO.reload();
+    }
+    @SubscribeEvent
+    public static void onServerStartedEvent(ServerStartedEvent event) {
         EntityAttributesConfigIO.reload();
         EntityLootConfigIO.reload();
     }
