@@ -21,6 +21,24 @@ import net.mcskill.mobexpansion.entity.RatKingEntity;
 import net.mcskill.mobexpansion.entity.SewerBoltProjectileEntity;
 import net.mcskill.mobexpansion.entity.SewerPoisonAreaEntity;
 import net.mcskill.mobexpansion.entity.SewerPotionProjectileEntity;
+import net.mcskill.mobexpansion.entity.robot.SwarmerAntEntity;
+import net.mcskill.mobexpansion.entity.robot.BeetleTrooperEntity;
+import net.mcskill.mobexpansion.entity.robot.GunshipMothEntity;
+import net.mcskill.mobexpansion.entity.robot.HuntsmanSpiderEntity;
+import net.mcskill.mobexpansion.entity.robot.LadybugMortarEntity;
+import net.mcskill.mobexpansion.entity.robot.WoodlouseTankEntity;
+import net.mcskill.mobexpansion.entity.sculk.SculkCrabbyEntity;
+import net.mcskill.mobexpansion.entity.sculk.SculkedCrustaceanEntity;
+import net.mcskill.mobexpansion.entity.sculk.SculkScreamerEntity;
+import net.mcskill.mobexpansion.entity.sculk.SculkSentinelEntity;
+import net.mcskill.mobexpansion.entity.sculk.EchoEnshrouderEntity;
+import net.mcskill.mobexpansion.entity.sculk.SoulBearerEntity;
+import net.mcskill.mobexpansion.entity.possessed.PossessedCinderArmorEntity;
+import net.mcskill.mobexpansion.entity.possessed.PossessedRuinArmorEntity;
+import net.mcskill.mobexpansion.entity.possessed.PossessedVikingArmorEntity;
+import net.mcskill.mobexpansion.entity.apocalypse.ApocalypseTypeAEntity;
+import net.mcskill.mobexpansion.entity.effect.MobExEffectEntity;
+import net.mcskill.mobexpansion.entity.effect.MobExProjectileEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -60,6 +78,26 @@ public class MobExEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<SewerBoltProjectileEntity>> SEWER_BOLT_PROJECTILE = registerMisc("sewer_bolt_projectile", SewerBoltProjectileEntity::new, 0.35F, 0.35F);
     public static final DeferredHolder<EntityType<?>, EntityType<SewerPoisonAreaEntity>> SEWER_POISON_AREA = registerMisc("sewer_poison_area", SewerPoisonAreaEntity::new, 0.5F, 0.5F);
 
+    public static final DeferredHolder<EntityType<?>, EntityType<SwarmerAntEntity>> SWARMER_ANT = register("swarmer_ant", SwarmerAntEntity::new, 1.0F, 0.8F);
+    public static final DeferredHolder<EntityType<?>, EntityType<BeetleTrooperEntity>> BEETLE_TROOPER = register("beetle_trooper", BeetleTrooperEntity::new, 2.5F, 1.2F);
+    public static final DeferredHolder<EntityType<?>, EntityType<GunshipMothEntity>> GUNSHIP_MOTH = register("gunship_moth", GunshipMothEntity::new, 2.5F, 2.75F);
+    public static final DeferredHolder<EntityType<?>, EntityType<HuntsmanSpiderEntity>> HUNTSMAN_SPIDER = register("huntsman_spider", HuntsmanSpiderEntity::new, 2.6F, 1.8F);
+    public static final DeferredHolder<EntityType<?>, EntityType<LadybugMortarEntity>> LADYBUG_MORTAR = register("ladybug_mortar", LadybugMortarEntity::new, 2.2F, 1.2F);
+    public static final DeferredHolder<EntityType<?>, EntityType<WoodlouseTankEntity>> WOODLOUSE_TANK = register("woodlouse_tank", WoodlouseTankEntity::new, 3.0F, 1.7F);
+    public static final DeferredHolder<EntityType<?>, EntityType<SculkCrabbyEntity>> SCULK_CRABBY = register("sculk_crabby", SculkCrabbyEntity::new, 0.9F, 1.4F);
+    public static final DeferredHolder<EntityType<?>, EntityType<SculkedCrustaceanEntity>> SCULKED_CRUSTACEAN = register("sculked_crustacean", SculkedCrustaceanEntity::new, 0.75F, 2.0F);
+    public static final DeferredHolder<EntityType<?>, EntityType<SculkScreamerEntity>> SCULK_SCREAMER = register("sculk_screamer", SculkScreamerEntity::new, 1.75F, 2.0F);
+    public static final DeferredHolder<EntityType<?>, EntityType<SculkSentinelEntity>> SCULK_SENTINEL = register("sculk_sentinel", SculkSentinelEntity::new, 1.25F, 3.6F);
+    public static final DeferredHolder<EntityType<?>, EntityType<EchoEnshrouderEntity>> ECHO_ENSHROUDER = register("echo_enshrouder", EchoEnshrouderEntity::new, 0.9F, 3.6F);
+    public static final DeferredHolder<EntityType<?>, EntityType<SoulBearerEntity>> SOUL_BEARER = register("soul_bearer", SoulBearerEntity::new, 0.65F, 1.75F);
+    public static final DeferredHolder<EntityType<?>, EntityType<PossessedCinderArmorEntity>> POSSESSED_CINDER_ARMOR = register("possessed_cinder_armor", PossessedCinderArmorEntity::new, 0.9F, 2.25F);
+    public static final DeferredHolder<EntityType<?>, EntityType<PossessedRuinArmorEntity>> POSSESSED_RUIN_ARMOR = register("possessed_ruin_armor", PossessedRuinArmorEntity::new, 0.9F, 2.25F);
+    public static final DeferredHolder<EntityType<?>, EntityType<PossessedVikingArmorEntity>> POSSESSED_VIKING_ARMOR = register("possessed_viking_armor", PossessedVikingArmorEntity::new, 0.9F, 2.25F);
+    public static final DeferredHolder<EntityType<?>, EntityType<ApocalypseTypeAEntity>> APOCALYPSE_TYPE_A = register("apocalypse_type_a", ApocalypseTypeAEntity::new, 1.0F, 3.6F);
+
+    public static final DeferredHolder<EntityType<?>, EntityType<MobExProjectileEntity>> ABILITY_PROJECTILE = registerProjectile("ability_projectile", MobExProjectileEntity::new, 0.3F, 0.3F);
+    public static final DeferredHolder<EntityType<?>, EntityType<MobExEffectEntity>> ABILITY_EFFECT = registerMisc("ability_effect", MobExEffectEntity::new, 0.5F, 0.5F);
+
     public static void register(IEventBus bus) {
         REGISTRY.register(bus);
     }
@@ -79,6 +117,22 @@ public class MobExEntities {
         event.put(MOSQUITO.get(), MosquitoEntity.createAttributes().build());
         event.put(LEECH.get(), LeechEntity.createAttributes().build());
         event.put(RAT_KING.get(), RatKingEntity.createAttributes().build());
+        event.put(SWARMER_ANT.get(), SwarmerAntEntity.createAttributes().build());
+        event.put(BEETLE_TROOPER.get(), BeetleTrooperEntity.createAttributes().build());
+        event.put(GUNSHIP_MOTH.get(), GunshipMothEntity.createAttributes().build());
+        event.put(HUNTSMAN_SPIDER.get(), HuntsmanSpiderEntity.createAttributes().build());
+        event.put(LADYBUG_MORTAR.get(), LadybugMortarEntity.createAttributes().build());
+        event.put(WOODLOUSE_TANK.get(), WoodlouseTankEntity.createAttributes().build());
+        event.put(SCULK_CRABBY.get(), SculkCrabbyEntity.createAttributes().build());
+        event.put(SCULKED_CRUSTACEAN.get(), SculkedCrustaceanEntity.createAttributes().build());
+        event.put(SCULK_SCREAMER.get(), SculkScreamerEntity.createAttributes().build());
+        event.put(SCULK_SENTINEL.get(), SculkSentinelEntity.createAttributes().build());
+        event.put(ECHO_ENSHROUDER.get(), EchoEnshrouderEntity.createAttributes().build());
+        event.put(SOUL_BEARER.get(), SoulBearerEntity.createAttributes().build());
+        event.put(POSSESSED_CINDER_ARMOR.get(), PossessedCinderArmorEntity.createAttributes().build());
+        event.put(POSSESSED_RUIN_ARMOR.get(), PossessedRuinArmorEntity.createAttributes().build());
+        event.put(POSSESSED_VIKING_ARMOR.get(), PossessedVikingArmorEntity.createAttributes().build());
+        event.put(APOCALYPSE_TYPE_A.get(), ApocalypseTypeAEntity.createAttributes().build());
     }
 
     private static <T extends Entity & GeoAnimatable & IModel> DeferredHolder<EntityType<?>, EntityType<T>> register(String name, EntityType.EntityFactory<T> factory, float width, float height) {

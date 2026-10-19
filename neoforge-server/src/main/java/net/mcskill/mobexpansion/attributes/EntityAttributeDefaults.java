@@ -34,6 +34,22 @@ public final class EntityAttributeDefaults {
         put(defaults, "mosquito", 20, 0, 0, 5, 0.23, 1.0, 40);
         put(defaults, "leech", 30, 0, 0, 1, 0.18, 1.0, 40);
         put(defaults, "rat_king", 500, 4, 0, 10, 0.29, 1.0, 40);
+        put(defaults, "swarmer_ant", 14, 2, 0, 3, 0.33, 0.0, 24);
+        put(defaults, "beetle_trooper", 40, 6, 0, 5, 0.25, 0.5, 32);
+        put(defaults, "gunship_moth", 60, 4, 0, 6, 0.3, 0.6, 40);
+        put(defaults, "huntsman_spider", 45, 4, 0, 8, 0.3, 0.4, 48);
+        put(defaults, "ladybug_mortar", 50, 8, 0, 7, 0.22, 0.6, 40);
+        put(defaults, "woodlouse_tank", 120, 12, 0, 8, 0.2, 0.9, 32);
+        put(defaults, "sculk_crabby", 18, 4, 0, 4, 0.3, 0.2, 24);
+        put(defaults, "sculked_crustacean", 40, 10, 0, 7, 0.24, 0.6, 24);
+        put(defaults, "sculk_screamer", 60, 4, 0, 7, 0.27, 0.5, 32);
+        put(defaults, "sculk_sentinel", 220, 10, 0, 10, 0.25, 1.0, 40);
+        put(defaults, "echo_enshrouder", 90, 4, 0, 7, 0.26, 0.5, 40);
+        put(defaults, "soul_bearer", 30, 2, 0, 5, 0.25, 0.2, 32);
+        put(defaults, "possessed_cinder_armor", 260, 14, 0, 11, 0.27, 0.8, 40);
+        put(defaults, "possessed_ruin_armor", 320, 18, 0, 13, 0.24, 1.0, 40);
+        put(defaults, "possessed_viking_armor", 280, 14, 0, 12, 0.27, 0.8, 40);
+        put(defaults, "apocalypse_type_a", 600, 16, 0, 14, 0.3, 1.0, 48);
         DEFAULTS = Collections.unmodifiableMap(defaults);
     }
 

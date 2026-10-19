@@ -35,6 +35,22 @@ public class ItemsModelProvider extends ItemModelProvider {
         spawnEggItem(MobExItems.MOSQUITO_SPAWN_EGG.asItem());
         spawnEggItem(MobExItems.LEECH_SPAWN_EGG.asItem());
         spawnEggItem(MobExItems.RAT_KING_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.SWARMER_ANT_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.BEETLE_TROOPER_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.GUNSHIP_MOTH_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.HUNTSMAN_SPIDER_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.LADYBUG_MORTAR_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.WOODLOUSE_TANK_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.SCULK_CRABBY_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.SCULKED_CRUSTACEAN_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.SCULK_SCREAMER_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.SCULK_SENTINEL_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.ECHO_ENSHROUDER_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.SOUL_BEARER_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.POSSESSED_CINDER_ARMOR_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.POSSESSED_RUIN_ARMOR_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.POSSESSED_VIKING_ARMOR_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.APOCALYPSE_TYPE_A_SPAWN_EGG.asItem());
     }
 
     public ItemModelBuilder basicBlock(Item item) {

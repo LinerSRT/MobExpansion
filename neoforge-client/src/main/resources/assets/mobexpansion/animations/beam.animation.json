@@ -1,0 +1,194 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"beam": {
+			"animation_length": 5,
+			"override_previous_animation": true,
+			"bones": {
+				"black_hole": {
+					"rotation": {
+						"1.65": {
+							"vector": [
+								0,
+								0,
+								0
+							]
+						},
+						"5.0": {
+							"vector": [
+								0,
+								0,
+								1210
+							]
+						}
+					},
+					"scale": {
+						"1.7": {
+							"vector": [
+								0,
+								0,
+								0
+							]
+						},
+						"1.85": {
+							"vector": [
+								0.24,
+								0.24,
+								0.24
+							]
+						},
+						"4.9": {
+							"vector": [
+								0.24,
+								0.24,
+								0.24
+							]
+						},
+						"5.0": {
+							"vector": [
+								0,
+								0,
+								0
+							]
+						}
+					}
+				},
+				"laser_beam": {
+					"rotation": {
+						"1.8": {
+							"vector": [
+								0,
+								0,
+								0
+							]
+						},
+						"5.0": {
+							"vector": [
+								0,
+								0,
+								-2082.5
+							]
+						}
+					},
+					"position": {
+						"vector": [
+							-1.5,
+							11,
+							0
+						]
+					},
+					"scale": {
+						"0.0": {
+							"vector": [
+								0,
+								0,
+								0
+							]
+						},
+						"1.7": {
+							"vector": [
+								0,
+								0,
+								0
+							]
+						},
+						"1.8": {
+							"vector": [
+								1,
+								1,
+								0
+							]
+						},
+						"2.0": {
+							"vector": [
+								1,
+								1,
+								1
+							]
+						},
+						"4.65": {
+							"vector": [
+								1,
+								1,
+								1
+							]
+						},
+						"4.85": {
+							"vector": [
+								1,
+								1,
+								0
+							]
+						},
+						"4.9": {
+							"vector": [
+								0,
+								0,
+								0
+							]
+						},
+						"5.0": {
+							"vector": [
+								0,
+								0,
+								0
+							]
+						}
+					}
+				},
+				"vfx": {
+					"rotation": {
+						"1.85": {
+							"pre": {
+								"vector": [
+									0,
+									0,
+									0
+								]
+							},
+							"post": {
+								"vector": [
+									0,
+									0,
+									0
+								]
+							},
+							"lerp_mode": "catmullrom"
+						},
+						"2.95": {
+							"post": {
+								"vector": [
+									0,
+									-52.5,
+									0
+								]
+							},
+							"lerp_mode": "catmullrom"
+						},
+						"4.4": {
+							"post": {
+								"vector": [
+									0,
+									67.5,
+									0
+								]
+							},
+							"lerp_mode": "catmullrom"
+						},
+						"4.9": {
+							"post": {
+								"vector": [
+									0,
+									0,
+									0
+								]
+							},
+							"lerp_mode": "catmullrom"
+						}
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

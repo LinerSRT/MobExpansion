@@ -1,0 +1,272 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.black_hole",
+				"texture_width": 256,
+				"texture_height": 256,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [
+					0,
+					1.25,
+					0
+				]
+			},
+			"bones": [
+				{
+					"name": "black_hole",
+					"pivot": [
+						-24,
+						0,
+						24
+					]
+				},
+				{
+					"name": "vfx",
+					"parent": "black_hole",
+					"pivot": [
+						-24,
+						0,
+						24
+					]
+				},
+				{
+					"name": "black_hole2",
+					"parent": "vfx",
+					"pivot": [
+						0,
+						24,
+						0
+					],
+					"cubes": [
+						{
+							"origin": [
+								-24,
+								0,
+								-24
+							],
+							"size": [
+								48,
+								48,
+								48
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										48
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"south": {
+									"uv": [
+										48,
+										0
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"west": {
+									"uv": [
+										48,
+										48
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"up": {
+									"uv": [
+										0,
+										96
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"down": {
+									"uv": [
+										96,
+										48
+									],
+									"uv_size": [
+										48,
+										-48
+									]
+								}
+							}
+						},
+						{
+							"origin": [
+								24,
+								48,
+								24
+							],
+							"size": [
+								-48,
+								-48,
+								-48
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										48,
+										96
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"east": {
+									"uv": [
+										96,
+										48
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"south": {
+									"uv": [
+										96,
+										96
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"west": {
+									"uv": [
+										0,
+										144
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"up": {
+									"uv": [
+										144,
+										0
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"down": {
+									"uv": [
+										48,
+										192
+									],
+									"uv_size": [
+										48,
+										-48
+									]
+								}
+							}
+						},
+						{
+							"origin": [
+								24,
+								48,
+								24
+							],
+							"size": [
+								-48,
+								-48,
+								-48
+							],
+							"inflate": -2,
+							"uv": {
+								"north": {
+									"uv": [
+										144,
+										48
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"east": {
+									"uv": [
+										96,
+										144
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"south": {
+									"uv": [
+										144,
+										96
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"west": {
+									"uv": [
+										144,
+										144
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"up": {
+									"uv": [
+										0,
+										192
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"down": {
+									"uv": [
+										192,
+										48
+									],
+									"uv_size": [
+										48,
+										-48
+									]
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

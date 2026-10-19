@@ -1,0 +1,501 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.beam",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 48,
+				"visible_bounds_height": 4.5,
+				"visible_bounds_offset": [
+					0,
+					1.75,
+					0
+				]
+			},
+			"bones": [
+				{
+					"name": "beam",
+					"pivot": [
+						0,
+						0,
+						0
+					]
+				},
+				{
+					"name": "vfx",
+					"parent": "beam",
+					"pivot": [
+						0,
+						0,
+						0
+					]
+				},
+				{
+					"name": "black_hole",
+					"parent": "vfx",
+					"pivot": [
+						0,
+						26,
+						2
+					],
+					"cubes": [
+						{
+							"origin": [
+								-24,
+								2,
+								-22
+							],
+							"size": [
+								48,
+								48,
+								48
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										0,
+										80
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										80
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"south": {
+									"uv": [
+										0,
+										80
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"west": {
+									"uv": [
+										0,
+										80
+									],
+									"uv_size": [
+										48,
+										48
+									]
+								},
+								"up": {
+									"uv": [
+										48,
+										128
+									],
+									"uv_size": [
+										-48,
+										-48
+									]
+								},
+								"down": {
+									"uv": [
+										48,
+										128
+									],
+									"uv_size": [
+										-48,
+										-48
+									]
+								}
+							}
+						},
+						{
+							"origin": [
+								24,
+								50,
+								26
+							],
+							"size": [
+								-48,
+								-48,
+								-48
+							],
+							"inflate": -2,
+							"uv": {
+								"north": {
+									"uv": [
+										127,
+										128
+									],
+									"uv_size": [
+										1,
+										-6
+									]
+								},
+								"east": {
+									"uv": [
+										127,
+										128
+									],
+									"uv_size": [
+										1,
+										-6
+									]
+								},
+								"south": {
+									"uv": [
+										127,
+										128
+									],
+									"uv_size": [
+										1,
+										-6
+									]
+								},
+								"west": {
+									"uv": [
+										127,
+										128
+									],
+									"uv_size": [
+										1,
+										-6
+									]
+								},
+								"up": {
+									"uv": [
+										128,
+										127
+									],
+									"uv_size": [
+										-1,
+										1
+									]
+								},
+								"down": {
+									"uv": [
+										128,
+										122
+									],
+									"uv_size": [
+										-1,
+										1
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "laser_beam",
+					"parent": "vfx",
+					"pivot": [
+						1.75,
+						15.25,
+						-0.5
+					],
+					"rotation": [
+						180,
+						0,
+						0
+					],
+					"cubes": [
+						{
+							"origin": [
+								-2,
+								12,
+								-1
+							],
+							"size": [
+								7,
+								7,
+								384
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										108,
+										74
+									],
+									"uv_size": [
+										7,
+										7
+									]
+								},
+								"east": {
+									"uv": [
+										113,
+										81
+									],
+									"uv_size": [
+										15,
+										7
+									]
+								},
+								"south": {
+									"uv": [
+										108,
+										74
+									],
+									"uv_size": [
+										7,
+										7
+									]
+								},
+								"west": {
+									"uv": [
+										128,
+										81
+									],
+									"uv_size": [
+										-15,
+										7
+									]
+								},
+								"up": {
+									"uv": [
+										113,
+										88
+									],
+									"uv_size": [
+										15,
+										-7
+									],
+									"uv_rotation": 90
+								},
+								"down": {
+									"uv": [
+										113,
+										88
+									],
+									"uv_size": [
+										15,
+										-7
+									],
+									"uv_rotation": 270
+								}
+							}
+						},
+						{
+							"origin": [
+								5,
+								19,
+								383
+							],
+							"size": [
+								-7,
+								-7,
+								-384
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										108,
+										72
+									],
+									"uv_size": [
+										7,
+										7
+									]
+								},
+								"east": {
+									"uv": [
+										128,
+										81
+									],
+									"uv_size": [
+										-15,
+										7
+									]
+								},
+								"south": {
+									"uv": [
+										108,
+										72
+									],
+									"uv_size": [
+										7,
+										7
+									]
+								},
+								"west": {
+									"uv": [
+										113,
+										81
+									],
+									"uv_size": [
+										15,
+										7
+									]
+								},
+								"up": {
+									"uv": [
+										128,
+										88
+									],
+									"uv_size": [
+										-15,
+										-7
+									],
+									"uv_rotation": 90
+								},
+								"down": {
+									"uv": [
+										128,
+										88
+									],
+									"uv_size": [
+										-15,
+										-7
+									],
+									"uv_rotation": 270
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "damage1",
+					"parent": "laser_beam",
+					"pivot": [
+						1.75,
+						15.25,
+						11.5
+					]
+				},
+				{
+					"name": "damage2",
+					"parent": "laser_beam",
+					"pivot": [
+						1.75,
+						15.25,
+						37.5
+					]
+				},
+				{
+					"name": "damage3",
+					"parent": "laser_beam",
+					"pivot": [
+						1.75,
+						15.25,
+						63.5
+					]
+				},
+				{
+					"name": "damage4",
+					"parent": "laser_beam",
+					"pivot": [
+						1.75,
+						15.25,
+						89.5
+					]
+				},
+				{
+					"name": "damage5",
+					"parent": "laser_beam",
+					"pivot": [
+						1.75,
+						15.25,
+						114.5
+					]
+				},
+				{
+					"name": "damage6",
+					"parent": "laser_beam",
+					"pivot": [
+						1.75,
+						15.25,
+						139.5
+					]
+				},
+				{
+					"name": "damage7",
+					"parent": "laser_beam",
+					"pivot": [
+						1.75,
+						15.25,
+						165.5
+					]
+				},
+				{
+					"name": "damage8",
+					"parent": "laser_beam",
+					"pivot": [
+						1.75,
+						15.25,
+						191.5
+					]
+				},
+				{
+					"name": "damage9",
+					"parent": "laser_beam",
+					"pivot": [
+						1.75,
+						15.25,
+						215.5
+					]
+				},
+				{
+					"name": "damage10",
+					"parent": "laser_beam",
+					"pivot": [
+						1.75,
+						15.25,
+						242.5
+					]
+				},
+				{
+					"name": "damage11",
+					"parent": "laser_beam",
+					"pivot": [
+						1.75,
+						15.25,
+						267.5
+					]
+				},
+				{
+					"name": "damage12",
+					"parent": "laser_beam",
+					"pivot": [
+						1.75,
+						15.25,
+						293.5
+					]
+				},
+				{
+					"name": "damage13",
+					"parent": "laser_beam",
+					"pivot": [
+						1.75,
+						15.25,
+						318.5
+					]
+				},
+				{
+					"name": "damage14",
+					"parent": "laser_beam",
+					"pivot": [
+						1.75,
+						15.25,
+						344.5
+					]
+				},
+				{
+					"name": "damage15",
+					"parent": "laser_beam",
+					"pivot": [
+						1.75,
+						15.25,
+						370.5
+					]
+				}
+			]
+		}
+	]
+}

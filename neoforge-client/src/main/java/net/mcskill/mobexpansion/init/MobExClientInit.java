@@ -23,6 +23,9 @@ import net.mcskill.mobexpansion.client.renderer.LeechRenderer;
 import net.mcskill.mobexpansion.client.renderer.RatKingRenderer;
 import net.mcskill.mobexpansion.client.renderer.PotionProjectileRenderer;
 import net.mcskill.mobexpansion.client.renderer.InvisibleRenderer;
+import net.mcskill.mobexpansion.client.renderer.AbilityMobRenderer;
+import net.mcskill.mobexpansion.client.renderer.MobExEffectRenderer;
+import net.mcskill.mobexpansion.client.renderer.MobExProjectileRenderer;
 import net.mcskill.mobexpansion.client.screen.MobDropConfigScreen;
 import net.mcskill.mobexpansion.client.screen.MobSpawnerScreen;
 import net.minecraft.client.Minecraft;
@@ -60,6 +63,24 @@ public class MobExClientInit {
         event.registerEntityRenderer(MobExEntities.SEWER_POTION_PROJECTILE.get(), PotionProjectileRenderer::new);
         event.registerEntityRenderer(MobExEntities.SEWER_BOLT_PROJECTILE.get(), InvisibleRenderer::new);
         event.registerEntityRenderer(MobExEntities.SEWER_POISON_AREA.get(), InvisibleRenderer::new);
+        event.registerEntityRenderer(MobExEntities.SWARMER_ANT.get(), AbilityMobRenderer.of(1.0F, 0.5F));
+        event.registerEntityRenderer(MobExEntities.BEETLE_TROOPER.get(), AbilityMobRenderer.of(1.0F, 1.2F));
+        event.registerEntityRenderer(MobExEntities.GUNSHIP_MOTH.get(), AbilityMobRenderer.of(1.0F, 1.4F));
+        event.registerEntityRenderer(MobExEntities.HUNTSMAN_SPIDER.get(), AbilityMobRenderer.of(1.0F, 1.4F));
+        event.registerEntityRenderer(MobExEntities.LADYBUG_MORTAR.get(), AbilityMobRenderer.of(1.0F, 1.1F));
+        event.registerEntityRenderer(MobExEntities.WOODLOUSE_TANK.get(), AbilityMobRenderer.of(1.0F, 1.6F));
+        event.registerEntityRenderer(MobExEntities.SCULK_CRABBY.get(), AbilityMobRenderer.of(1.0F, 0.5F));
+        event.registerEntityRenderer(MobExEntities.SCULKED_CRUSTACEAN.get(), AbilityMobRenderer.of(1.0F, 0.8F));
+        event.registerEntityRenderer(MobExEntities.SCULK_SCREAMER.get(), AbilityMobRenderer.of(1.0F, 1.0F));
+        event.registerEntityRenderer(MobExEntities.SCULK_SENTINEL.get(), AbilityMobRenderer.of(1.0F, 1.4F));
+        event.registerEntityRenderer(MobExEntities.ECHO_ENSHROUDER.get(), AbilityMobRenderer.of(1.0F, 0.8F));
+        event.registerEntityRenderer(MobExEntities.SOUL_BEARER.get(), AbilityMobRenderer.of(1.0F, 0.5F));
+        event.registerEntityRenderer(MobExEntities.POSSESSED_CINDER_ARMOR.get(), AbilityMobRenderer.of(1.0F, 0.9F));
+        event.registerEntityRenderer(MobExEntities.POSSESSED_RUIN_ARMOR.get(), AbilityMobRenderer.of(1.0F, 0.9F));
+        event.registerEntityRenderer(MobExEntities.POSSESSED_VIKING_ARMOR.get(), AbilityMobRenderer.of(1.0F, 0.9F));
+        event.registerEntityRenderer(MobExEntities.APOCALYPSE_TYPE_A.get(), AbilityMobRenderer.of(1.0F, 1.0F));
+        event.registerEntityRenderer(MobExEntities.ABILITY_PROJECTILE.get(), MobExProjectileRenderer::new);
+        event.registerEntityRenderer(MobExEntities.ABILITY_EFFECT.get(), MobExEffectRenderer::new);
     }
 
     @SubscribeEvent

@@ -35,7 +35,23 @@ public final class SpawnerMobCatalog {
             MobExEntities.RAT.getId(),
             MobExEntities.MOSQUITO.getId(),
             MobExEntities.LEECH.getId(),
-            MobExEntities.RAT_KING.getId()
+            MobExEntities.RAT_KING.getId(),
+            MobExEntities.SWARMER_ANT.getId(),
+            MobExEntities.BEETLE_TROOPER.getId(),
+            MobExEntities.GUNSHIP_MOTH.getId(),
+            MobExEntities.HUNTSMAN_SPIDER.getId(),
+            MobExEntities.LADYBUG_MORTAR.getId(),
+            MobExEntities.WOODLOUSE_TANK.getId(),
+            MobExEntities.SCULK_CRABBY.getId(),
+            MobExEntities.SCULKED_CRUSTACEAN.getId(),
+            MobExEntities.SCULK_SCREAMER.getId(),
+            MobExEntities.SCULK_SENTINEL.getId(),
+            MobExEntities.ECHO_ENSHROUDER.getId(),
+            MobExEntities.SOUL_BEARER.getId(),
+            MobExEntities.POSSESSED_CINDER_ARMOR.getId(),
+            MobExEntities.POSSESSED_RUIN_ARMOR.getId(),
+            MobExEntities.POSSESSED_VIKING_ARMOR.getId(),
+            MobExEntities.APOCALYPSE_TYPE_A.getId()
     );
 
     private static volatile List<ResourceLocation> cachedIds;

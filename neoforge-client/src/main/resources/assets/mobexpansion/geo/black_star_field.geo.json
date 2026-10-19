@@ -1,0 +1,123 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.black_star_field",
+				"texture_width": 256,
+				"texture_height": 256,
+				"visible_bounds_width": 17,
+				"visible_bounds_height": 1,
+				"visible_bounds_offset": [
+					0,
+					0,
+					0
+				]
+			},
+			"bones": [
+				{
+					"name": "black_star_field",
+					"pivot": [
+						0,
+						0,
+						0
+					]
+				},
+				{
+					"name": "vfx",
+					"parent": "black_star_field",
+					"pivot": [
+						0,
+						0,
+						0
+					]
+				},
+				{
+					"name": "void_field",
+					"parent": "vfx",
+					"pivot": [
+						0,
+						-1,
+						-1
+					],
+					"cubes": [
+						{
+							"origin": [
+								-129.5,
+								0,
+								-126.5
+							],
+							"size": [
+								256,
+								0,
+								256
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										128,
+										0
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										128,
+										0
+									]
+								},
+								"south": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										128,
+										0
+									]
+								},
+								"west": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										128,
+										0
+									]
+								},
+								"up": {
+									"uv": [
+										256,
+										256
+									],
+									"uv_size": [
+										-256,
+										-256
+									]
+								},
+								"down": {
+									"uv": [
+										256,
+										0
+									],
+									"uv_size": [
+										-256,
+										256
+									]
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

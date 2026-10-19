@@ -1,0 +1,81 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"black_hole": {
+			"animation_length": 13,
+			"override_previous_animation": true,
+			"bones": {
+				"black_hole2": {
+					"rotation": {
+						"0.0": {
+							"vector": [
+								0,
+								0,
+								0
+							]
+						},
+						"4.0": {
+							"vector": [
+								-360,
+								0,
+								-360
+							]
+						},
+						"8.0": {
+							"vector": [
+								-720,
+								0,
+								-720
+							]
+						},
+						"12.0": {
+							"vector": [
+								-1080,
+								0,
+								-1080
+							]
+						},
+						"13.0": {
+							"vector": [
+								-1260,
+								0,
+								-1260
+							]
+						}
+					},
+					"scale": {
+						"1.0": {
+							"vector": [
+								0,
+								0,
+								0
+							]
+						},
+						"8.0": {
+							"vector": [
+								2,
+								2,
+								2
+							]
+						},
+						"12.0": {
+							"vector": [
+								2,
+								2,
+								2
+							]
+						},
+						"13.0": {
+							"vector": [
+								0,
+								0,
+								0
+							]
+						}
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

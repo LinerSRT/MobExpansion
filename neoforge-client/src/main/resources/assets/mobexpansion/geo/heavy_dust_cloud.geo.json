@@ -1,0 +1,2524 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.heavy_dust_cloud",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 2,
+				"visible_bounds_offset": [
+					0,
+					0,
+					0
+				]
+			},
+			"bones": [
+				{
+					"name": "heavy_dust_cloud",
+					"pivot": [
+						0,
+						0,
+						0
+					]
+				},
+				{
+					"name": "vfx",
+					"parent": "heavy_dust_cloud",
+					"pivot": [
+						0,
+						0,
+						0
+					]
+				},
+				{
+					"name": "rocks",
+					"parent": "vfx",
+					"pivot": [
+						0,
+						0,
+						0
+					]
+				},
+				{
+					"name": "rock_rot1",
+					"parent": "rocks",
+					"pivot": [
+						0,
+						0,
+						0
+					]
+				},
+				{
+					"name": "rock1",
+					"parent": "rock_rot1",
+					"pivot": [
+						0,
+						0,
+						-8
+					],
+					"cubes": [
+						{
+							"origin": [
+								-2,
+								-2,
+								-10
+							],
+							"size": [
+								4,
+								4,
+								4
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										56,
+										0
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"east": {
+									"uv": [
+										60,
+										4
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"south": {
+									"uv": [
+										56,
+										4
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"west": {
+									"uv": [
+										52,
+										0
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"up": {
+									"uv": [
+										64,
+										4
+									],
+									"uv_size": [
+										-4,
+										-4
+									]
+								},
+								"down": {
+									"uv": [
+										56,
+										8
+									],
+									"uv_size": [
+										-4,
+										-4
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "rock_rot2",
+					"parent": "rocks",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						45,
+						0
+					]
+				},
+				{
+					"name": "rock2",
+					"parent": "rock_rot2",
+					"pivot": [
+						0,
+						0,
+						-8
+					],
+					"cubes": [
+						{
+							"origin": [
+								-2,
+								-2,
+								-10
+							],
+							"size": [
+								4,
+								4,
+								4
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										56,
+										0
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"east": {
+									"uv": [
+										60,
+										4
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"south": {
+									"uv": [
+										56,
+										4
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"west": {
+									"uv": [
+										52,
+										0
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"up": {
+									"uv": [
+										64,
+										4
+									],
+									"uv_size": [
+										-4,
+										-4
+									]
+								},
+								"down": {
+									"uv": [
+										56,
+										8
+									],
+									"uv_size": [
+										-4,
+										-4
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "rock_rot3",
+					"parent": "rocks",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						90,
+						0
+					]
+				},
+				{
+					"name": "rock3",
+					"parent": "rock_rot3",
+					"pivot": [
+						0,
+						0,
+						-8
+					],
+					"cubes": [
+						{
+							"origin": [
+								-2,
+								-2,
+								-10
+							],
+							"size": [
+								4,
+								4,
+								4
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										56,
+										0
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"east": {
+									"uv": [
+										60,
+										4
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"south": {
+									"uv": [
+										56,
+										4
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"west": {
+									"uv": [
+										52,
+										0
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"up": {
+									"uv": [
+										64,
+										4
+									],
+									"uv_size": [
+										-4,
+										-4
+									]
+								},
+								"down": {
+									"uv": [
+										56,
+										8
+									],
+									"uv_size": [
+										-4,
+										-4
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "rock_rot4",
+					"parent": "rocks",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						135,
+						0
+					]
+				},
+				{
+					"name": "rock4",
+					"parent": "rock_rot4",
+					"pivot": [
+						0,
+						0,
+						-8
+					],
+					"cubes": [
+						{
+							"origin": [
+								-2,
+								-2,
+								-10
+							],
+							"size": [
+								4,
+								4,
+								4
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										56,
+										0
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"east": {
+									"uv": [
+										60,
+										4
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"south": {
+									"uv": [
+										56,
+										4
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"west": {
+									"uv": [
+										52,
+										0
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"up": {
+									"uv": [
+										64,
+										4
+									],
+									"uv_size": [
+										-4,
+										-4
+									]
+								},
+								"down": {
+									"uv": [
+										56,
+										8
+									],
+									"uv_size": [
+										-4,
+										-4
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "rock_rot5",
+					"parent": "rocks",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						180,
+						0
+					]
+				},
+				{
+					"name": "rock5",
+					"parent": "rock_rot5",
+					"pivot": [
+						0,
+						0,
+						-8
+					],
+					"cubes": [
+						{
+							"origin": [
+								-2,
+								-2,
+								-10
+							],
+							"size": [
+								4,
+								4,
+								4
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										56,
+										0
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"east": {
+									"uv": [
+										60,
+										4
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"south": {
+									"uv": [
+										56,
+										4
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"west": {
+									"uv": [
+										52,
+										0
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"up": {
+									"uv": [
+										64,
+										4
+									],
+									"uv_size": [
+										-4,
+										-4
+									]
+								},
+								"down": {
+									"uv": [
+										56,
+										8
+									],
+									"uv_size": [
+										-4,
+										-4
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "rock_rot6",
+					"parent": "rocks",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						-135,
+						0
+					]
+				},
+				{
+					"name": "rock6",
+					"parent": "rock_rot6",
+					"pivot": [
+						0,
+						0,
+						-8
+					],
+					"cubes": [
+						{
+							"origin": [
+								-2,
+								-2,
+								-10
+							],
+							"size": [
+								4,
+								4,
+								4
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										56,
+										0
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"east": {
+									"uv": [
+										60,
+										4
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"south": {
+									"uv": [
+										56,
+										4
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"west": {
+									"uv": [
+										52,
+										0
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"up": {
+									"uv": [
+										64,
+										4
+									],
+									"uv_size": [
+										-4,
+										-4
+									]
+								},
+								"down": {
+									"uv": [
+										56,
+										8
+									],
+									"uv_size": [
+										-4,
+										-4
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "rock_rot7",
+					"parent": "rocks",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						-90,
+						0
+					]
+				},
+				{
+					"name": "rock7",
+					"parent": "rock_rot7",
+					"pivot": [
+						0,
+						0,
+						-8
+					],
+					"cubes": [
+						{
+							"origin": [
+								-2,
+								-2,
+								-10
+							],
+							"size": [
+								4,
+								4,
+								4
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										56,
+										0
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"east": {
+									"uv": [
+										60,
+										4
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"south": {
+									"uv": [
+										56,
+										4
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"west": {
+									"uv": [
+										52,
+										0
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"up": {
+									"uv": [
+										64,
+										4
+									],
+									"uv_size": [
+										-4,
+										-4
+									]
+								},
+								"down": {
+									"uv": [
+										56,
+										8
+									],
+									"uv_size": [
+										-4,
+										-4
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "rock_rot8",
+					"parent": "rocks",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						-45,
+						0
+					]
+				},
+				{
+					"name": "rock8",
+					"parent": "rock_rot8",
+					"pivot": [
+						0,
+						0,
+						-8
+					],
+					"cubes": [
+						{
+							"origin": [
+								-2,
+								-2,
+								-10
+							],
+							"size": [
+								4,
+								4,
+								4
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										56,
+										0
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"east": {
+									"uv": [
+										60,
+										4
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"south": {
+									"uv": [
+										56,
+										4
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"west": {
+									"uv": [
+										52,
+										0
+									],
+									"uv_size": [
+										4,
+										4
+									]
+								},
+								"up": {
+									"uv": [
+										64,
+										4
+									],
+									"uv_size": [
+										-4,
+										-4
+									]
+								},
+								"down": {
+									"uv": [
+										56,
+										8
+									],
+									"uv_size": [
+										-4,
+										-4
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "big_rock_rot1",
+					"parent": "rocks",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						30,
+						0
+					]
+				},
+				{
+					"name": "big_rock1",
+					"parent": "big_rock_rot1",
+					"pivot": [
+						0,
+						0,
+						-8
+					],
+					"cubes": [
+						{
+							"origin": [
+								-2.5,
+								-2.5,
+								-12.5
+							],
+							"size": [
+								5,
+								5,
+								9
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										59,
+										8
+									],
+									"uv_size": [
+										5,
+										5
+									]
+								},
+								"east": {
+									"uv": [
+										50,
+										8
+									],
+									"uv_size": [
+										9,
+										5
+									]
+								},
+								"south": {
+									"uv": [
+										59,
+										13
+									],
+									"uv_size": [
+										5,
+										5
+									]
+								},
+								"west": {
+									"uv": [
+										50,
+										13
+									],
+									"uv_size": [
+										9,
+										5
+									]
+								},
+								"up": {
+									"uv": [
+										64,
+										27
+									],
+									"uv_size": [
+										-5,
+										-9
+									]
+								},
+								"down": {
+									"uv": [
+										59,
+										27
+									],
+									"uv_size": [
+										-5,
+										-9
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "big_rock_rot2",
+					"parent": "rocks",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						90,
+						0
+					]
+				},
+				{
+					"name": "big_rock2",
+					"parent": "big_rock_rot2",
+					"pivot": [
+						0,
+						0,
+						-8
+					],
+					"cubes": [
+						{
+							"origin": [
+								-2.5,
+								-2.5,
+								-12.5
+							],
+							"size": [
+								5,
+								5,
+								9
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										59,
+										8
+									],
+									"uv_size": [
+										5,
+										5
+									]
+								},
+								"east": {
+									"uv": [
+										50,
+										8
+									],
+									"uv_size": [
+										9,
+										5
+									]
+								},
+								"south": {
+									"uv": [
+										59,
+										13
+									],
+									"uv_size": [
+										5,
+										5
+									]
+								},
+								"west": {
+									"uv": [
+										50,
+										13
+									],
+									"uv_size": [
+										9,
+										5
+									]
+								},
+								"up": {
+									"uv": [
+										64,
+										27
+									],
+									"uv_size": [
+										-5,
+										-9
+									]
+								},
+								"down": {
+									"uv": [
+										59,
+										27
+									],
+									"uv_size": [
+										-5,
+										-9
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "big_rock_rot3",
+					"parent": "rocks",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						150,
+						0
+					]
+				},
+				{
+					"name": "big_rock3",
+					"parent": "big_rock_rot3",
+					"pivot": [
+						0,
+						0,
+						-8
+					],
+					"cubes": [
+						{
+							"origin": [
+								-2.5,
+								-2.5,
+								-12.5
+							],
+							"size": [
+								5,
+								5,
+								9
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										59,
+										8
+									],
+									"uv_size": [
+										5,
+										5
+									]
+								},
+								"east": {
+									"uv": [
+										50,
+										8
+									],
+									"uv_size": [
+										9,
+										5
+									]
+								},
+								"south": {
+									"uv": [
+										59,
+										13
+									],
+									"uv_size": [
+										5,
+										5
+									]
+								},
+								"west": {
+									"uv": [
+										50,
+										13
+									],
+									"uv_size": [
+										9,
+										5
+									]
+								},
+								"up": {
+									"uv": [
+										64,
+										27
+									],
+									"uv_size": [
+										-5,
+										-9
+									]
+								},
+								"down": {
+									"uv": [
+										59,
+										27
+									],
+									"uv_size": [
+										-5,
+										-9
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "big_rock_rot4",
+					"parent": "rocks",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						-150,
+						0
+					]
+				},
+				{
+					"name": "big_rock4",
+					"parent": "big_rock_rot4",
+					"pivot": [
+						0,
+						0,
+						-8
+					],
+					"cubes": [
+						{
+							"origin": [
+								-2.5,
+								-2.5,
+								-12.5
+							],
+							"size": [
+								5,
+								5,
+								9
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										59,
+										8
+									],
+									"uv_size": [
+										5,
+										5
+									]
+								},
+								"east": {
+									"uv": [
+										50,
+										8
+									],
+									"uv_size": [
+										9,
+										5
+									]
+								},
+								"south": {
+									"uv": [
+										59,
+										13
+									],
+									"uv_size": [
+										5,
+										5
+									]
+								},
+								"west": {
+									"uv": [
+										50,
+										13
+									],
+									"uv_size": [
+										9,
+										5
+									]
+								},
+								"up": {
+									"uv": [
+										64,
+										27
+									],
+									"uv_size": [
+										-5,
+										-9
+									]
+								},
+								"down": {
+									"uv": [
+										59,
+										27
+									],
+									"uv_size": [
+										-5,
+										-9
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "big_rock_rot5",
+					"parent": "rocks",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						-90,
+						0
+					]
+				},
+				{
+					"name": "big_rock5",
+					"parent": "big_rock_rot5",
+					"pivot": [
+						0,
+						0,
+						-8
+					],
+					"cubes": [
+						{
+							"origin": [
+								-2.5,
+								-2.5,
+								-12.5
+							],
+							"size": [
+								5,
+								5,
+								9
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										59,
+										8
+									],
+									"uv_size": [
+										5,
+										5
+									]
+								},
+								"east": {
+									"uv": [
+										50,
+										8
+									],
+									"uv_size": [
+										9,
+										5
+									]
+								},
+								"south": {
+									"uv": [
+										59,
+										13
+									],
+									"uv_size": [
+										5,
+										5
+									]
+								},
+								"west": {
+									"uv": [
+										50,
+										13
+									],
+									"uv_size": [
+										9,
+										5
+									]
+								},
+								"up": {
+									"uv": [
+										64,
+										27
+									],
+									"uv_size": [
+										-5,
+										-9
+									]
+								},
+								"down": {
+									"uv": [
+										59,
+										27
+									],
+									"uv_size": [
+										-5,
+										-9
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "big_rock_rot6",
+					"parent": "rocks",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						-30,
+						0
+					]
+				},
+				{
+					"name": "big_rock6",
+					"parent": "big_rock_rot6",
+					"pivot": [
+						0,
+						0,
+						-8
+					],
+					"cubes": [
+						{
+							"origin": [
+								-2.5,
+								-2.5,
+								-12.5
+							],
+							"size": [
+								5,
+								5,
+								9
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										59,
+										8
+									],
+									"uv_size": [
+										5,
+										5
+									]
+								},
+								"east": {
+									"uv": [
+										50,
+										8
+									],
+									"uv_size": [
+										9,
+										5
+									]
+								},
+								"south": {
+									"uv": [
+										59,
+										13
+									],
+									"uv_size": [
+										5,
+										5
+									]
+								},
+								"west": {
+									"uv": [
+										50,
+										13
+									],
+									"uv_size": [
+										9,
+										5
+									]
+								},
+								"up": {
+									"uv": [
+										64,
+										27
+									],
+									"uv_size": [
+										-5,
+										-9
+									]
+								},
+								"down": {
+									"uv": [
+										59,
+										27
+									],
+									"uv_size": [
+										-5,
+										-9
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust_clouds",
+					"parent": "vfx",
+					"pivot": [
+						0,
+						0,
+						0
+					]
+				},
+				{
+					"name": "dust_cloud_rot2",
+					"parent": "dust_clouds",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						45,
+						0
+					]
+				},
+				{
+					"name": "dust_cloud2",
+					"parent": "dust_cloud_rot2",
+					"pivot": [
+						0,
+						0,
+						-5
+					],
+					"cubes": [
+						{
+							"origin": [
+								-4,
+								-4,
+								-9
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										10,
+										20
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										20,
+										10
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										18,
+										20
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										26,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										26,
+										26
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										10,
+										36
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust_cloud_rot1",
+					"parent": "dust_clouds",
+					"pivot": [
+						0,
+						0,
+						0
+					]
+				},
+				{
+					"name": "dust_cloud1",
+					"parent": "dust_cloud_rot1",
+					"pivot": [
+						0,
+						0,
+						-5
+					],
+					"cubes": [
+						{
+							"origin": [
+								-4,
+								-4,
+								-9
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										10,
+										20
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										20,
+										10
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										18,
+										20
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										26,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										26,
+										26
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										10,
+										36
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust_cloud_rot3",
+					"parent": "dust_clouds",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						90,
+						0
+					]
+				},
+				{
+					"name": "dust_cloud3",
+					"parent": "dust_cloud_rot3",
+					"pivot": [
+						0,
+						0,
+						-5
+					],
+					"cubes": [
+						{
+							"origin": [
+								-4,
+								-4,
+								-9
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										10,
+										20
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										20,
+										10
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										18,
+										20
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										26,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										26,
+										26
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										10,
+										36
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust_cloud_rot4",
+					"parent": "dust_clouds",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						135,
+						0
+					]
+				},
+				{
+					"name": "dust_cloud4",
+					"parent": "dust_cloud_rot4",
+					"pivot": [
+						0,
+						0,
+						-5
+					],
+					"cubes": [
+						{
+							"origin": [
+								-4,
+								-4,
+								-9
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										10,
+										20
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										20,
+										10
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										18,
+										20
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										26,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										26,
+										26
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										10,
+										36
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust_cloud_rot5",
+					"parent": "dust_clouds",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						180,
+						0
+					]
+				},
+				{
+					"name": "dust_cloud5",
+					"parent": "dust_cloud_rot5",
+					"pivot": [
+						0,
+						0,
+						-5
+					],
+					"cubes": [
+						{
+							"origin": [
+								-4,
+								-4,
+								-9
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										10,
+										20
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										20,
+										10
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										18,
+										20
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										26,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										26,
+										26
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										10,
+										36
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust_cloud_rot6",
+					"parent": "dust_clouds",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						-135,
+						0
+					]
+				},
+				{
+					"name": "dust_cloud6",
+					"parent": "dust_cloud_rot6",
+					"pivot": [
+						0,
+						0,
+						-5
+					],
+					"cubes": [
+						{
+							"origin": [
+								-4,
+								-4,
+								-9
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										10,
+										20
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										20,
+										10
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										18,
+										20
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										26,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										26,
+										26
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										10,
+										36
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust_cloud_rot7",
+					"parent": "dust_clouds",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						-90,
+						0
+					]
+				},
+				{
+					"name": "dust_cloud7",
+					"parent": "dust_cloud_rot7",
+					"pivot": [
+						0,
+						0,
+						-5
+					],
+					"cubes": [
+						{
+							"origin": [
+								-4,
+								-4,
+								-9
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										10,
+										20
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										20,
+										10
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										18,
+										20
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										26,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										26,
+										26
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										10,
+										36
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust_cloud_rot8",
+					"parent": "dust_clouds",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						-45,
+						0
+					]
+				},
+				{
+					"name": "dust_cloud8",
+					"parent": "dust_cloud_rot8",
+					"pivot": [
+						0,
+						0,
+						-5
+					],
+					"cubes": [
+						{
+							"origin": [
+								-4,
+								-4,
+								-9
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										10,
+										20
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										20,
+										10
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										18,
+										20
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										26,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										26,
+										26
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										10,
+										36
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "center_cloud_rot1",
+					"parent": "dust_clouds",
+					"pivot": [
+						0,
+						0,
+						0
+					]
+				},
+				{
+					"name": "center_cloud1",
+					"parent": "center_cloud_rot1",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"cubes": [
+						{
+							"origin": [
+								-5,
+								-5,
+								-5
+							],
+							"size": [
+								10,
+								10,
+								10
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										10,
+										10
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										10
+									],
+									"uv_size": [
+										10,
+										10
+									]
+								},
+								"south": {
+									"uv": [
+										10,
+										0
+									],
+									"uv_size": [
+										10,
+										10
+									]
+								},
+								"west": {
+									"uv": [
+										10,
+										10
+									],
+									"uv_size": [
+										10,
+										10
+									]
+								},
+								"up": {
+									"uv": [
+										0,
+										20
+									],
+									"uv_size": [
+										10,
+										10
+									]
+								},
+								"down": {
+									"uv": [
+										20,
+										10
+									],
+									"uv_size": [
+										10,
+										-10
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "center_cloud_rot2",
+					"parent": "dust_clouds",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						120,
+						0
+					]
+				},
+				{
+					"name": "center_cloud2",
+					"parent": "center_cloud_rot2",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"cubes": [
+						{
+							"origin": [
+								-5,
+								-5,
+								-5
+							],
+							"size": [
+								10,
+								10,
+								10
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										10,
+										10
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										10
+									],
+									"uv_size": [
+										10,
+										10
+									]
+								},
+								"south": {
+									"uv": [
+										10,
+										0
+									],
+									"uv_size": [
+										10,
+										10
+									]
+								},
+								"west": {
+									"uv": [
+										10,
+										10
+									],
+									"uv_size": [
+										10,
+										10
+									]
+								},
+								"up": {
+									"uv": [
+										0,
+										20
+									],
+									"uv_size": [
+										10,
+										10
+									]
+								},
+								"down": {
+									"uv": [
+										20,
+										10
+									],
+									"uv_size": [
+										10,
+										-10
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "center_cloud_rot3",
+					"parent": "dust_clouds",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"rotation": [
+						0,
+						-120,
+						0
+					]
+				},
+				{
+					"name": "center_cloud3",
+					"parent": "center_cloud_rot3",
+					"pivot": [
+						0,
+						0,
+						0
+					],
+					"cubes": [
+						{
+							"origin": [
+								-5,
+								-5,
+								-5
+							],
+							"size": [
+								10,
+								10,
+								10
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										10,
+										10
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										10
+									],
+									"uv_size": [
+										10,
+										10
+									]
+								},
+								"south": {
+									"uv": [
+										10,
+										0
+									],
+									"uv_size": [
+										10,
+										10
+									]
+								},
+								"west": {
+									"uv": [
+										10,
+										10
+									],
+									"uv_size": [
+										10,
+										10
+									]
+								},
+								"up": {
+									"uv": [
+										0,
+										20
+									],
+									"uv_size": [
+										10,
+										10
+									]
+								},
+								"down": {
+									"uv": [
+										20,
+										10
+									],
+									"uv_size": [
+										10,
+										-10
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "hitbox",
+					"pivot": [
+						0,
+						2,
+						0
+					]
+				}
+			]
+		}
+	]
+}
