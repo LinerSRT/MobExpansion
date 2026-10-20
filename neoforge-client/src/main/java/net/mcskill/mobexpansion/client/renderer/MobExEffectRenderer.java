@@ -35,7 +35,7 @@ public class MobExEffectRenderer extends GeoEntityRenderer<MobExEffectEntity> {
 
     @Override
     public RenderType getRenderType(MobExEffectEntity animatable, ResourceLocation texture, @Nullable MultiBufferSource bufferSource, float partialTick) {
-        return RenderType.entityTranslucent(texture);
+        return RenderType.entityTranslucentCull(texture);
     }
 
     @Override
