@@ -80,7 +80,7 @@ public class MobExEntities {
 
     public static final DeferredHolder<EntityType<?>, EntityType<SwarmerAntEntity>> SWARMER_ANT = register("swarmer_ant", SwarmerAntEntity::new, 1.0F, 0.8F);
     public static final DeferredHolder<EntityType<?>, EntityType<BeetleTrooperEntity>> BEETLE_TROOPER = register("beetle_trooper", BeetleTrooperEntity::new, 2.5F, 1.2F);
-    public static final DeferredHolder<EntityType<?>, EntityType<GunshipMothEntity>> GUNSHIP_MOTH = register("gunship_moth", GunshipMothEntity::new, 2.5F, 2.75F);
+    public static final DeferredHolder<EntityType<?>, EntityType<GunshipMothEntity>> GUNSHIP_MOTH = register("gunship_moth", GunshipMothEntity::new, 7.5F, 8.25F);
     public static final DeferredHolder<EntityType<?>, EntityType<HuntsmanSpiderEntity>> HUNTSMAN_SPIDER = register("huntsman_spider", HuntsmanSpiderEntity::new, 2.6F, 1.8F);
     public static final DeferredHolder<EntityType<?>, EntityType<LadybugMortarEntity>> LADYBUG_MORTAR = register("ladybug_mortar", LadybugMortarEntity::new, 2.2F, 1.2F);
     public static final DeferredHolder<EntityType<?>, EntityType<WoodlouseTankEntity>> WOODLOUSE_TANK = register("woodlouse_tank", WoodlouseTankEntity::new, 3.0F, 1.7F);

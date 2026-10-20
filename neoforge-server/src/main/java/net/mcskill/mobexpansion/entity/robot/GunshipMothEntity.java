@@ -41,14 +41,14 @@ public class GunshipMothEntity extends FlyingAbilityMobEntity {
     @Override
     protected void registerAbilities(List<Ability> abilities) {
         // ракетный залп: 6 ракет поочерёдно с левого и правого крыла
-        abilities.add(Ability.builder("rocket_barrage").seconds(3.6).range(4.0, 30.0).cooldown(110).weight(2).moving()
+        abilities.add(Ability.builder("rocket_barrage").seconds(3.6).range(6.0, 36.0).cooldown(110).weight(2).moving()
                 .onStart((mob, target) -> mob.sound(SoundEvents.PISTON_EXTEND, 1.0F, 0.6F))
                 .every(12, 52, 8, (mob, target, tick) -> {
                     if (target == null)
                         return;
                     leftGun = !leftGun;
-                    final Vec3 launcher = mob.localPos(leftGun ? 1.6D : -1.6D, 1.4D, 0.4D);
-                    mob.shootAt(mob.projectile("bullet", launcher).scale(2.2F).damage(mob.damage(0.5))
+                    final Vec3 launcher = mob.localPos(leftGun ? 4.8D : -4.8D, 4.2D, 1.2D);
+                    mob.shootAt(mob.projectile("bullet", launcher).scale(4.0F).damage(mob.damage(0.5))
                                     .explosion(2.5D, mob.damage(1.0)).homing(target, 0.07D).life(80)
                                     .trail(ParticleTypes.LARGE_SMOKE, 1).impact(ParticleTypes.FLAME, null),
                             target, 0.9F, 6.0F);
@@ -57,12 +57,12 @@ public class GunshipMothEntity extends FlyingAbilityMobEntity {
                 .build());
 
         // пулемёты: без отдельной анимации — моль продолжает лететь и стреляет короткими очередями
-        abilities.add(Ability.builder("gun_burst").animation(null).duration(30).range(0.0, 20.0).cooldown(45).weight(3).moving()
+        abilities.add(Ability.builder("gun_burst").animation(null).duration(30).range(0.0, 28.0).cooldown(45).weight(3).moving()
                 .every(0, 27, 3, (mob, target, tick) -> {
                     if (target == null)
                         return;
                     leftGun = !leftGun;
-                    final Vec3 gun = mob.localPos(leftGun ? 1.0D : -1.0D, 1.2D, 0.8D);
+                    final Vec3 gun = mob.localPos(leftGun ? 3.0D : -3.0D, 3.6D, 2.4D);
                     mob.shootAt(mob.projectile("bullet", gun).damage(mob.damage(0.25)).knockback(0.05).life(40)
                             .trail(ParticleTypes.CRIT, 1), target, 2.4F, 4.0F);
                     mob.sound(SoundEvents.DISPENSER_LAUNCH, 0.5F, 1.8F);
@@ -72,17 +72,17 @@ public class GunshipMothEntity extends FlyingAbilityMobEntity {
 
     @Override
     public double hoverHeight() {
-        return 6.0D;
+        return 10.0D;
     }
 
     @Override
     public double preferredMinRange() {
-        return 5.0D;
+        return 10.0D;
     }
 
     @Override
     public double preferredMaxRange() {
-        return 10.0D;
+        return 16.0D;
     }
 
     @Override
