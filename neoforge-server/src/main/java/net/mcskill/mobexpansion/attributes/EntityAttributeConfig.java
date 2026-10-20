@@ -1,5 +1,6 @@
 package net.mcskill.mobexpansion.attributes;
 
+import net.mcskill.mobexpansion.clearance.Clearance;
 import net.mcskill.mobexpansion.drops.DropDestination;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,7 +20,8 @@ public record EntityAttributeConfig(
         double knockbackResistance,
         double followRange,
         Map<String, Double> extras,
-        DropDestination dropDestination
+        DropDestination dropDestination,
+        int clearanceLevel
 ) {
     public static final double MAX_HEALTH_CAP = 1_000_000.0D;
     public static final double ATTACK_DAMAGE_CAP = 1_000_000.0D;
@@ -29,7 +31,7 @@ public record EntityAttributeConfig(
     }
 
     public EntityAttributeConfig(double maxHealth, double armor, double armorToughness, double attackDamage, double movementSpeed, double knockbackResistance, double followRange, Map<String, Double> extras) {
-        this(maxHealth, armor, armorToughness, attackDamage, movementSpeed, knockbackResistance, followRange, extras, DropDestination.KILLER_INVENTORY);
+        this(maxHealth, armor, armorToughness, attackDamage, movementSpeed, knockbackResistance, followRange, extras, DropDestination.KILLER_INVENTORY, 0);
     }
 
     public EntityAttributeConfig {
@@ -43,15 +45,19 @@ public record EntityAttributeConfig(
 
     public EntityAttributeConfig sanitized(ResourceLocation entityId) {
         final Map<String, Double> sanitizedExtras = entityId == null ? Map.copyOf(extras) : EntityExtraParametersCatalog.sanitizeExtras(entityId, extras);
-        return new EntityAttributeConfig(clamp(maxHealth, 1.0D, MAX_HEALTH_CAP), clamp(armor, 0.0D, 100.0D), clamp(armorToughness, 0.0D, 100.0D), clamp(attackDamage, 0.0D, ATTACK_DAMAGE_CAP), clamp(movementSpeed, 0.0D, 4.0D), clamp(knockbackResistance, 0.0D, 1.0D), clamp(followRange, 0.0D, 128.0D), sanitizedExtras, dropDestination);
+        return new EntityAttributeConfig(clamp(maxHealth, 1.0D, MAX_HEALTH_CAP), clamp(armor, 0.0D, 100.0D), clamp(armorToughness, 0.0D, 100.0D), clamp(attackDamage, 0.0D, ATTACK_DAMAGE_CAP), clamp(movementSpeed, 0.0D, 4.0D), clamp(knockbackResistance, 0.0D, 1.0D), clamp(followRange, 0.0D, 128.0D), sanitizedExtras, dropDestination, Clearance.clamp(clearanceLevel));
     }
 
     public EntityAttributeConfig withExtras(Map<String, Double> nextExtras) {
-        return new EntityAttributeConfig(maxHealth, armor, armorToughness, attackDamage, movementSpeed, knockbackResistance, followRange, nextExtras, dropDestination);
+        return new EntityAttributeConfig(maxHealth, armor, armorToughness, attackDamage, movementSpeed, knockbackResistance, followRange, nextExtras, dropDestination, clearanceLevel);
     }
 
     public EntityAttributeConfig withDropDestination(DropDestination nextDestination) {
-        return new EntityAttributeConfig(maxHealth, armor, armorToughness, attackDamage, movementSpeed, knockbackResistance, followRange, extras, nextDestination);
+        return new EntityAttributeConfig(maxHealth, armor, armorToughness, attackDamage, movementSpeed, knockbackResistance, followRange, extras, nextDestination, clearanceLevel);
+    }
+
+    public EntityAttributeConfig withClearanceLevel(int nextClearanceLevel) {
+        return new EntityAttributeConfig(maxHealth, armor, armorToughness, attackDamage, movementSpeed, knockbackResistance, followRange, extras, dropDestination, nextClearanceLevel);
     }
 
     public double extra(String key, double fallback) {

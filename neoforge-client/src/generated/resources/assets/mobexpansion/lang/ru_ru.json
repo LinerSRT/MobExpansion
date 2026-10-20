@@ -1,5 +1,8 @@
 {
   "block.mobexpansion.mob_spawner": "Спавнер мобов",
+  "commands.mobexpansion.clearance.get": "Уровень допуска %s: %s (макс. %s)",
+  "commands.mobexpansion.clearance.set.multiple": "Уровень допуска изменён у %s игроков",
+  "commands.mobexpansion.clearance.set.single": "Уровень допуска %s установлен: %s",
   "entity.mobexpansion.ability_effect": "Эффект способности",
   "entity.mobexpansion.ability_projectile": "Снаряд",
   "entity.mobexpansion.apocalypse_type_a": "Апокалипсис: тип А",
@@ -88,6 +91,8 @@
   "gui.mobexpansion.mob_drop_config.attr.armor_toughness.tooltip": "Снижает пробитие брони сильными ударами.",
   "gui.mobexpansion.mob_drop_config.attr.attack_damage": "Урон",
   "gui.mobexpansion.mob_drop_config.attr.attack_damage.tooltip": "Базовый атрибут урона в ближнем бою.",
+  "gui.mobexpansion.mob_drop_config.attr.clearance_level": "Уровень допуска",
+  "gui.mobexpansion.mob_drop_config.attr.clearance_level.tooltip": "Минимальный уровень допуска игрока (0-5), чтобы наносить урон этому мобу. 0 — без требования.",
   "gui.mobexpansion.mob_drop_config.attr.follow_range": "Дальность преследования",
   "gui.mobexpansion.mob_drop_config.attr.follow_range.tooltip": "Как далеко моб замечает и преследует цели.",
   "gui.mobexpansion.mob_drop_config.attr.knockback_resistance": "Сопр. отбрасыванию",
@@ -480,5 +485,8 @@
   "item.mobexpansion.swarmer_ant_spawn_egg": "Яйцо призыва: Муравей-роевик",
   "item.mobexpansion.woodlouse_tank_spawn_egg": "Яйцо призыва: Мокрица-танк",
   "itemGroup.mobexpansion.main": "MobExpansion",
+  "label.mobexpansion.clearance_required": "Нужен уровень допуска %s",
+  "message.mobexpansion.clearance.changed": "Ваш уровень допуска: %s",
+  "message.mobexpansion.clearance.denied": "Нужен уровень допуска %s (у вас %s)",
   "mobexpansion": "MobExpansion"
 }

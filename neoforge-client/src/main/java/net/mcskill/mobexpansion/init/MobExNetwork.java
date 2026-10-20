@@ -1,6 +1,8 @@
 package net.mcskill.mobexpansion.init;
 
 import net.mcskill.mobexpansion.Core;
+import net.mcskill.mobexpansion.network.ClearanceLevelPacket;
+import net.mcskill.mobexpansion.network.MobClearancePacket;
 import net.mcskill.mobexpansion.network.SpawnerRevealPacket;
 import net.mcskill.mobexpansion.network.UpdateMobDropsPacket;
 import net.mcskill.mobexpansion.network.UpdateMobSpawnerPacket;
@@ -20,5 +22,7 @@ public class MobExNetwork {
         registrar.playToServer(UpdateMobSpawnerPacket.TYPE, UpdateMobSpawnerPacket.STREAM_CODEC, UpdateMobSpawnerPacket::handle);
         registrar.playToServer(UpdateMobDropsPacket.TYPE, UpdateMobDropsPacket.STREAM_CODEC, UpdateMobDropsPacket::handle);
         registrar.playToClient(SpawnerRevealPacket.TYPE, SpawnerRevealPacket.STREAM_CODEC, SpawnerRevealPacket::handle);
+        registrar.playToClient(ClearanceLevelPacket.TYPE, ClearanceLevelPacket.STREAM_CODEC, ClearanceLevelPacket::handle);
+        registrar.playToClient(MobClearancePacket.TYPE, MobClearancePacket.STREAM_CODEC, MobClearancePacket::handle);
     }
 }

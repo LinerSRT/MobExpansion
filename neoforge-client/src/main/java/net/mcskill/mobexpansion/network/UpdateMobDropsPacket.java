@@ -66,7 +66,8 @@ public record UpdateMobDropsPacket(List<EntityDropsData> entities) implements Cu
             final Map<String, Double> extras = new LinkedHashMap<>();
             for (int index = 0; index < extraCount; index++)
                 extras.put(buffer.readUtf(), buffer.readDouble());
-            return new AttributeData(maxHealth, armor, armorToughness, attackDamage, movementSpeed, knockbackResistance, followRange, extras, buffer.readBoolean());
+            final boolean dropToKiller = buffer.readBoolean();
+            return new AttributeData(maxHealth, armor, armorToughness, attackDamage, movementSpeed, knockbackResistance, followRange, extras, dropToKiller, buffer.readVarInt());
         }
 
         @Override
@@ -84,6 +85,7 @@ public record UpdateMobDropsPacket(List<EntityDropsData> entities) implements Cu
                 buffer.writeDouble(entry.getValue());
             }
             buffer.writeBoolean(data.dropToKiller());
+            buffer.writeVarInt(data.clearanceLevel());
         }
     };
 
@@ -154,7 +156,8 @@ public record UpdateMobDropsPacket(List<EntityDropsData> entities) implements Cu
             double knockbackResistance,
             double followRange,
             Map<String, Double> extras,
-            boolean dropToKiller
+            boolean dropToKiller,
+            int clearanceLevel
     ) {
         public AttributeData {
             extras = extras == null ? Map.of() : Map.copyOf(new LinkedHashMap<>(extras));
@@ -170,7 +173,8 @@ public record UpdateMobDropsPacket(List<EntityDropsData> entities) implements Cu
                     config.knockbackResistance(),
                     config.followRange(),
                     config.extras(),
-                    config.dropDestination().givesToKiller()
+                    config.dropDestination().givesToKiller(),
+                    config.clearanceLevel()
             );
         }
     }
