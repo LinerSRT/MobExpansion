@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 public final class EntityExtraParametersCatalog {
+    public static final String DAMAGE_SUFFIX = "_damage";
+    public static final String SPEED_SUFFIX = "_speed";
     private static final Map<ResourceLocation, List<ExtraParameterDefinition>> PARAMS;
 
     static {
@@ -167,6 +169,23 @@ public final class EntityExtraParametersCatalog {
                 parameter("stompWeakDuration", 60, 0, 6000),
                 parameter("stompWeakAmplifier", 0, 0, 10)
         ));
+        // способности новых мобов: коэффициент урона (базовый урон × коэф.) и скорость анимации каждой атаки
+        map.put(id("swarmer_ant"), abilityParameters("attack", 1));
+        map.put(id("beetle_trooper"), abilityParameters("fire", 0.6, "charge", 1.6));
+        map.put(id("gunship_moth"), abilityParameters("rocket_barrage", 1, "gun_burst", 0.25));
+        map.put(id("huntsman_spider"), abilityParameters("fire", 2.4));
+        map.put(id("ladybug_mortar"), abilityParameters("fire", 1.2));
+        map.put(id("woodlouse_tank"), abilityParameters("left_fire", 1, "right_fire", 1, "roll", 1.4, "roll_exit_emp", 1.2));
+        map.put(id("sculk_crabby"), abilityParameters("pinch", 1, "burrow", 1.2));
+        map.put(id("sculked_crustacean"), abilityParameters("pinch", 1.6));
+        map.put(id("sculk_screamer"), abilityParameters("right_slash", 1, "left_slash", 1, "scream", 0.3));
+        map.put(id("sculk_sentinel"), abilityParameters("smash", 1.3, "stomp", 1, "tongue_attack", 0.5, "eat", 0.6));
+        map.put(id("echo_enshrouder"), abilityParameters("right_shot", 1, "left_shot", 1, "summon_spike", 1.3, "soul_explosion", 1.6));
+        map.put(id("soul_bearer"), abilityParameters("shoot", 0.8));
+        map.put(id("possessed_cinder_armor"), abilityParameters("overhead_attack", 1.4, "stab", 1.2, "swing", 1.1, "slices", 0.5, "pummel", 0.8, "dash", 1.2, "explosion", 2.2));
+        map.put(id("possessed_ruin_armor"), abilityParameters("headbutt", 0.9, "swing", 1.2, "overhead_attack", 1.6, "stab", 1.3, "underslash", 1.1, "rampage", 1.3, "ruination", 1.5));
+        map.put(id("possessed_viking_armor"), abilityParameters("headbutt", 0.8, "right_chop", 1, "left_chop", 1, "axe_combo", 1.2, "axe_throw", 1.3, "reckless_strike", 2, "reckless_leap", 1.6, "ice_spikes", 1));
+        map.put(id("apocalypse_type_a"), abilityParameters("basic_attack", 1, "basic_attack2", 0.9, "combo", 1.5, "uppercut", 1.3, "throw", 1, "vanish", 1.5, "beam", 0.5, "void_storm", 0.5, "black_star_field", 0.7, "buildings_collapse", 2, "black_hole", 1.5, "blackbox", 0.4, "white_void", 1.8));
         PARAMS = Collections.unmodifiableMap(map);
     }
 
@@ -203,6 +222,18 @@ public final class EntityExtraParametersCatalog {
 
     private static ResourceLocation id(String path) {
         return Core.loc(path);
+    }
+
+    /** Пары (способность, коэффициент урона по умолчанию) -> параметры "<способность>_damage" и "<способность>_speed". */
+    private static List<ExtraParameterDefinition> abilityParameters(Object... abilityDamagePairs) {
+        final List<ExtraParameterDefinition> list = new java.util.ArrayList<>();
+        for (int i = 0; i < abilityDamagePairs.length; i += 2) {
+            final String ability = (String) abilityDamagePairs[i];
+            final double damage = ((Number) abilityDamagePairs[i + 1]).doubleValue();
+            list.add(parameter(ability + DAMAGE_SUFFIX, damage, 0, 50));
+            list.add(parameter(ability + SPEED_SUFFIX, 1, 0.25, 4));
+        }
+        return List.copyOf(list);
     }
 
     private static ExtraParameterDefinition parameter(String key, double defaultValue, double min, double max) {

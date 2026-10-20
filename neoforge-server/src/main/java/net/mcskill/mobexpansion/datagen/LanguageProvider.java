@@ -264,6 +264,330 @@ public class LanguageProvider implements DataProvider {
         add("gui.mobexpansion.mob_drop_config.col.extra", "Parameter", "Параметр");
         add("gui.mobexpansion.mob_drop_config.col.value", "Value", "Значение");
         add("gui.mobexpansion.mob_drop_config.no_extras", "No extra parameters", "Нет доп. параметров");
+        addExtra("attack_damage", "Bite: damage", "Укус: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("attack_speed", "Bite: speed", "Укус: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("axe_combo_damage", "Axe combo: damage", "Серия топором: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("axe_combo_speed", "Axe combo: speed", "Серия топором: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("axe_throw_damage", "Axe throw: damage", "Бросок топора: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("axe_throw_speed", "Axe throw: speed", "Бросок топора: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("basic_attack_damage", "Strike: damage", "Удар: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("basic_attack_speed", "Strike: speed", "Удар: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("basic_attack2_damage", "Double strike: damage", "Двойной удар: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("basic_attack2_speed", "Double strike: speed", "Двойной удар: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("beam_damage", "Beam: damage", "Луч: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("beam_speed", "Beam: speed", "Луч: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("black_hole_damage", "Black hole: damage", "Чёрная дыра: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("black_hole_speed", "Black hole: speed", "Чёрная дыра: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("black_star_field_damage", "Black star field: damage", "Поле чёрных звёзд: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("black_star_field_speed", "Black star field: speed", "Поле чёрных звёзд: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("blackbox_damage", "Black box: damage", "Чёрный ящик: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("blackbox_speed", "Black box: speed", "Чёрный ящик: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("buildings_collapse_damage", "Buildings collapse: damage", "Обрушение зданий: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("buildings_collapse_speed", "Buildings collapse: speed", "Обрушение зданий: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("burrow_damage", "Burrow ambush: damage", "Засада из-под земли: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("burrow_speed", "Burrow ambush: speed", "Засада из-под земли: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("charge_damage", "Charge: damage", "Таран: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("charge_speed", "Charge: speed", "Таран: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("combo_damage", "Combo: damage", "Комбо: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("combo_speed", "Combo: speed", "Комбо: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("dash_damage", "Dash: damage", "Рывок: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("dash_speed", "Dash: speed", "Рывок: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("eat_damage", "Devour: damage", "Поедание: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("eat_speed", "Devour: speed", "Поедание: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("explosion_damage", "Explosion: damage", "Взрыв: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("explosion_speed", "Explosion: speed", "Взрыв: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("fire_damage", "Shot: damage", "Выстрел: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("fire_speed", "Shot: speed", "Выстрел: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("gun_burst_damage", "Gun burst: damage", "Пулемётная очередь: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("gun_burst_speed", "Gun burst: speed", "Пулемётная очередь: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("headbutt_damage", "Headbutt: damage", "Удар головой: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("headbutt_speed", "Headbutt: speed", "Удар головой: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("ice_spikes_damage", "Ice spikes: damage", "Ледяные шипы: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("ice_spikes_speed", "Ice spikes: speed", "Ледяные шипы: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("left_chop_damage", "Left chop: damage", "Рубящий левой: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("left_chop_speed", "Left chop: speed", "Рубящий левой: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("left_fire_damage", "Left cannon: damage", "Левая пушка: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("left_fire_speed", "Left cannon: speed", "Левая пушка: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("left_shot_damage", "Left soul shot: damage", "Сгусток душ (левая): урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("left_shot_speed", "Left soul shot: speed", "Сгусток душ (левая): скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("left_slash_damage", "Left slash: damage", "Удар левой лапой: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("left_slash_speed", "Left slash: speed", "Удар левой лапой: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("overhead_attack_damage", "Overhead strike: damage", "Удар сверху: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("overhead_attack_speed", "Overhead strike: speed", "Удар сверху: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("pinch_damage", "Pinch: damage", "Щипок: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("pinch_speed", "Pinch: speed", "Щипок: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("pummel_damage", "Pummel: damage", "Толчок: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("pummel_speed", "Pummel: speed", "Толчок: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("rampage_damage", "Rampage: damage", "Натиск: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("rampage_speed", "Rampage: speed", "Натиск: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("reckless_leap_damage", "Reckless leap: damage", "Безрассудный прыжок: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("reckless_leap_speed", "Reckless leap: speed", "Безрассудный прыжок: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("reckless_strike_damage", "Reckless strike: damage", "Безрассудный удар: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("reckless_strike_speed", "Reckless strike: speed", "Безрассудный удар: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("right_chop_damage", "Right chop: damage", "Рубящий правой: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("right_chop_speed", "Right chop: speed", "Рубящий правой: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("right_fire_damage", "Right cannon: damage", "Правая пушка: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("right_fire_speed", "Right cannon: speed", "Правая пушка: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("right_shot_damage", "Right soul shot: damage", "Сгусток душ (правая): урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("right_shot_speed", "Right soul shot: speed", "Сгусток душ (правая): скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("right_slash_damage", "Right slash: damage", "Удар правой лапой: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("right_slash_speed", "Right slash: speed", "Удар правой лапой: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("rocket_barrage_damage", "Rocket barrage: damage", "Ракетный залп: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("rocket_barrage_speed", "Rocket barrage: speed", "Ракетный залп: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("roll_damage", "Roll: damage", "Перекат: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("roll_speed", "Roll: speed", "Перекат: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("roll_exit_emp_damage", "EMP blast: damage", "ЭМИ-импульс: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("roll_exit_emp_speed", "EMP blast: speed", "ЭМИ-импульс: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("ruination_damage", "Ruination: damage", "Руина: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("ruination_speed", "Ruination: speed", "Руина: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("scream_damage", "Scream: damage", "Крик: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("scream_speed", "Scream: speed", "Крик: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("shoot_damage", "Soul flames: damage", "Душевное пламя: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("shoot_speed", "Soul flames: speed", "Душевное пламя: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("slices_damage", "Slices: damage", "Рассечения: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("slices_speed", "Slices: speed", "Рассечения: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("smash_damage", "Smash: damage", "Удар с размаху: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("smash_speed", "Smash: speed", "Удар с размаху: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("soul_explosion_damage", "Soul explosion: damage", "Взрыв душ: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("soul_explosion_speed", "Soul explosion: speed", "Взрыв душ: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("stab_damage", "Stab: damage", "Укол: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("stab_speed", "Stab: speed", "Укол: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("stomp_damage", "Stomp: damage", "Топот: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("stomp_speed", "Stomp: speed", "Топот: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("summon_spike_damage", "Sculk spikes: damage", "Скалковые шипы: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("summon_spike_speed", "Sculk spikes: speed", "Скалковые шипы: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("swing_damage", "Swing: damage", "Взмах: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("swing_speed", "Swing: speed", "Взмах: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("throw_damage", "Throw: damage", "Бросок: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("throw_speed", "Throw: speed", "Бросок: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("tongue_attack_damage", "Tongue: damage", "Язык: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("tongue_attack_speed", "Tongue: speed", "Язык: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("underslash_damage", "Underslash: damage", "Удар снизу: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("underslash_speed", "Underslash: speed", "Удар снизу: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("uppercut_damage", "Uppercut: damage", "Апперкот: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("uppercut_speed", "Uppercut: speed", "Апперкот: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("vanish_damage", "Vanish slam: damage", "Исчезновение и удар: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("vanish_speed", "Vanish slam: speed", "Исчезновение и удар: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("void_storm_damage", "Void storm: damage", "Вихрь пустоты: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("void_storm_speed", "Void storm: speed", "Вихрь пустоты: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
+        addExtra("white_void_damage", "White void: damage", "Белая пустота: урон",
+                "Damage multiplier of this attack: base attack damage × value. For multi-hit attacks it sets the strongest hit, the rest scale proportionally.",
+                "Коэффициент урона атаки: базовый урон моба × значение. Для серий ударов задаёт сильнейший удар, остальные меняются пропорционально.");
+        addExtra("white_void_speed", "White void: speed", "Белая пустота: скорость",
+                "Attack animation speed: 1 = normal, 2 = twice as fast. Hit timings follow the animation.",
+                "Скорость анимации атаки: 1 — обычная, 2 — вдвое быстрее. Тайминги ударов следуют за анимацией.");
         addExtra("attackReach", "Attack reach", "Дальность атаки",
                 "Maximum distance for a successful melee hit.",
                 "Максимальная дистанция, на которой засчитывается удар ближнего боя.");

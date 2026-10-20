@@ -1,6 +1,7 @@
 package net.mcskill.mobexpansion.entity.effect;
 
 import net.mcskill.mobexpansion.entity.IModel;
+import net.mcskill.mobexpansion.entity.ability.AbilityMobEntity;
 import net.mcskill.mobexpansion.init.MobExEntities;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -50,6 +51,8 @@ public class MobExEffectEntity extends Entity implements GeoEntity, IModel {
     @Nullable
     private Ticker ticker;
     private boolean spawnedThisSession;
+    @Nullable
+    private String sourceAbility;
 
     public MobExEffectEntity(EntityType<? extends MobExEffectEntity> type, Level level) {
         super(type, level);
@@ -60,6 +63,8 @@ public class MobExEffectEntity extends Entity implements GeoEntity, IModel {
     public static MobExEffectEntity create(Level level, @Nullable LivingEntity owner, String model, int lifetime) {
         final MobExEffectEntity effect = new MobExEffectEntity(MobExEntities.ABILITY_EFFECT.get(), level);
         effect.owner = owner;
+        if (owner instanceof AbilityMobEntity mob)
+            effect.sourceAbility = mob.activeAbilityName();
         effect.entityData.set(MODEL, model);
         effect.entityData.set(ANIMATION, model);
         effect.entityData.set(LIFETIME, lifetime);
@@ -142,8 +147,13 @@ public class MobExEffectEntity extends Entity implements GeoEntity, IModel {
                 setPos(pos.x, pos.y, pos.z);
             }
         }
-        if (ticker != null)
-            ticker.tick(this, tickCount);
+        if (ticker != null) {
+            // урон тикера считается по коэффициенту атаки, создавшей эффект (а не той, что идёт сейчас)
+            if (owner instanceof AbilityMobEntity mob)
+                mob.runInDamageContext(sourceAbility, () -> ticker.tick(this, tickCount));
+            else
+                ticker.tick(this, tickCount);
+        }
     }
 
     @Override

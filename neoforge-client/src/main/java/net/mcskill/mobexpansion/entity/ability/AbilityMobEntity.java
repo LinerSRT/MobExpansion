@@ -1,5 +1,9 @@
 package net.mcskill.mobexpansion.entity.ability;
 
+import net.mcskill.mobexpansion.attributes.EntityExtraParametersCatalog;
+import net.mcskill.mobexpansion.attributes.ExtraParameterDefinition;
+import net.mcskill.mobexpansion.init.MobExParameters;
+import net.minecraft.resources.ResourceLocation;
 import net.mcskill.mobexpansion.entity.MobExGeckoEntity;
 import net.mcskill.mobexpansion.entity.MobExTargeting;
 import net.mcskill.mobexpansion.entity.ai.SurvivalPlayerHurtByTargetGoal;
@@ -54,6 +58,8 @@ import java.util.Set;
 public abstract class AbilityMobEntity extends MobExGeckoEntity {
     /** Произвольное «состояние» моба для клиента (развёрнут/свёрнут, фаза босса и т.п.). */
     protected static final EntityDataAccessor<Integer> STANCE = SynchedEntityData.defineId(AbilityMobEntity.class, EntityDataSerializers.INT);
+    /** Скорость анимации текущей способности (параметр «<способность>_speed»), нужна клиенту для GeckoLib. */
+    private static final EntityDataAccessor<Float> ANIMATION_SPEED = SynchedEntityData.defineId(AbilityMobEntity.class, EntityDataSerializers.FLOAT);
 
     public enum CombatStyle {
         /** Идёт в упор. */
@@ -73,6 +79,11 @@ public abstract class AbilityMobEntity extends MobExGeckoEntity {
     @Nullable
     private Ability active;
     private int activeTick;
+    /** Время способности в тиках с учётом её скорости (при скорости 2 — растёт на 2 за тик). */
+    private double activeTime;
+    /** Способность, чьим коэффициентом урона считается {@link #damage}: активная или та, что создала эффект. */
+    @Nullable
+    private String damageContext;
     @Nullable
     private LivingEntity activeTarget;
     private int globalCooldown;
@@ -143,6 +154,7 @@ public abstract class AbilityMobEntity extends MobExGeckoEntity {
     protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
         super.defineSynchedData(builder);
         builder.define(STANCE, 0);
+        builder.define(ANIMATION_SPEED, 1.0F);
     }
 
     public int getStance() {
@@ -289,8 +301,10 @@ public abstract class AbilityMobEntity extends MobExGeckoEntity {
             finishAbility(true);
         active = ability;
         activeTick = 0;
+        activeTime = 0.0D;
         activeTarget = target;
         hitThisAbility.clear();
+        entityData.set(ANIMATION_SPEED, (float) abilitySpeed(ability.name));
         cooldowns.put(ability.name, ability.cooldown);
         if (ability.stopsMovement)
             getNavigation().stop();
@@ -311,7 +325,9 @@ public abstract class AbilityMobEntity extends MobExGeckoEntity {
         final LivingEntity target = activeTarget;
         active = null;
         activeTick = 0;
+        activeTime = 0.0D;
         activeTarget = null;
+        entityData.set(ANIMATION_SPEED, 1.0F);
         globalCooldown = postAbilityDelay();
         if (interrupted)
             held = null;
@@ -414,8 +430,12 @@ public abstract class AbilityMobEntity extends MobExGeckoEntity {
             final LivingEntity target = currentAbilityTarget();
             if (ability.tracksTarget && target != null)
                 faceTowards(target);
-            activeTick++;
-            runTimeline(activeTick);
+            activeTime += abilitySpeed(ability.name);
+            final int reached = (int) Math.floor(activeTime + 1.0E-6D);
+            while (active == ability && activeTick < reached && activeTick < ability.duration) {
+                activeTick++;
+                runTimeline(activeTick);
+            }
             if (active == ability && activeTick >= ability.duration)
                 finishAbility(false);
         }
@@ -438,6 +458,7 @@ public abstract class AbilityMobEntity extends MobExGeckoEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         final AnimationController<AbilityMobEntity> controller = new AnimationController<>(this, "main", 4, this::handleAnimation);
+        controller.setAnimationSpeedHandler(mob -> (double) mob.entityData.get(ANIMATION_SPEED));
         final Set<String> names = new LinkedHashSet<>();
         for (Ability ability : abilities())
             if (ability.animation != null)
@@ -536,9 +557,51 @@ public abstract class AbilityMobEntity extends MobExGeckoEntity {
 
     // ---------------------------------------------------------------- помощники для способностей
 
-    /** Урон от атрибута ATTACK_DAMAGE с множителем — так все удары моба масштабируются конфигом. */
+    /**
+     * Урон удара: ATTACK_DAMAGE × multiplier × поправка из конфига способности.
+     * У каждой атаки есть доп. параметр «<способность>_damage» (по умолчанию — множитель её сильнейшего удара).
+     * Поправка = значение из конфига / значение по умолчанию: так сильнейший удар получает ровно «базовый урон × коэф.»,
+     * а остальные удары серии меняются пропорционально.
+     */
     public float damage(double multiplier) {
-        return (float) (getAttributeValue(Attributes.ATTACK_DAMAGE) * multiplier);
+        return (float) (getAttributeValue(Attributes.ATTACK_DAMAGE) * multiplier * damageScale());
+    }
+
+    private double damageScale() {
+        final String ability = damageContext != null ? damageContext : active != null ? active.name : null;
+        if (ability == null)
+            return 1.0D;
+        final ResourceLocation id = MobExParameters.idOf(this);
+        final ExtraParameterDefinition def = id == null ? null : EntityExtraParametersCatalog.find(id, ability + EntityExtraParametersCatalog.DAMAGE_SUFFIX);
+        if (def == null || def.defaultValue() <= 0.0D)
+            return 1.0D;
+        return MobExParameters.get(this, def.key(), def.defaultValue()) / def.defaultValue();
+    }
+
+    /** Скорость анимации способности из параметра «<способность>_speed» (1 — обычная). */
+    public double abilitySpeed(String ability) {
+        final ResourceLocation id = MobExParameters.idOf(this);
+        final ExtraParameterDefinition def = id == null ? null : EntityExtraParametersCatalog.find(id, ability + EntityExtraParametersCatalog.SPEED_SUFFIX);
+        if (def == null)
+            return 1.0D;
+        return def.sanitize(MobExParameters.get(this, def.key(), def.defaultValue()));
+    }
+
+    /** Активная способность (для эффектов: урон их тикеров считается по коэффициенту создавшей их атаки). */
+    @Nullable
+    public String activeAbilityName() {
+        return active != null ? active.name : null;
+    }
+
+    /** Выполнить действие так, будто идёт указанная способность (урон — по её коэффициенту). */
+    public void runInDamageContext(@Nullable String ability, Runnable action) {
+        final String previous = damageContext;
+        damageContext = ability;
+        try {
+            action.run();
+        } finally {
+            damageContext = previous;
+        }
     }
 
     public void faceTowards(Entity target) {
