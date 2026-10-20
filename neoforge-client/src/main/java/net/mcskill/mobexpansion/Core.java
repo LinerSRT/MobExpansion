@@ -23,6 +23,7 @@ public class Core {
         MobExItems.register(modEventBus);
         MobExCreativeTabs.register(modEventBus);
         MobExParticles.register(modEventBus);
+        MobExAttachments.register(modEventBus);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

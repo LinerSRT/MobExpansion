@@ -25,6 +25,7 @@ public class Core {
         MobExItems.register(modEventBus);
         MobExCreativeTabs.register(modEventBus);
         MobExParticles.register(modEventBus);
+        MobExAttachments.register(modEventBus);
         System.out.println("MobExpansion has been initialized!");
     }
 

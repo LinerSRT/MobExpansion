@@ -1,5 +1,8 @@
 {
   "block.mobexpansion.mob_spawner": "Mob Spawner",
+  "commands.mobexpansion.clearance.get": "%s has clearance level %s (max %s)",
+  "commands.mobexpansion.clearance.set.multiple": "Updated clearance level of %s players",
+  "commands.mobexpansion.clearance.set.single": "Set clearance level of %s to %s",
   "entity.mobexpansion.ability_effect": "Ability Effect",
   "entity.mobexpansion.ability_projectile": "Projectile",
   "entity.mobexpansion.apocalypse_type_a": "Apocalypse Type A",
@@ -480,5 +483,8 @@
   "item.mobexpansion.swarmer_ant_spawn_egg": "Swarmer Ant spawn egg",
   "item.mobexpansion.woodlouse_tank_spawn_egg": "Woodlouse Tank spawn egg",
   "itemGroup.mobexpansion.main": "MobExpansion",
+  "label.mobexpansion.clearance_required": "Clearance level %s required",
+  "message.mobexpansion.clearance.changed": "Your clearance level is now %s",
+  "message.mobexpansion.clearance.denied": "Clearance level %s required (you have %s)",
   "mobexpansion": "MobExpansion"
 }
