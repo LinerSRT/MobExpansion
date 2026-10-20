@@ -25,6 +25,25 @@ public class SoundsProvider extends SoundDefinitionsProvider {
         add(MobExSounds.SENTINEL_GM5.get(), Core.loc("sentinel/gm5"));
         add(MobExSounds.SENTINEL_GM6.get(), Core.loc("sentinel/gm6"));
         add(MobExSounds.SENTINEL_GM7.get(), Core.loc("sentinel/gm7"));
+        add(MobExSounds.APOCALYPSE_BASIC_ATTACK1.get(), Core.loc("apocalypse/basic_attack1"));
+        add(MobExSounds.APOCALYPSE_BASIC_ATTACK2.get(), Core.loc("apocalypse/basic_attack2"));
+        add(MobExSounds.APOCALYPSE_BEAM.get(), Core.loc("apocalypse/beam"));
+        add(MobExSounds.APOCALYPSE_BLACK_HOLE.get(), Core.loc("apocalypse/black_hole"));
+        add(MobExSounds.APOCALYPSE_BLACK_STAR.get(), Core.loc("apocalypse/black_star"));
+        add(MobExSounds.APOCALYPSE_BLACKBOX_BUILD.get(), Core.loc("apocalypse/blackbox_build"));
+        add(MobExSounds.APOCALYPSE_BUILDINGS_COLLAPSE.get(), Core.loc("apocalypse/buildings_collapse"));
+        add(MobExSounds.APOCALYPSE_COMBO1.get(), Core.loc("apocalypse/combo1"));
+        add(MobExSounds.APOCALYPSE_COMBO2.get(), Core.loc("apocalypse/combo2"));
+        add(MobExSounds.APOCALYPSE_COMBO3.get(), Core.loc("apocalypse/combo3"));
+        add(MobExSounds.APOCALYPSE_COMBO_X.get(), Core.loc("apocalypse/combo_x"));
+        add(MobExSounds.APOCALYPSE_GRAB.get(), Core.loc("apocalypse/grab"));
+        add(MobExSounds.APOCALYPSE_SWORDS_WHOOSH.get(), Core.loc("apocalypse/swords_whoosh"));
+        add(MobExSounds.APOCALYPSE_TELEPORT.get(), Core.loc("apocalypse/teleport"));
+        add(MobExSounds.APOCALYPSE_THROW.get(), Core.loc("apocalypse/throw"));
+        add(MobExSounds.APOCALYPSE_UPPERCUT.get(), Core.loc("apocalypse/uppercut"));
+        add(MobExSounds.APOCALYPSE_VANISH.get(), Core.loc("apocalypse/vanish"));
+        add(MobExSounds.APOCALYPSE_VOID_STORM.get(), Core.loc("apocalypse/void_storm"));
+        add(MobExSounds.APOCALYPSE_WHITE_VOID.get(), Core.loc("apocalypse/white_void"));
     }
 
     protected void add(SoundEvent soundEvent, ResourceLocation location) {

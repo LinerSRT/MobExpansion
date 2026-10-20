@@ -4,6 +4,7 @@ import net.mcskill.mobexpansion.entity.ability.AbilityMobEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,5 +44,13 @@ public class AbilityMobRenderer<T extends AbilityMobEntity> extends MobExGeoRend
     @Override
     protected float getDeathMaxRotation(T animatable) {
         return 0.0F;
+    }
+
+    /** Без ванильного красного оттенка, пока моб умирает: смерть показывает только своя анимация. */
+    @Override
+    public int getPackedOverlay(T animatable, float u, float partialTick) {
+        if (animatable.isDeadOrDying())
+            return OverlayTexture.NO_OVERLAY;
+        return super.getPackedOverlay(animatable, u, partialTick);
     }
 }

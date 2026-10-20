@@ -1,4 +1,99 @@
 {
+  "apocalypse.basic_attack1": {
+    "sounds": [
+      "mobexpansion:apocalypse/basic_attack1"
+    ]
+  },
+  "apocalypse.basic_attack2": {
+    "sounds": [
+      "mobexpansion:apocalypse/basic_attack2"
+    ]
+  },
+  "apocalypse.beam": {
+    "sounds": [
+      "mobexpansion:apocalypse/beam"
+    ]
+  },
+  "apocalypse.black_hole": {
+    "sounds": [
+      "mobexpansion:apocalypse/black_hole"
+    ]
+  },
+  "apocalypse.black_star": {
+    "sounds": [
+      "mobexpansion:apocalypse/black_star"
+    ]
+  },
+  "apocalypse.blackbox_build": {
+    "sounds": [
+      "mobexpansion:apocalypse/blackbox_build"
+    ]
+  },
+  "apocalypse.buildings_collapse": {
+    "sounds": [
+      "mobexpansion:apocalypse/buildings_collapse"
+    ]
+  },
+  "apocalypse.combo1": {
+    "sounds": [
+      "mobexpansion:apocalypse/combo1"
+    ]
+  },
+  "apocalypse.combo2": {
+    "sounds": [
+      "mobexpansion:apocalypse/combo2"
+    ]
+  },
+  "apocalypse.combo3": {
+    "sounds": [
+      "mobexpansion:apocalypse/combo3"
+    ]
+  },
+  "apocalypse.combo_x": {
+    "sounds": [
+      "mobexpansion:apocalypse/combo_x"
+    ]
+  },
+  "apocalypse.grab": {
+    "sounds": [
+      "mobexpansion:apocalypse/grab"
+    ]
+  },
+  "apocalypse.swords_whoosh": {
+    "sounds": [
+      "mobexpansion:apocalypse/swords_whoosh"
+    ]
+  },
+  "apocalypse.teleport": {
+    "sounds": [
+      "mobexpansion:apocalypse/teleport"
+    ]
+  },
+  "apocalypse.throw": {
+    "sounds": [
+      "mobexpansion:apocalypse/throw"
+    ]
+  },
+  "apocalypse.uppercut": {
+    "sounds": [
+      "mobexpansion:apocalypse/uppercut"
+    ]
+  },
+  "apocalypse.vanish": {
+    "sounds": [
+      "mobexpansion:apocalypse/vanish"
+    ]
+  },
+  "apocalypse.void_storm": {
+    "sounds": [
+      "mobexpansion:apocalypse/void_storm"
+    ]
+  },
+  "apocalypse.white_void": {
+    "sounds": [
+      "mobexpansion:apocalypse/white_void"
+    ]
+  },
   "sentinel.gm1": {
     "sounds": [
       "mobexpansion:sentinel/gm1"

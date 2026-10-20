@@ -388,6 +388,10 @@ public abstract class AbilityMobEntity extends MobExGeckoEntity {
         super.tick();
         if (level().isClientSide())
             return;
+        // полоска босса обновляется здесь, а не в шаге ИИ: у моба с NoAI шаг ИИ не вызывается
+        final net.minecraft.server.level.ServerBossEvent boss = bossEvent();
+        if (boss != null)
+            boss.setProgress(getHealth() / getMaxHealth());
         if (hurtSoundCooldown > 0)
             hurtSoundCooldown--;
         if (globalCooldown > 0 && active == null)
@@ -727,10 +731,23 @@ public abstract class AbilityMobEntity extends MobExGeckoEntity {
     }
 
     public MobExEffectEntity spawnEffect(String model, Vec3 pos, int lifetime) {
+        return spawnEffect(model, pos, lifetime, yBodyRot);
+    }
+
+    /**
+     * Эффект с заданным поворотом. Поворот надо задавать здесь, а не после спавна: пакет появления уходит клиенту
+     * сразу в addFreshEntity, и более поздняя смена yRot до клиента не доходит.
+     */
+    public MobExEffectEntity spawnEffect(String model, Vec3 pos, int lifetime, float yaw) {
         final MobExEffectEntity effect = MobExEffectEntity.create(level(), this, model, lifetime);
-        effect.moveTo(pos.x, pos.y, pos.z, yBodyRot, 0.0F);
+        effect.moveTo(pos.x, pos.y, pos.z, yaw, 0.0F);
         level().addFreshEntity(effect);
         return effect;
+    }
+
+    /** Поворот (как у мобов) в сторону точки. */
+    public float yawTowards(Vec3 point) {
+        return (float) (Mth.atan2(point.z - getZ(), point.x - getX()) * Mth.RAD_TO_DEG) - 90.0F;
     }
 
     @Nullable
@@ -797,13 +814,6 @@ public abstract class AbilityMobEntity extends MobExGeckoEntity {
             event.removePlayer(player);
     }
 
-    @Override
-    protected void customServerAiStep() {
-        super.customServerAiStep();
-        final net.minecraft.server.level.ServerBossEvent event = bossEvent();
-        if (event != null)
-            event.setProgress(getHealth() / getMaxHealth());
-    }
 
     @Override
     public void setCustomName(@Nullable net.minecraft.network.chat.Component name) {

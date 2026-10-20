@@ -106,12 +106,6 @@ public class MobExEffectEntity extends Entity implements GeoEntity, IModel {
         return this;
     }
 
-    public MobExEffectEntity facing(float yaw) {
-        setYRot(yaw);
-        yRotO = yaw;
-        return this;
-    }
-
     @Nullable
     public LivingEntity getOwner() {
         return owner;

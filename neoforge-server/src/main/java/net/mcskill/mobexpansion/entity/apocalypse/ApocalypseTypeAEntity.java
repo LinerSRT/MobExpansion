@@ -2,9 +2,11 @@ package net.mcskill.mobexpansion.entity.apocalypse;
 
 import net.mcskill.mobexpansion.entity.ability.Ability;
 import net.mcskill.mobexpansion.entity.ability.AbilityMobEntity;
+import net.mcskill.mobexpansion.init.MobExSounds;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
@@ -35,6 +37,8 @@ public class ApocalypseTypeAEntity extends AbilityMobEntity {
     private Ability vanish;
     @Nullable
     private Vec3 markedSpot;
+    @Nullable
+    private Vec3 beamDirection;
 
     public ApocalypseTypeAEntity(EntityType<? extends ApocalypseTypeAEntity> entityType, Level level) {
         super(entityType, level);
@@ -59,22 +63,31 @@ public class ApocalypseTypeAEntity extends AbilityMobEntity {
     protected void registerAbilities(List<Ability> abilities) {
         // ---------------- ближний бой
         abilities.add(Ability.builder("basic_attack").seconds(1.45).range(0, 3.5).cooldown(15).weight(4)
-                .at(8, (mob, target) -> swing(mob, 1.0))
+                .at(8, (mob, target) -> {
+                    swing(mob, 1.0);
+                    mob.sound(MobExSounds.APOCALYPSE_BASIC_ATTACK1.get(), 3.0F, 1.0F);
+                })
                 .build());
         abilities.add(Ability.builder("basic_attack2").seconds(1.8).range(0, 3.5).cooldown(20).weight(4)
-                .at(10, (mob, target) -> swing(mob, 0.7))
-                .at(23, (mob, target) -> swing(mob, 0.9))
+                .at(8, (mob, target) -> {
+                    swing(mob, 0.7);
+                    mob.sound(MobExSounds.APOCALYPSE_BASIC_ATTACK1.get(), 3.0F, 1.0F);
+                })
+                .at(21, (mob, target) -> {
+                    swing(mob, 0.9);
+                    mob.sound(MobExSounds.APOCALYPSE_BASIC_ATTACK2.get(), 3.0F, 1.0F);
+                })
                 .build());
         abilities.add(Ability.builder("combo").seconds(3.15).range(0, 4.0).cooldown(90).weight(3).unstoppable()
-                .at(8, (mob, target) -> comboHit(mob, target, "combo_first", 0.6))
-                .at(21, (mob, target) -> comboHit(mob, target, "combo_second", 0.6))
-                .at(36, (mob, target) -> comboHit(mob, target, "combo_third", 0.7))
-                .at(56, (mob, target) -> comboHit(mob, target, "combo_x", 1.5))
+                .at(9, (mob, target) -> comboHit(mob, target, "combo_first", 0.6, MobExSounds.APOCALYPSE_COMBO1.get()))
+                .at(20, (mob, target) -> comboHit(mob, target, "combo_second", 0.6, MobExSounds.APOCALYPSE_COMBO2.get()))
+                .at(33, (mob, target) -> comboHit(mob, target, "combo_third", 0.7, MobExSounds.APOCALYPSE_COMBO3.get()))
+                .at(55, (mob, target) -> comboHit(mob, target, "combo_x", 1.5, MobExSounds.APOCALYPSE_COMBO_X.get()))
                 .build());
         abilities.add(Ability.builder("uppercut").seconds(1.55).range(0, 3.0).cooldown(70).weight(2)
-                .at(23, (mob, target) -> {
+                .at(22, (mob, target) -> {
                     mob.hitCone(3.0, 90.0F, mob.damage(1.3), 0.2, 1.5);
-                    mob.sound(SoundEvents.PLAYER_ATTACK_KNOCKBACK, 1.2F, 0.5F);
+                    mob.sound(MobExSounds.APOCALYPSE_UPPERCUT.get(), 3.0F, 1.0F);
                 })
                 .build());
 
@@ -86,11 +99,12 @@ public class ApocalypseTypeAEntity extends AbilityMobEntity {
                         victim.hurt(mob.damageSources().mobAttack(mob), mob.damage(1.0));
                     }
                     mob.release(2.4D, 0.8D);
-                    mob.sound(SoundEvents.PLAYER_ATTACK_STRONG, 1.2F, 0.5F);
+                    mob.sound(MobExSounds.APOCALYPSE_THROW.get(), 3.0F, 1.0F);
                 })
                 .build();
         abilities.add(throwAbility);
         abilities.add(Ability.builder("grab").seconds(2.0).range(0, 3.0).cooldown(180).weight(2)
+                .at(6, (mob, target) -> mob.sound(MobExSounds.APOCALYPSE_GRAB.get(), 3.0F, 1.0F))
                 .at(27, (mob, target) -> {
                     if (target != null && mob.distanceTo(target) < 3.6D && mob.isEnemy(target))
                         mob.grab(target, HOLD);
@@ -103,6 +117,7 @@ public class ApocalypseTypeAEntity extends AbilityMobEntity {
 
         // ---------------- перемещения
         abilities.add(Ability.builder("teleport").seconds(1.35).range(7.0, 30.0).cooldown(110).weight(2).ignoreSight()
+                .at(6, (mob, target) -> mob.sound(MobExSounds.APOCALYPSE_TELEPORT.get(), 3.0F, 1.0F))
                 .at(8, (mob, target) -> {
                     if (target == null)
                         return;
@@ -116,8 +131,8 @@ public class ApocalypseTypeAEntity extends AbilityMobEntity {
                     mob.particles(ParticleTypes.REVERSE_PORTAL, mob.position().add(0, 1.5, 0), 40, 0.6, 0.1);
                     mob.setInvisible(true);
                     mob.setInvulnerable(true);
-                    mob.sound(SoundEvents.ENDERMAN_TELEPORT, 1.5F, 0.5F);
                 })
+                .at(9, (mob, target) -> mob.sound(MobExSounds.APOCALYPSE_VANISH.get(), 3.0F, 1.0F))
                 .at(40, (mob, target) -> {
                     if (target != null)
                         mob.teleportTo(target.getX(), target.getY(), target.getZ());
@@ -140,17 +155,19 @@ public class ApocalypseTypeAEntity extends AbilityMobEntity {
                         mob.faceTowards(target);
                 })
                 .at(9, (mob, target) -> {
-                    // модель луча вытянута в +Z, т.е. «назад» — разворачиваем на 180°
-                    mob.spawnEffect("beam", mob.position().add(0.0D, 0.6D, 0.0D), 100).facing(mob.yBodyRot + 180.0F)
+                    final float yaw = target != null ? mob.yawTowards(target.position()) : mob.yBodyRot;
+                    final float rad = yaw * Mth.DEG_TO_RAD;
+                    beamDirection = new Vec3(-Mth.sin(rad), 0.0D, Mth.cos(rad));
+                    // луч смотрит туда же, куда «смотрит» эффект (проверено в игре по стойке-мишени)
+                    mob.spawnEffect("beam", mob.position().add(0.0D, 0.6D, 0.0D), 100, yaw)
                             .follow(mob, new Vec3(0.0D, 0.6D, 0.0D));
-                    mob.sound(SoundEvents.BEACON_ACTIVATE, 2.0F, 0.5F);
                 })
+                .at(31, (mob, target) -> mob.sound(MobExSounds.APOCALYPSE_BEAM.get(), 3.0F, 1.0F))
                 .every(36, 94, 5, (mob, target, tick) -> {
                     final Vec3 from = mob.position().add(0.0D, 2.0D, 0.0D);
-                    for (LivingEntity hit : mob.hitLine(from, from.add(mob.forward().scale(24.0D)), 1.4D, mob.damage(0.5), 0.3D, 0.0D))
+                    final Vec3 direction = beamDirection != null ? beamDirection : mob.forward();
+                    for (LivingEntity hit : mob.hitLine(from, from.add(direction.scale(24.0D)), 1.4D, mob.damage(0.5), 0.3D, 0.0D))
                         mob.effect(hit, MobEffects.WITHER, 40, 0);
-                    if (tick % 15 == 1)
-                        mob.sound(SoundEvents.BEACON_AMBIENT, 2.0F, 0.6F);
                 })
                 .build());
 
@@ -164,11 +181,12 @@ public class ApocalypseTypeAEntity extends AbilityMobEntity {
                         mob.hitArea(mob.position().add(0.0D, 1.0D, 0.0D), 6.0D, mob.damage(0.5), 0.0D, 0.0D);
                         mob.particleRing(ParticleTypes.REVERSE_PORTAL, mob.position().add(0, 0.5, 0), 6.0D, 30);
                     });
-                    mob.sound(SoundEvents.ELYTRA_FLYING, 1.5F, 0.4F);
+                    mob.sound(MobExSounds.APOCALYPSE_VOID_STORM.get(), 3.0F, 1.0F);
                 })
                 .build());
 
         abilities.add(Ability.builder("black_star_field").seconds(2.9).range(0.0, 14.0).cooldown(240).weight(2).ignoreSight()
+                .at(1, (mob, target) -> mob.sound(MobExSounds.APOCALYPSE_BLACK_STAR.get(), 3.0F, 1.0F))
                 .at(19, (mob, target) -> {
                     final Vec3 center = mob.position();
                     mob.spawnEffect("black_star_field", center.add(0.0D, 0.05D, 0.0D), 58).ticker((effect, age) -> {
@@ -179,26 +197,25 @@ public class ApocalypseTypeAEntity extends AbilityMobEntity {
                                 mob.effect(enemy, MobEffects.MOVEMENT_SLOWDOWN, 30, 1);
                         }
                     });
-                    mob.sound(SoundEvents.AMETHYST_BLOCK_RESONATE, 2.0F, 0.5F);
                 })
                 .build());
 
         abilities.add(Ability.builder("buildings_collapse").seconds(3.2).range(4.0, 20.0).cooldown(260).weight(2)
                 .onStart((mob, target) -> {
                     markedSpot = target != null ? mob.groundAt(target.position()) : mob.forwardPos(6.0D, 0.0D);
-                    mob.spawnEffect("buildings_collapse", markedSpot, 55).facing(mob.yBodyRot);
+                    mob.spawnEffect("buildings_collapse", markedSpot, 55, mob.yawTowards(markedSpot));
                 })
                 .every(0, 36, 6, (mob, target, tick) -> {
                     if (markedSpot != null)
                         mob.particleRing(ParticleTypes.LARGE_SMOKE, markedSpot.add(0.0D, 0.2D, 0.0D), 5.0D, 30);
                 })
+                .at(32, (mob, target) -> mob.sound(MobExSounds.APOCALYPSE_BUILDINGS_COLLAPSE.get(), 3.0F, 1.0F))
                 .at(39, (mob, target) -> {
                     if (markedSpot == null)
                         return;
                     for (LivingEntity hit : mob.hitArea(markedSpot.add(0.0D, 1.0D, 0.0D), 5.5D, mob.damage(2.0), 0.5D, 0.2D))
                         mob.effect(hit, MobEffects.MOVEMENT_SLOWDOWN, 60, 2);
                     mob.particles(ParticleTypes.EXPLOSION_EMITTER, markedSpot, 1, 0.0, 0.0);
-                    mob.sound(SoundEvents.GENERIC_EXPLODE.value(), 2.0F, 0.5F);
                 })
                 .build());
 
@@ -215,10 +232,9 @@ public class ApocalypseTypeAEntity extends AbilityMobEntity {
                         if (age == 140) {
                             mob.hitArea(center, 5.0D, mob.damage(1.5), 1.6D, 0.6D);
                             mob.particles(ParticleTypes.EXPLOSION_EMITTER, center, 1, 0.0, 0.0);
-                            mob.sound(SoundEvents.GENERIC_EXPLODE.value(), 2.0F, 0.4F);
                         }
                     });
-                    mob.sound(SoundEvents.PORTAL_TRIGGER, 2.0F, 0.5F);
+                    mob.sound(MobExSounds.APOCALYPSE_BLACK_HOLE.get(), 3.0F, 1.0F);
                 })
                 .build());
 
@@ -228,7 +244,10 @@ public class ApocalypseTypeAEntity extends AbilityMobEntity {
                     if (target == null)
                         return;
                     final Vec3 center = mob.groundAt(target.position());
-                    mob.spawnEffect("blackbox", center, 200).glowing(false).ticker((effect, age) -> {
+                    mob.spawnEffect("blackbox", center, 210).glowing(false).ticker((effect, age) -> {
+                        // мечи, вылетающие из ящика: тайминги звука из blackbox_skills оригинала
+                        if (age == 150 || age == 155 || age == 160 || age == 177 || age == 206)
+                            mob.level().playSound(null, center.x, center.y, center.z, MobExSounds.APOCALYPSE_SWORDS_WHOOSH.get(), mob.getSoundSource(), 3.0F, 1.0F);
                         for (LivingEntity enemy : mob.enemiesNear(center.add(0.0D, 1.0D, 0.0D), 6.0D)) {
                             final double distance = enemy.position().multiply(1.0D, 0.0D, 1.0D).distanceTo(center.multiply(1.0D, 0.0D, 1.0D));
                             if (distance > 2.8D && distance < 5.0D)
@@ -237,33 +256,32 @@ public class ApocalypseTypeAEntity extends AbilityMobEntity {
                                 mob.effect(enemy, MobEffects.MOVEMENT_SLOWDOWN, 20, 2);
                         }
                     });
-                    mob.sound(SoundEvents.IRON_DOOR_CLOSE, 2.0F, 0.4F);
+                    mob.sound(MobExSounds.APOCALYPSE_BLACKBOX_BUILD.get(), 3.0F, 1.0F);
                 })
                 .build());
 
         abilities.add(Ability.builder("white_void").seconds(7.55).range(0.0, 16.0).cooldown(520).weight(2).unstoppable().ignoreSight()
                 .when((mob, target) -> phaseTwo())
                 .at(0, (mob, target) -> mob.spawnEffect("white_void", mob.position(), 151).follow(mob, Vec3.ZERO))
+                .at(60, (mob, target) -> mob.sound(MobExSounds.APOCALYPSE_WHITE_VOID.get(), 3.0F, 1.0F))
                 .every(10, 78, 6, (mob, target, tick) -> mob.particleRing(ParticleTypes.END_ROD, mob.position().add(0.0D, 1.5D, 0.0D), 16.0D * (1.0D - tick / 80.0D), 40))
                 .at(80, (mob, target) -> {
                     for (LivingEntity hit : mob.hitArea(mob.position().add(0.0D, 1.5D, 0.0D), 16.0D, mob.damage(1.8), 1.5D, 0.5D))
                         mob.effect(hit, MobEffects.BLINDNESS, 60, 0);
                     mob.particles(ParticleTypes.FLASH, mob.position().add(0, 1.5, 0), 3, 1.0, 0.0);
-                    mob.sound(SoundEvents.WITHER_BREAK_BLOCK, 2.0F, 0.5F);
                 })
                 .build());
     }
 
     private static void swing(AbilityMobEntity mob, double multiplier) {
         mob.hitCone(3.5, 120.0F, mob.damage(multiplier), 0.6, 0.2);
-        mob.sound(SoundEvents.PLAYER_ATTACK_SWEEP, 1.0F, 0.5F);
     }
 
-    private static void comboHit(AbilityMobEntity mob, @Nullable LivingEntity target, String effect, double multiplier) {
+    private static void comboHit(AbilityMobEntity mob, @Nullable LivingEntity target, String effect, double multiplier, SoundEvent sound) {
         final List<LivingEntity> hits = mob.hitCone(4.0, 110.0F, mob.damage(multiplier), multiplier > 1.0 ? 1.4 : 0.3, multiplier > 1.0 ? 0.5 : 0.05);
         final Vec3 at = target != null ? target.position() : mob.forwardPos(2.0D, 0.0D);
-        mob.spawnEffect(effect, at, 15).animation("combo").facing(mob.yBodyRot);
-        mob.sound(multiplier > 1.0 ? SoundEvents.PLAYER_ATTACK_CRIT : SoundEvents.PLAYER_ATTACK_SWEEP, 1.0F, 0.6F);
+        mob.spawnEffect(effect, at, 15, mob.yBodyRot).animation("combo");
+        mob.sound(sound, 3.0F, 1.0F);
         if (!hits.isEmpty())
             mob.particles(ParticleTypes.REVERSE_PORTAL, at.add(0.0D, 1.0D, 0.0D), 10, 0.3, 0.05);
     }
@@ -272,7 +290,6 @@ public class ApocalypseTypeAEntity extends AbilityMobEntity {
         mob.particles(ParticleTypes.REVERSE_PORTAL, mob.position().add(0, 1.5, 0), 30, 0.5, 0.1);
         mob.teleportTo(to.x, to.y, to.z);
         mob.particles(ParticleTypes.REVERSE_PORTAL, to.add(0, 1.5, 0), 30, 0.5, 0.1);
-        mob.sound(SoundEvents.ENDERMAN_TELEPORT, 1.5F, 0.6F);
     }
 
     @Override
@@ -283,7 +300,6 @@ public class ApocalypseTypeAEntity extends AbilityMobEntity {
         // переход во вторую фазу: исчезает и обрушивается на цель
         if (!phaseTwo() && healthBelow(0.5)) {
             setStance(PHASE_TWO);
-            sound(SoundEvents.WITHER_SPAWN, 2.0F, 0.7F);
             particles(ParticleTypes.REVERSE_PORTAL, position().add(0, 1.5, 0), 80, 1.0, 0.2);
             if (getTarget() != null)
                 forceAbility(vanish, getTarget());
@@ -302,6 +318,8 @@ public class ApocalypseTypeAEntity extends AbilityMobEntity {
             setInvulnerable(false);
         }
         markedSpot = null;
+        if (ability != null && "beam".equals(ability.name()))
+            beamDirection = null;
     }
 
     @Override
@@ -330,26 +348,21 @@ public class ApocalypseTypeAEntity extends AbilityMobEntity {
         return false;
     }
 
+    // в оригинале моб «Silent: true»: у босса только фирменные звуки способностей, без ванильных голосов
     @Override
+    @Nullable
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENDERMAN_AMBIENT;
+        return null;
     }
 
     @Override
-    @NotNull
-    protected SoundEvent getHurtSound(@NotNull DamageSource source) {
-        return SoundEvents.ENDERMAN_HURT;
+    protected void playHurtSound(@NotNull DamageSource source) {
     }
 
     @Override
-    @NotNull
+    @Nullable
     protected SoundEvent getDeathSound() {
-        return SoundEvents.WITHER_DEATH;
-    }
-
-    @Override
-    public float getVoicePitch() {
-        return 0.5F;
+        return null;
     }
 
     @Override
