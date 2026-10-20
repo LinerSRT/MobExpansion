@@ -91,6 +91,8 @@
   "gui.mobexpansion.mob_drop_config.attr.armor_toughness.tooltip": "Reduces how quickly strong hits pierce armor.",
   "gui.mobexpansion.mob_drop_config.attr.attack_damage": "Attack damage",
   "gui.mobexpansion.mob_drop_config.attr.attack_damage.tooltip": "Base melee attack damage attribute.",
+  "gui.mobexpansion.mob_drop_config.attr.clearance_level": "Clearance level",
+  "gui.mobexpansion.mob_drop_config.attr.clearance_level.tooltip": "Minimum player clearance level (0-5) required to damage this mob. 0 - no requirement.",
   "gui.mobexpansion.mob_drop_config.attr.follow_range": "Follow range",
   "gui.mobexpansion.mob_drop_config.attr.follow_range.tooltip": "How far the mob can detect and chase targets.",
   "gui.mobexpansion.mob_drop_config.attr.knockback_resistance": "Knockback resistance",

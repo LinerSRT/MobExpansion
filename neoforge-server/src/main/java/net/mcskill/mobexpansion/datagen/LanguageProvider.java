@@ -258,6 +258,8 @@ public class LanguageProvider implements DataProvider {
         add("gui.mobexpansion.mob_drop_config.attr.knockback_resistance.tooltip", "Chance/strength resistance against knockback (0-1).", "Сопротивление отбрасыванию (обычно 0-1).");
         add("gui.mobexpansion.mob_drop_config.attr.follow_range", "Follow range", "Дальность преследования");
         add("gui.mobexpansion.mob_drop_config.attr.follow_range.tooltip", "How far the mob can detect and chase targets.", "Как далеко моб замечает и преследует цели.");
+        add("gui.mobexpansion.mob_drop_config.attr.clearance_level", "Clearance level", "Уровень допуска");
+        add("gui.mobexpansion.mob_drop_config.attr.clearance_level.tooltip", "Minimum player clearance level (0-5) required to damage this mob. 0 - no requirement.", "Минимальный уровень допуска игрока (0-5), чтобы наносить урон этому мобу. 0 — без требования.");
         add("gui.mobexpansion.mob_drop_config.extras_table", "Extra parameters", "Доп. параметры");
         add("gui.mobexpansion.mob_drop_config.col.extra", "Parameter", "Параметр");
         add("gui.mobexpansion.mob_drop_config.col.value", "Value", "Значение");

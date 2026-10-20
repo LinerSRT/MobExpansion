@@ -1,6 +1,7 @@
 package net.mcskill.mobexpansion.attributes;
 
 import net.mcskill.mobexpansion.Core;
+import net.mcskill.mobexpansion.clearance.MobClearance;
 import net.mcskill.mobexpansion.drops.DropDestination;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -70,7 +71,8 @@ public final class EntityAttributeDefaults {
         final EntityAttributeConfig fromType = fromEntityType(entityId);
         if (fromType != null)
             return fromType;
-        return new EntityAttributeConfig(30, 2, 0, 6, 0.28, 0.2, 24, EntityExtraParametersCatalog.defaultExtras(entityId));
+        return new EntityAttributeConfig(30, 2, 0, 6, 0.28, 0.2, 24, EntityExtraParametersCatalog.defaultExtras(entityId))
+                .withClearanceLevel(MobClearance.getDefault(entityId));
     }
 
     @SuppressWarnings("unchecked")
@@ -93,7 +95,8 @@ public final class EntityAttributeDefaults {
                 attributeValue(supplier, Attributes.KNOCKBACK_RESISTANCE, 0.0D),
                 attributeValue(supplier, Attributes.FOLLOW_RANGE, 16.0D),
                 EntityExtraParametersCatalog.defaultExtras(entityId),
-                DropDestination.WORLD
+                DropDestination.WORLD,
+                MobClearance.getDefault(entityId)
         );
     }
 
@@ -114,6 +117,6 @@ public final class EntityAttributeDefaults {
                 knockbackResistance,
                 followRange,
                 EntityExtraParametersCatalog.defaultExtras(entityId)
-        ));
+        ).withClearanceLevel(MobClearance.getDefault(entityId)));
     }
 }

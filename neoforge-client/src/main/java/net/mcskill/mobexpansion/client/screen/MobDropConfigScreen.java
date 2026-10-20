@@ -71,7 +71,7 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
     private static final int CONDITION_TYPE_Y = 120;
     private static final int CONDITION_PARAM_Y = 148;
     private static final int ATTR_FIELD_START_Y = 52;
-    private static final int ATTR_FIELD_STRIDE = 34;
+    private static final int ATTR_FIELD_STRIDE = 30;
     private static final int ATTR_LABEL_OFFSET = 0;
     private static final int ATTR_BOX_OFFSET = 12;
     private static final int EXTRA_VALUE_WIDTH = 68;
@@ -114,6 +114,7 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
     private OreUIEditText movementSpeedBox;
     private OreUIEditText knockbackResistanceBox;
     private OreUIEditText followRangeBox;
+    private OreUIEditText clearanceLevelBox;
     private final List<OreUIEditText> extraBoxes = new ArrayList<>();
 
     private ResourceLocation selectedEntityId;
@@ -263,6 +264,7 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
         movementSpeedBox = createBox(rightFieldX, top + ATTR_FIELD_START_Y + ATTR_FIELD_STRIDE * 4 + ATTR_BOX_OFFSET, RIGHT_FIELD_W, "0.28");
         knockbackResistanceBox = createBox(rightFieldX, top + ATTR_FIELD_START_Y + ATTR_FIELD_STRIDE * 5 + ATTR_BOX_OFFSET, RIGHT_FIELD_W, "0");
         followRangeBox = createBox(rightFieldX, top + ATTR_FIELD_START_Y + ATTR_FIELD_STRIDE * 6 + ATTR_BOX_OFFSET, RIGHT_FIELD_W, "24");
+        clearanceLevelBox = createBox(rightFieldX, top + ATTR_FIELD_START_Y + ATTR_FIELD_STRIDE * 7 + ATTR_BOX_OFFSET, RIGHT_FIELD_W, "0");
         setAttributeTooltip(healthBox, "max_health");
         setAttributeTooltip(armorBox, "armor");
         setAttributeTooltip(armorToughnessBox, "armor_toughness");
@@ -270,6 +272,7 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
         setAttributeTooltip(movementSpeedBox, "movement_speed");
         setAttributeTooltip(knockbackResistanceBox, "knockback_resistance");
         setAttributeTooltip(followRangeBox, "follow_range");
+        setAttributeTooltip(clearanceLevelBox, "clearance_level");
 
         addRenderableWidget(itemBox);
         addRenderableWidget(chanceBox);
@@ -283,6 +286,7 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
         addRenderableWidget(movementSpeedBox);
         addRenderableWidget(knockbackResistanceBox);
         addRenderableWidget(followRangeBox);
+        addRenderableWidget(clearanceLevelBox);
         rebuildExtraBoxes();
 
         chanceMinusButton = addOreButton(rightFieldX + 76, top + 120, 18, 18, Component.literal("-"), () -> nudgeChance(-1));
@@ -501,6 +505,7 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
         setShown(movementSpeedBox, characteristicsTab);
         setShown(knockbackResistanceBox, characteristicsTab);
         setShown(followRangeBox, characteristicsTab);
+        setShown(clearanceLevelBox, characteristicsTab);
         if (characteristicsTab) {
             setShown(addEntryButton, false);
             setShown(removeEntryButton, false);
@@ -829,6 +834,7 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
         movementSpeedBox.setValue(formatAttribute(config.movementSpeed()));
         knockbackResistanceBox.setValue(formatAttribute(config.knockbackResistance()));
         followRangeBox.setValue(formatAttribute(config.followRange()));
+        clearanceLevelBox.setValue(String.valueOf(config.clearanceLevel()));
         final List<ExtraParameterDefinition> defs = currentExtraDefs();
         for (int index = 0; index < extraBoxes.size() && index < defs.size(); index++) {
             final ExtraParameterDefinition def = defs.get(index);
@@ -924,7 +930,8 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
                 parseDouble(knockbackResistanceBox.getValue(), fallback.knockbackResistance()),
                 parseDouble(followRangeBox.getValue(), fallback.followRange()),
                 extras,
-                workingDropDestination
+                workingDropDestination,
+                parseInt(clearanceLevelBox.getValue(), fallback.clearanceLevel())
         ).sanitized(selectedEntityId);
     }
 
@@ -1471,7 +1478,7 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
 
     private static final String[] BASE_ATTR_KEYS = {
             "max_health", "armor", "armor_toughness", "attack_damage",
-            "movement_speed", "knockback_resistance", "follow_range"
+            "movement_speed", "knockback_resistance", "follow_range", "clearance_level"
     };
 
     private int characteristicsRowAt(double mouseX, double mouseY) {
@@ -1729,6 +1736,7 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
         guiGraphics.drawString(font, Component.translatable("gui.mobexpansion.mob_drop_config.attr.movement_speed"), labelX, top + ATTR_FIELD_START_Y + ATTR_FIELD_STRIDE * 4 + ATTR_LABEL_OFFSET, COLOR_MUTED);
         guiGraphics.drawString(font, Component.translatable("gui.mobexpansion.mob_drop_config.attr.knockback_resistance"), labelX, top + ATTR_FIELD_START_Y + ATTR_FIELD_STRIDE * 5 + ATTR_LABEL_OFFSET, COLOR_MUTED);
         guiGraphics.drawString(font, Component.translatable("gui.mobexpansion.mob_drop_config.attr.follow_range"), labelX, top + ATTR_FIELD_START_Y + ATTR_FIELD_STRIDE * 6 + ATTR_LABEL_OFFSET, COLOR_MUTED);
+        guiGraphics.drawString(font, Component.translatable("gui.mobexpansion.mob_drop_config.attr.clearance_level"), labelX, top + ATTR_FIELD_START_Y + ATTR_FIELD_STRIDE * 7 + ATTR_LABEL_OFFSET, COLOR_MUTED);
     }
 
     @Override

@@ -109,6 +109,7 @@ public class MobDropConfigMenu extends AbstractContainerMenu {
             buffer.writeDouble(entry.getValue());
         }
         buffer.writeBoolean(config.dropDestination().givesToKiller());
+        buffer.writeVarInt(config.clearanceLevel());
     }
 
     private static EntityAttributeConfig readAttributes(FriendlyByteBuf buffer) {
@@ -132,7 +133,8 @@ public class MobDropConfigMenu extends AbstractContainerMenu {
                 knockbackResistance,
                 followRange,
                 extras,
-                buffer.readBoolean() ? DropDestination.KILLER_INVENTORY : DropDestination.WORLD
+                buffer.readBoolean() ? DropDestination.KILLER_INVENTORY : DropDestination.WORLD,
+                buffer.readVarInt()
         );
     }
 

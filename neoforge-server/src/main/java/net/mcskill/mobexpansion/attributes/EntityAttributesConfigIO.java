@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.mcskill.mobexpansion.clearance.MobClearance;
 import net.mcskill.mobexpansion.drops.DropDestination;
 import net.mcskill.mobexpansion.spawner.SpawnerMobCatalog;
 import net.minecraft.resources.ResourceLocation;
@@ -33,7 +34,15 @@ public final class EntityAttributesConfigIO {
     }
 
     public static synchronized void reload() {
-        cached = loadMergedWithDefaults();
+        setCached(loadMergedWithDefaults());
+    }
+
+    private static void setCached(Map<ResourceLocation, EntityAttributeConfig> configs) {
+        cached = configs;
+        final Map<ResourceLocation, Integer> clearance = new LinkedHashMap<>();
+        for (Map.Entry<ResourceLocation, EntityAttributeConfig> entry : configs.entrySet())
+            clearance.put(entry.getKey(), entry.getValue().clearanceLevel());
+        MobClearance.applyConfigured(clearance);
     }
 
     public static synchronized Map<ResourceLocation, EntityAttributeConfig> getCached() {
@@ -97,7 +106,7 @@ public final class EntityAttributesConfigIO {
             try (Writer writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
                 GSON.toJson(root, writer);
             }
-            cached = loadMergedWithDefaults();
+            setCached(loadMergedWithDefaults());
         } catch (IOException ignored) {
         }
     }
@@ -118,6 +127,7 @@ public final class EntityAttributesConfigIO {
             json.add("extras", extras);
         }
         json.addProperty("dropDestination", config.dropDestination().name());
+        json.addProperty("clearanceLevel", config.clearanceLevel());
         return json;
     }
 
@@ -143,7 +153,8 @@ public final class EntityAttributesConfigIO {
                 readDouble(json, "knockbackResistance", fallback.knockbackResistance()),
                 readDouble(json, "followRange", fallback.followRange()),
                 extras,
-                DropDestination.byName(readString(json, "dropDestination", fallback.dropDestination().name()))
+                DropDestination.byName(readString(json, "dropDestination", fallback.dropDestination().name())),
+                (int) Math.round(readDouble(json, "clearanceLevel", fallback.clearanceLevel()))
         ).sanitized(entityId);
     }
 

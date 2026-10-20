@@ -17,10 +17,14 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Реестр «тип моба → требуемый уровень допуска» (0 = без требования).
  * <p>
- * Ключ — id типа сущности, поэтому можно задавать требования и мобам других модов. Источник истины — сервер:
- * таблица отправляется клиенту при входе ({@link net.mcskill.mobexpansion.network.MobClearancePacket}).
+ * Ключ — id типа сущности, поэтому можно задавать требования и мобам других модов. Значения по умолчанию заданы
+ * ниже в коде; на сервере их перекрывает поле «Уровень допуска» из конфига характеристик мобов
+ * ({@code config/mobexpansion/entity_attributes.json}, вкладка «Характеристики» настройщика дропа).
+ * Источник истины — сервер: таблица отправляется клиенту при входе
+ * ({@link net.mcskill.mobexpansion.network.MobClearancePacket}).
  */
 public final class MobClearance {
+    private static final Map<ResourceLocation, Integer> DEFAULTS = new HashMap<>();
     private static final Map<ResourceLocation, Integer> REQUIRED = new ConcurrentHashMap<>();
 
     static {
@@ -44,13 +48,19 @@ public final class MobClearance {
         put("sentinel_golem", 3);
         put("rat_king", 3);
         put("apocalypse_type_a", 4);
+        REQUIRED.putAll(DEFAULTS);
     }
 
     private MobClearance() {
     }
 
     private static void put(String path, int level) {
-        REQUIRED.put(Core.loc(path), level);
+        DEFAULTS.put(Core.loc(path), level);
+    }
+
+    /** Уровень по умолчанию (из кода), без учёта конфига. */
+    public static int getDefault(ResourceLocation entityId) {
+        return entityId == null ? 0 : DEFAULTS.getOrDefault(entityId, 0);
     }
 
     public static int getRequired(Entity entity) {
@@ -75,6 +85,12 @@ public final class MobClearance {
             REQUIRED.remove(entityId);
         else
             REQUIRED.put(entityId, clamped);
+    }
+
+    /** Применяет уровни из конфига характеристик мобов (перекрывают значения по умолчанию). */
+    public static void applyConfigured(Map<ResourceLocation, Integer> configured) {
+        for (Map.Entry<ResourceLocation, Integer> entry : configured.entrySet())
+            setRequired(entry.getKey(), entry.getValue());
     }
 
     public static Map<ResourceLocation, Integer> snapshot() {
