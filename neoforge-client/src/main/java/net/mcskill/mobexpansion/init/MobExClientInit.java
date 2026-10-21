@@ -15,6 +15,7 @@ import net.mcskill.mobexpansion.client.renderer.DroneRenderer;
 import net.mcskill.mobexpansion.client.renderer.TowerRenderer;
 import net.mcskill.mobexpansion.client.renderer.ProjectileRenderer;
 import net.mcskill.mobexpansion.client.renderer.WrenchProjectileRenderer;
+import net.mcskill.mobexpansion.client.skin.SkinItemRenderer;
 import net.mcskill.mobexpansion.client.renderer.StatueRenderer;
 import net.mcskill.mobexpansion.client.renderer.GolemRenderer;
 import net.mcskill.mobexpansion.client.renderer.RatRenderer;
@@ -29,6 +30,7 @@ import net.mcskill.mobexpansion.client.renderer.MobExProjectileRenderer;
 import net.mcskill.mobexpansion.client.screen.MobDropConfigScreen;
 import net.mcskill.mobexpansion.client.screen.MobSpawnerScreen;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
@@ -38,6 +40,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
 @EventBusSubscriber(modid = Core.MODID, value = Dist.CLIENT)
@@ -104,6 +107,17 @@ public class MobExClientInit {
     @SubscribeEvent
     public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
         event.registerBlock(MobSpawnerClientExtensions.INSTANCE, MobExBlocks.MOB_SPAWNER.get());
+        final IClientItemExtensions skinItem = new IClientItemExtensions() {
+            private SkinItemRenderer renderer;
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                if (renderer == null)
+                    renderer = new SkinItemRenderer();
+                return renderer;
+            }
+        };
+        event.registerItem(skinItem, MobExItems.CAPRA_SKIN.get(), MobExItems.LILLITH_SKIN.get());
     }
 
     @SubscribeEvent

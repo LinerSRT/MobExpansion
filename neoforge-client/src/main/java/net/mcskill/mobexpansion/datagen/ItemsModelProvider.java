@@ -6,7 +6,9 @@ import net.mcskill.mobexpansion.registry.BlockHolder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
@@ -51,6 +53,22 @@ public class ItemsModelProvider extends ItemModelProvider {
         spawnEggItem(MobExItems.POSSESSED_RUIN_ARMOR_SPAWN_EGG.asItem());
         spawnEggItem(MobExItems.POSSESSED_VIKING_ARMOR_SPAWN_EGG.asItem());
         spawnEggItem(MobExItems.APOCALYPSE_TYPE_A_SPAWN_EGG.asItem());
+        skinItem(MobExItems.CAPRA_SKIN.asItem());
+        skinItem(MobExItems.LILLITH_SKIN.asItem());
+    }
+
+    /** Предмет-скин рисуется GeckoLib-рендерером (client.skin.SkinItemRenderer), модель — только поза в руке/GUI. */
+    public ItemModelBuilder skinItem(Item item) {
+        return getBuilder(Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item)).toString())
+                .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
+                .guiLight(BlockModel.GuiLight.FRONT)
+                .transforms()
+                .transform(ItemDisplayContext.GUI).rotation(15, 202, 0).translation(0, -1, 0).scale(0.9F, 0.9F, 0.9F).end()
+                .transform(ItemDisplayContext.GROUND).translation(0, 2, 0).scale(0.6F, 0.6F, 0.6F).end()
+                .transform(ItemDisplayContext.FIXED).rotation(0, 180, 0).scale(0.8F, 0.8F, 0.8F).end()
+                .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, 0, 0).translation(0, 3, 1).scale(0.55F, 0.55F, 0.55F).end()
+                .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 180, 0).translation(1, 1, 0).scale(0.6F, 0.6F, 0.6F).end()
+                .end();
     }
 
     public ItemModelBuilder basicBlock(Item item) {

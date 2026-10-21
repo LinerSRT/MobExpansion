@@ -109,6 +109,8 @@ public class LanguageProvider implements DataProvider {
         add(MobExItems.APOCALYPSE_TYPE_A_SPAWN_EGG.get(), "Apocalypse Type A spawn egg", "Яйцо призыва: Апокалипсис: тип А");
         add(MobExBlocks.MOB_SPAWNER.get(), "Mob Spawner", "Спавнер мобов");
         add(MobExItems.DROP_CONFIGURATOR.get(), "Mob Configurator", "Настройка мобов");
+        add(MobExItems.CAPRA_SKIN.get(), "Skin: Capra", "Скин: Capra");
+        add(MobExItems.LILLITH_SKIN.get(), "Skin: Lillith", "Скин: Lillith");
         add("gui.mobexpansion.mob_spawner.entity_set", "Entity set", "Набор сущностей");
         add("gui.mobexpansion.mob_spawner.entity_set_empty", "Empty", "Пусто");
         add("gui.mobexpansion.mob_spawner.mob_picker", "Mob picker", "Выбор моба");

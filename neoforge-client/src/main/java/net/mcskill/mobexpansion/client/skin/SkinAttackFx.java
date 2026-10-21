@@ -6,6 +6,7 @@ import com.mojang.math.Axis;
 import it.unimi.dsi.fastutil.ints.Int2LongMap;
 import it.unimi.dsi.fastutil.ints.Int2LongOpenHashMap;
 import net.mcskill.mobexpansion.Core;
+import net.mcskill.mobexpansion.client.MobExClientConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.LightTexture;
@@ -70,6 +71,8 @@ public final class SkinAttackFx {
             return;
         final SkinAttackStyle style = definition.attack();
         LAST_ATTACK.put(entityId, level.getGameTime());
+        if (hiddenInFirstPerson(player))
+            return;
         if (strength < MIN_SLASH_STRENGTH) {
             particles(level, player, style, 3, 0.6F);
             return;
@@ -91,6 +94,13 @@ public final class SkinAttackFx {
                     chest.z + RANDOM.nextGaussian() * 0.3, 0, 0.05, 0);
         level.playLocalSound(player.getX(), player.getY(), player.getZ(), style.critSound(), SoundSource.PLAYERS,
                 0.6F, 1.2F + RANDOM.nextFloat() * 0.3F, false);
+    }
+
+    /** Свой эффект удара отключён настройкой и камера от первого лица. */
+    private static boolean hiddenInFirstPerson(Entity owner) {
+        final Minecraft mc = Minecraft.getInstance();
+        return MobExClientConfig.HIDE_SKIN_ATTACK_FX_FIRST_PERSON.get() && owner == mc.player
+                && mc.options.getCameraType().isFirstPerson();
     }
 
     /** Частицы по дуге перед игроком (у вихря — по кругу вокруг). */
@@ -135,6 +145,8 @@ public final class SkinAttackFx {
                 it.remove();
                 continue;
             }
+            if (hiddenInFirstPerson(owner))
+                continue;
             final RenderType type = RenderType.entityTranslucentEmissive(effect.kind == Kind.SEAL ? effect.style.critSeal() : effect.style.slash());
             used.add(type);
             effect.render(poseStack, buffers.getBuffer(type), owner, camera, partialTick, age / life);

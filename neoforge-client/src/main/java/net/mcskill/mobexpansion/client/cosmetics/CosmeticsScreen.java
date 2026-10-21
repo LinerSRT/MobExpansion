@@ -256,8 +256,12 @@ public class CosmeticsScreen extends Screen {
         guiGraphics.fill(ix, iy, ix + iw, iy + ih, 0xFF1A1A1C);
         renderIcon(guiGraphics, row, entry, ix, iy, iw, ih);
         if (locked) {
+            // фигурка скина рисуется со сдвигом по Z — затемнение и замок поднимаем выше неё
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(0.0F, 0.0F, 200.0F);
             guiGraphics.fill(ix, iy, ix + iw, iy + ih, 0x99000000);
             renderLock(guiGraphics, ix + iw / 2, iy + ih / 2);
+            guiGraphics.pose().popPose();
         }
         // название — в две строки максимум, мелко
         final Component name = row.name(entry);

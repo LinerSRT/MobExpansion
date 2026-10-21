@@ -266,6 +266,23 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
         spawner.setChanged();
     }
 
+    /**
+     * Тестовый спавн: по волне для каждой подходящей записи, игнорируя КД, задержку активации и условие дня.
+     * Лимит одновременных мобов и условия места спавна (блок под/рядом) сохраняются. Возвращает число записей, давших мобов.
+     */
+    public int forceSpawn(ServerLevel serverLevel) {
+        int spawnedEntries = 0;
+        if (!matchesBlockUnder(serverLevel, worldPosition))
+            return 0;
+        for (SpawnerEntityEntry entry : entries) {
+            if (entry.isEnabled() && trySpawnWave(serverLevel, worldPosition, entry) == WaveResult.SPAWNED)
+                spawnedEntries++;
+        }
+        lastSpawnTime = System.currentTimeMillis();
+        setChanged();
+        return spawnedEntries;
+    }
+
     @Override
     public void onLoad() {
         super.onLoad();

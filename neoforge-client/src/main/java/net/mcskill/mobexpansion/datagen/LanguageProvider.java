@@ -109,6 +109,8 @@ public class LanguageProvider implements DataProvider {
         add(MobExItems.APOCALYPSE_TYPE_A_SPAWN_EGG.get(), "Apocalypse Type A spawn egg", "Яйцо призыва: Апокалипсис: тип А");
         add(MobExBlocks.MOB_SPAWNER.get(), "Mob Spawner", "Спавнер мобов");
         add(MobExItems.DROP_CONFIGURATOR.get(), "Mob Configurator", "Настройка мобов");
+        add(MobExItems.CAPRA_SKIN.get(), "Skin: Capra", "Скин: Capra");
+        add(MobExItems.LILLITH_SKIN.get(), "Skin: Lillith", "Скин: Lillith");
         add("gui.mobexpansion.mob_spawner.entity_set", "Entity set", "Набор сущностей");
         add("gui.mobexpansion.mob_spawner.entity_set_empty", "Empty", "Пусто");
         add("gui.mobexpansion.mob_spawner.mob_picker", "Mob picker", "Выбор моба");
@@ -963,6 +965,7 @@ public class LanguageProvider implements DataProvider {
         add("message.mobexpansion.clearance.denied", "Clearance level %s required (you have %s)", "Нужен уровень допуска %s (у вас %s)");
         add("message.mobexpansion.clearance.changed", "Your clearance level is now %s", "Ваш уровень допуска: %s");
         add("commands.mobexpansion.clearance.get", "%s has clearance level %s (max %s)", "Уровень допуска %s: %s (макс. %s)");
+        add("commands.mobexpansion.spawnall", "Spawners activated: %s of %s found within %s blocks", "Спавнеры сработали: %s из %s в радиусе %s блоков");
         add("commands.mobexpansion.clearance.set.single", "Set clearance level of %s to %s", "Уровень допуска %s установлен: %s");
         add("commands.mobexpansion.clearance.set.multiple", "Updated clearance level of %s players", "Уровень допуска изменён у %s игроков");
         add("commands.mobexpansion.skin.set.single", "Set skin of %s to %s", "Скин %s: %s");
@@ -977,6 +980,7 @@ public class LanguageProvider implements DataProvider {
         add("gui.mobexpansion.cosmetics.no_trail", "No trail", "Без шлейфа");
         add("gui.mobexpansion.cosmetics.equipped", "Equipped", "Надето");
         add("gui.mobexpansion.cosmetics.locked", "Locked", "Закрыто");
+        add("config.mobexpansion.hide_skin_attack_fx_first_person", "Hide skin attack effect in first person", "Скрывать эффект удара скина от первого лица");
         add("gui.mobexpansion.cosmetics.locked_tooltip", "Not unlocked yet", "Ещё не открыто");
         add("gui.mobexpansion.cosmetics.click_to_equip", "Click to equip", "Нажми, чтобы надеть");
         add("gui.mobexpansion.cosmetics.preview_hint", "Hover a card to preview", "Наведи на карточку");

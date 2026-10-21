@@ -2,6 +2,7 @@ package net.mcskill.mobexpansion.init;
 
 import net.mcskill.mobexpansion.Core;
 import net.mcskill.mobexpansion.item.DropConfiguratorItem;
+import net.mcskill.mobexpansion.item.SkinItem;
 import net.mcskill.mobexpansion.registry.ItemHolder;
 import net.mcskill.mobexpansion.registry.ItemRegistry;
 import net.minecraft.world.item.BlockItem;
@@ -42,6 +43,8 @@ public class MobExItems {
     public static final ItemHolder<Item> APOCALYPSE_TYPE_A_SPAWN_EGG = ITEM_REGISTRY.registerItem("apocalypse_type_a_spawn_egg", properties -> new DeferredSpawnEggItem(MobExEntities.APOCALYPSE_TYPE_A, 0x0A0A0A, 0xF0F0F0, properties));
     public static final ItemHolder<BlockItem> MOB_SPAWNER = ITEM_REGISTRY.registerBlockItem(MobExBlocks.MOB_SPAWNER);
     public static final ItemHolder<Item> DROP_CONFIGURATOR = ITEM_REGISTRY.registerItem("drop_configurator", DropConfiguratorItem::new, new Item.Properties().stacksTo(1));
+    public static final ItemHolder<SkinItem> CAPRA_SKIN = ITEM_REGISTRY.registerItem("capra_skin", properties -> new SkinItem("capra", properties), new Item.Properties().stacksTo(1));
+    public static final ItemHolder<SkinItem> LILLITH_SKIN = ITEM_REGISTRY.registerItem("lillith_skin", properties -> new SkinItem("lillith", properties), new Item.Properties().stacksTo(1));
 
     public static void register(IEventBus bus) {
         ITEM_REGISTRY.register(bus);

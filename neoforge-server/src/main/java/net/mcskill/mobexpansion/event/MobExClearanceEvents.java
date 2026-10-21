@@ -4,6 +4,7 @@ import net.mcskill.mobexpansion.Core;
 import net.mcskill.mobexpansion.clearance.Clearance;
 import net.mcskill.mobexpansion.clearance.MobClearance;
 import net.mcskill.mobexpansion.command.ClearanceCommand;
+import net.mcskill.mobexpansion.command.MobExpansionCommand;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -34,6 +35,7 @@ public final class MobExClearanceEvents {
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
         ClearanceCommand.register(event.getDispatcher());
+        MobExpansionCommand.register(event.getDispatcher());
     }
 
     @SubscribeEvent
