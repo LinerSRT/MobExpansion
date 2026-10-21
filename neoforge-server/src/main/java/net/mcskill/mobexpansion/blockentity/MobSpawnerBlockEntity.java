@@ -267,16 +267,17 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
         if (!spawner.isCooldownOver(now))
             return;
 
+        // Игрок ещё не в радиусе ни одной записи — КД не трогаем: накопленное время не сгорает,
+        // волна выйдет, как только игрок подойдёт ближе.
         final SpawnerEntityEntry selectedEntry = spawner.selectEntry(serverLevel, blockPos, activatingPlayer);
-        spawner.lastSpawnTime = now;
-        if (selectedEntry == null) {
-            spawner.spawnCooldown = SpawnerEntityEntry.MIN_INTERVAL;
-            spawner.setChanged();
+        if (selectedEntry == null)
             return;
-        }
 
-        spawner.spawnCooldown = selectedEntry.getInterval();
-        spawner.trySpawnWave(serverLevel, blockPos, selectedEntry, activatingPlayer);
+        final WaveResult result = spawner.trySpawnWave(serverLevel, blockPos, selectedEntry, activatingPlayer);
+        spawner.lastSpawnTime = now;
+        // Не нашлось места для мобов — повторяем через секунду, а не через полный интервал.
+        spawner.spawnCooldown = result == WaveResult.NO_ROOM ? SpawnerEntityEntry.MIN_INTERVAL : selectedEntry.getInterval();
+        spawner.setChanged();
     }
 
     private boolean isCooldownOver(long now) {
@@ -384,9 +385,11 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
         return false;
     }
 
-    private void trySpawnWave(ServerLevel serverLevel, BlockPos blockPos, SpawnerEntityEntry entry, Player activatingPlayer) {
+    private enum WaveResult { SPAWNED, LIMIT_REACHED, NO_ROOM }
+
+    private WaveResult trySpawnWave(ServerLevel serverLevel, BlockPos blockPos, SpawnerEntityEntry entry, Player activatingPlayer) {
         if (!SpawnerMobCatalog.isSpawnable(entry.getEntityId()))
-            return;
+            return WaveResult.LIMIT_REACHED;
 
         final double checkRadius = Math.max(entry.getSpawnRadius(), entry.getActivationRadius()) * 2.0D;
         final AABB nearbyArea = new AABB(blockPos).inflate(checkRadius);
@@ -396,7 +399,7 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
                 mob -> mob.isAlive() && entry.getEntityId().equals(BuiltInRegistries.ENTITY_TYPE.getKey(mob.getType()))
         ).size();
         if (nearbyCount >= entry.getMaxSimultaneous())
-            return;
+            return WaveResult.LIMIT_REACHED;
 
         final int waveCount = entry.getCountMin() + serverLevel.random.nextInt(Math.max(1, entry.getCountMax() - entry.getCountMin() + 1));
         int spawnedAmount = 0;
@@ -431,7 +434,7 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
             serverLevel.addFreshEntityWithPassengers(mob);
             spawnedAmount++;
         }
-        setChanged();
+        return spawnedAmount > 0 ? WaveResult.SPAWNED : WaveResult.NO_ROOM;
     }
 
     @Override
