@@ -21,6 +21,16 @@ public final class MobExAttachments {
                     .copyOnDeath()
                     .build());
 
+    /**
+     * Скин игрока (id из {@code PlayerSkins}, пустая строка — обычный вид). Хранится в NBT игрока, переживает смерть.
+     * Клиентам рассылается пакетом {@code PlayerSkinPacket}: на клиенте атачмент не синхронизируется.
+     */
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<String>> PLAYER_SKIN = REGISTRY.register("player_skin",
+            () -> AttachmentType.builder(() -> "")
+                    .serialize(Codec.STRING, skin -> !skin.isEmpty())
+                    .copyOnDeath()
+                    .build());
+
     private MobExAttachments() {
     }
 

@@ -965,6 +965,11 @@ public class LanguageProvider implements DataProvider {
         add("commands.mobexpansion.clearance.get", "%s has clearance level %s (max %s)", "Уровень допуска %s: %s (макс. %s)");
         add("commands.mobexpansion.clearance.set.single", "Set clearance level of %s to %s", "Уровень допуска %s установлен: %s");
         add("commands.mobexpansion.clearance.set.multiple", "Updated clearance level of %s players", "Уровень допуска изменён у %s игроков");
+        add("commands.mobexpansion.skin.set.single", "Set skin of %s to %s", "Скин %s: %s");
+        add("commands.mobexpansion.skin.set.multiple", "Set skin %s for %s players", "Скин %s надет на %s игроков");
+        add("commands.mobexpansion.skin.reset.single", "Reset skin of %s", "Скин %s снят");
+        add("commands.mobexpansion.skin.reset.multiple", "Reset skin of %s players", "Скин снят у %s игроков");
+        add("commands.mobexpansion.skin.unknown", "Unknown skin: %s", "Неизвестный скин: %s");
     }
 
     @Override
