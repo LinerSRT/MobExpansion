@@ -970,6 +970,45 @@ public class LanguageProvider implements DataProvider {
         add("commands.mobexpansion.skin.reset.single", "Reset skin of %s", "Скин %s снят");
         add("commands.mobexpansion.skin.reset.multiple", "Reset skin of %s players", "Скин снят у %s игроков");
         add("commands.mobexpansion.skin.unknown", "Unknown skin: %s", "Неизвестный скин: %s");
+        add("gui.mobexpansion.cosmetics.title", "Character customization", "Кастомизация персонажа");
+        add("gui.mobexpansion.cosmetics.skins", "Skins", "Скины");
+        add("gui.mobexpansion.cosmetics.trails", "Trails", "Шлейфы");
+        add("gui.mobexpansion.cosmetics.no_skin", "No skin", "Без скина");
+        add("gui.mobexpansion.cosmetics.no_trail", "No trail", "Без шлейфа");
+        add("gui.mobexpansion.cosmetics.equipped", "Equipped", "Надето");
+        add("gui.mobexpansion.cosmetics.locked", "Locked", "Закрыто");
+        add("gui.mobexpansion.cosmetics.locked_tooltip", "Not unlocked yet", "Ещё не открыто");
+        add("gui.mobexpansion.cosmetics.click_to_equip", "Click to equip", "Нажми, чтобы надеть");
+        add("gui.mobexpansion.cosmetics.preview_hint", "Hover a card to preview", "Наведи на карточку");
+        add("gui.mobexpansion.cosmetics.key_hint", "Open: %s or /cosmetics", "Открыть: %s или /cosmetics");
+        add("gui.mobexpansion.cosmetics.loading", "Loading...", "Загрузка...");
+        add("gui.mobexpansion.cosmetics.unavailable", "Not available on this server", "Недоступно на этом сервере");
+        add("message.mobexpansion.cosmetics.locked", "This cosmetic is not unlocked", "Эта косметика вам не открыта");
+        add("key.mobexpansion.cosmetics", "Character customization", "Кастомизация персонажа");
+        add("key.categories.mobexpansion", "MobExpansion", "MobExpansion");
+        add("cosmetics.mobexpansion.skin.capra", "Capra", "Капра");
+        add("cosmetics.mobexpansion.skin.lillith", "Lillith", "Лилит");
+        add("cosmetics.mobexpansion.trail.nyan_cat", "Nyan Cat", "Нян-кот");
+        add("cosmetics.mobexpansion.trail.rainbow", "Rainbow", "Радуга");
+        add("cosmetics.mobexpansion.trail.red_sparks", "Red sparks", "Красные искры");
+        add("cosmetics.mobexpansion.trail.tiles", "Tiles", "Плитка");
+        add("cosmetics.mobexpansion.trail.tron_blue", "Tron (blue)", "Трон (синий)");
+        add("cosmetics.mobexpansion.trail.tron_yellow", "Tron (yellow)", "Трон (жёлтый)");
+        add("cosmetics.mobexpansion.trail.funny", "Smileys", "Смайлы");
+        add("cosmetics.mobexpansion.trail.neon", "Neon", "Неон");
+        add("cosmetics.mobexpansion.trail.neon2", "Neon 2", "Неон 2");
+        add("cosmetics.mobexpansion.trail.bloks", "Blocks", "Блоки");
+        add("cosmetics.mobexpansion.trail.clauds", "Clouds", "Облака");
+        add("cosmetics.mobexpansion.trail.coin", "Coins", "Монеты");
+        add("cosmetics.mobexpansion.trail.fire", "Fire", "Огонь");
+        add("cosmetics.mobexpansion.trail.hearts", "Hearts", "Сердца");
+        add("cosmetics.mobexpansion.trail.ice_crystal", "Ice", "Лёд");
+        add("cosmetics.mobexpansion.trail.lightning", "Lightning", "Молния");
+        add("cosmetics.mobexpansion.trail.skills", "Skills", "Навыки");
+        add("cosmetics.mobexpansion.trail.water", "Water", "Вода");
+        add("cosmetics.mobexpansion.trail.korolev", "Korolev", "Королёв");
+        add("cosmetics.mobexpansion.trail.osiris", "Osiris", "Озирис");
+        add("cosmetics.mobexpansion.trail.cycle_trail", "Cycle", "Цикл");
     }
 
     @Override

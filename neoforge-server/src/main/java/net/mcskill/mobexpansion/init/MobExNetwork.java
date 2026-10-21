@@ -2,7 +2,11 @@ package net.mcskill.mobexpansion.init;
 
 import net.mcskill.mobexpansion.Core;
 import net.mcskill.mobexpansion.network.ClearanceLevelPacket;
+import net.mcskill.mobexpansion.network.CosmeticsRequestPacket;
+import net.mcskill.mobexpansion.network.CosmeticsSelectPacket;
+import net.mcskill.mobexpansion.network.CosmeticsStatePacket;
 import net.mcskill.mobexpansion.network.MobClearancePacket;
+import net.mcskill.mobexpansion.network.OpenCosmeticsPacket;
 import net.mcskill.mobexpansion.network.PlayerSkinPacket;
 import net.mcskill.mobexpansion.network.SkinAttackFxPacket;
 import net.mcskill.mobexpansion.network.SpawnerRevealPacket;
@@ -28,5 +32,9 @@ public class MobExNetwork {
         registrar.playToClient(MobClearancePacket.TYPE, MobClearancePacket.STREAM_CODEC, MobClearancePacket::handle);
         registrar.playToClient(PlayerSkinPacket.TYPE, PlayerSkinPacket.STREAM_CODEC, PlayerSkinPacket::handle);
         registrar.playToClient(SkinAttackFxPacket.TYPE, SkinAttackFxPacket.STREAM_CODEC, SkinAttackFxPacket::handle);
+        registrar.playToClient(OpenCosmeticsPacket.TYPE, OpenCosmeticsPacket.STREAM_CODEC, OpenCosmeticsPacket::handle);
+        registrar.playToClient(CosmeticsStatePacket.TYPE, CosmeticsStatePacket.STREAM_CODEC, CosmeticsStatePacket::handle);
+        registrar.playToServer(CosmeticsRequestPacket.TYPE, CosmeticsRequestPacket.STREAM_CODEC, CosmeticsRequestPacket::handle);
+        registrar.playToServer(CosmeticsSelectPacket.TYPE, CosmeticsSelectPacket.STREAM_CODEC, CosmeticsSelectPacket::handle);
     }
 }

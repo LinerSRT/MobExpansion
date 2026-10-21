@@ -29,9 +29,30 @@ public final class ClientSkins {
             SKINS.put(player, skin);
     }
 
-    /** Скин игрока или пустая строка. */
+    /** Скин игрока или пустая строка (во время {@link #renderWithSkin} — скин превью). */
     public static String get(Player player) {
+        final UUID preview = previewPlayer;
+        if (preview != null && preview.equals(player.getUUID()))
+            return previewSkin;
         return SKINS.getOrDefault(player.getUUID(), "");
+    }
+
+    private static UUID previewPlayer;
+    private static String previewSkin = "";
+
+    /**
+     * Нарисовать игрока в другом скине (превью в GUI кастомизации): пока выполняется {@code render},
+     * {@link #get} для этого игрока возвращает {@code skin} (пустая строка — обычный вид).
+     */
+    public static void renderWithSkin(Player player, String skin, Runnable render) {
+        previewPlayer = player.getUUID();
+        previewSkin = skin;
+        try {
+            render.run();
+        } finally {
+            previewPlayer = null;
+            previewSkin = "";
+        }
     }
 
     @SubscribeEvent

@@ -31,6 +31,16 @@ public final class MobExAttachments {
                     .copyOnDeath()
                     .build());
 
+    /**
+     * Шлейф MSEss, выбранный через GUI кастомизации (id или пустая строка). Сам шлейф хранит и рисует MSEss —
+     * это только отметка «что надето» для карточек GUI.
+     */
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<String>> COSMETIC_TRAIL = REGISTRY.register("cosmetic_trail",
+            () -> AttachmentType.builder(() -> "")
+                    .serialize(Codec.STRING, trail -> !trail.isEmpty())
+                    .copyOnDeath()
+                    .build());
+
     private MobExAttachments() {
     }
 

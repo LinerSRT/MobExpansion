@@ -1,7 +1,10 @@
 package net.mcskill.mobexpansion.event;
 
 import net.mcskill.mobexpansion.Core;
+import net.mcskill.mobexpansion.command.CosmeticsCommand;
 import net.mcskill.mobexpansion.command.SkinCommand;
+import net.mcskill.mobexpansion.cosmetics.CosmeticPermissions;
+import net.mcskill.mobexpansion.cosmetics.Cosmetics;
 import net.mcskill.mobexpansion.network.SkinAttackFxPacket;
 import net.mcskill.mobexpansion.skin.PlayerSkins;
 import net.minecraft.server.level.ServerPlayer;
@@ -13,10 +16,12 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
- * Скины игроков: команда, рассылка скина клиентам и эффект удара игрока со скином.
+ * Скины игроков и GUI кастомизации: команды, рассылка скина клиентам, проверка прав при входе
+ * и эффект удара игрока со скином.
  */
 @EventBusSubscriber(modid = Core.MODID)
 public final class MobExSkinEvents {
@@ -26,6 +31,12 @@ public final class MobExSkinEvents {
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
         SkinCommand.register(event.getDispatcher());
+        CosmeticsCommand.register(event.getDispatcher());
+    }
+
+    @SubscribeEvent
+    public static void onServerStarting(ServerStartingEvent event) {
+        Cosmetics.installHandlers();
     }
 
     /** Игрок {@code viewer} начал видеть игрока со скином — отправляем ему скин. */
@@ -38,7 +49,12 @@ public final class MobExSkinEvents {
 
     @SubscribeEvent
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player && PlayerSkins.hasSkin(player))
+        if (!(event.getEntity() instanceof ServerPlayer player) || !PlayerSkins.hasSkin(player))
+            return;
+        // право на скин могли забрать (например, кончился донат) — снимаем; без LuckPerms не трогаем
+        if (CosmeticPermissions.isLuckPermsLoaded() && !CosmeticPermissions.canUseSkin(player, PlayerSkins.get(player)))
+            PlayerSkins.set(player, PlayerSkins.NONE);
+        else
             PlayerSkins.broadcast(player);
     }
 
