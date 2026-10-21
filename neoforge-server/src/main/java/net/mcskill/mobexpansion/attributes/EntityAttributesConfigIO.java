@@ -10,6 +10,11 @@ import net.mcskill.mobexpansion.spawner.SpawnerMobCatalog;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.loading.FMLPaths;
 
+import com.mojang.logging.LogUtils;
+import net.mcskill.mobexpansion.drops.SafeJsonFile;
+import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -21,6 +26,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class EntityAttributesConfigIO {
+    private static final Logger LOGGER = LogUtils.getLogger();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final String RELATIVE_PATH = "mobexpansion/entity_attributes.json";
 
@@ -34,7 +40,14 @@ public final class EntityAttributesConfigIO {
     }
 
     public static synchronized void reload() {
-        setCached(loadMergedWithDefaults());
+        final Map<ResourceLocation, EntityAttributeConfig> loaded = loadFromDisk();
+        if (loaded == null) {
+            // Файл есть, но не читается (и .bak тоже) — не сбрасываем атрибуты на дефолтные.
+            LOGGER.error("[MobExpansion] {} is unreadable, keeping cached entity attributes", configPath());
+            if (!cached.isEmpty())
+                return;
+        }
+        setCached(mergeWithDefaults(loaded == null ? Collections.emptyMap() : loaded));
     }
 
     private static void setCached(Map<ResourceLocation, EntityAttributeConfig> configs) {
@@ -60,39 +73,59 @@ public final class EntityAttributesConfigIO {
     }
 
     public static Map<ResourceLocation, EntityAttributeConfig> loadMergedWithDefaults() {
-        final Map<ResourceLocation, EntityAttributeConfig> merged = new LinkedHashMap<>(EntityAttributeDefaults.all());
         final Map<ResourceLocation, EntityAttributeConfig> loaded = loadFromDisk();
+        if (loaded == null && !cached.isEmpty())
+            return new LinkedHashMap<>(cached);
+        return mergeWithDefaults(loaded == null ? Collections.emptyMap() : loaded);
+    }
+
+    private static Map<ResourceLocation, EntityAttributeConfig> mergeWithDefaults(Map<ResourceLocation, EntityAttributeConfig> loaded) {
+        final Map<ResourceLocation, EntityAttributeConfig> merged = new LinkedHashMap<>(EntityAttributeDefaults.all());
         for (Map.Entry<ResourceLocation, EntityAttributeConfig> entry : loaded.entrySet())
             if (SpawnerMobCatalog.isSpawnable(entry.getKey()))
                 merged.put(entry.getKey(), entry.getValue().sanitized(entry.getKey()));
         return merged;
     }
 
+    /**
+     * Атрибуты с диска; при битом основном файле — из резервной копии. {@code null} — прочитать не удалось.
+     */
+    @Nullable
     public static Map<ResourceLocation, EntityAttributeConfig> loadFromDisk() {
         final Path path = configPath();
-        if (!Files.isRegularFile(path))
-            return Collections.emptyMap();
-        try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
-            final JsonObject root = GSON.fromJson(reader, JsonObject.class);
-            if (root == null)
-                return Collections.emptyMap();
-            final Map<ResourceLocation, EntityAttributeConfig> configs = new LinkedHashMap<>();
-            for (Map.Entry<String, JsonElement> entry : root.entrySet()) {
-                final ResourceLocation entityId = ResourceLocation.tryParse(entry.getKey());
-                if (entityId == null || !entry.getValue().isJsonObject())
-                    continue;
-                configs.put(entityId, fromJson(entry.getValue().getAsJsonObject(), EntityAttributeDefaults.get(entityId), entityId));
-            }
-            return configs;
-        } catch (IOException | RuntimeException ignored) {
-            return Collections.emptyMap();
+        try {
+            final JsonObject root = SafeJsonFile.read(path, GSON);
+            return root == null ? Collections.emptyMap() : parseRoot(root);
+        } catch (IOException e) {
+            LOGGER.error("[MobExpansion] Failed to read {}: {}", path, e.getMessage());
         }
+        final Path backup = SafeJsonFile.backupPath(path);
+        try {
+            final JsonObject root = SafeJsonFile.read(backup, GSON);
+            if (root != null) {
+                LOGGER.warn("[MobExpansion] Loaded entity attributes from backup {}", backup);
+                return parseRoot(root);
+            }
+        } catch (IOException e) {
+            LOGGER.error("[MobExpansion] Failed to read {}: {}", backup, e.getMessage());
+        }
+        return null;
+    }
+
+    private static Map<ResourceLocation, EntityAttributeConfig> parseRoot(JsonObject root) {
+        final Map<ResourceLocation, EntityAttributeConfig> configs = new LinkedHashMap<>();
+        for (Map.Entry<String, JsonElement> entry : root.entrySet()) {
+            final ResourceLocation entityId = ResourceLocation.tryParse(entry.getKey());
+            if (entityId == null || !entry.getValue().isJsonObject())
+                continue;
+            configs.put(entityId, fromJson(entry.getValue().getAsJsonObject(), EntityAttributeDefaults.get(entityId), entityId));
+        }
+        return configs;
     }
 
     public static synchronized void writeAll(Map<ResourceLocation, EntityAttributeConfig> configsByEntity) {
         final Path path = configPath();
         try {
-            Files.createDirectories(path.getParent());
             final JsonObject root = new JsonObject();
             final Map<ResourceLocation, EntityAttributeConfig> toWrite = new LinkedHashMap<>();
             for (ResourceLocation entityId : EntityAttributeDefaults.all().keySet())
@@ -103,11 +136,10 @@ public final class EntityAttributesConfigIO {
             }
             for (Map.Entry<ResourceLocation, EntityAttributeConfig> entry : toWrite.entrySet())
                 root.add(entry.getKey().toString(), toJson(entry.getValue()));
-            try (Writer writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
-                GSON.toJson(root, writer);
-            }
-            setCached(loadMergedWithDefaults());
-        } catch (IOException ignored) {
+            SafeJsonFile.write(path, GSON, root);
+            setCached(mergeWithDefaults(parseRoot(root)));
+        } catch (IOException e) {
+            LOGGER.error("[MobExpansion] Failed to save {}", path, e);
         }
     }
 

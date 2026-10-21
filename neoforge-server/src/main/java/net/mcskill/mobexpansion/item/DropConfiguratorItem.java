@@ -3,6 +3,7 @@ package net.mcskill.mobexpansion.item;
 import net.mcskill.mobexpansion.attributes.EntityAttributeConfig;
 import net.mcskill.mobexpansion.attributes.EntityAttributeDefaults;
 import net.mcskill.mobexpansion.attributes.EntityAttributesConfigIO;
+import net.mcskill.mobexpansion.drops.DropConfigSessions;
 import net.mcskill.mobexpansion.drops.EntityLootConfig;
 import net.mcskill.mobexpansion.drops.EntityLootConfigIO;
 import net.mcskill.mobexpansion.menu.MobDropConfigMenu;
@@ -45,6 +46,7 @@ public class DropConfiguratorItem extends Item {
         for (ResourceLocation entityId : EntityAttributeDefaults.all().keySet())
             configsByEntity.putIfAbsent(entityId, scriptConfigs.getOrDefault(entityId, EntityLootConfig.EMPTY));
         final Map<ResourceLocation, EntityAttributeConfig> attributesByEntity = new HashMap<>(EntityAttributesConfigIO.loadMergedWithDefaults());
+        DropConfigSessions.open(serverPlayer.getUUID(), configsByEntity, attributesByEntity);
         final ResourceLocation initialEntityId = SpawnerMobCatalog.getSpawnableIds().isEmpty() ? null : SpawnerMobCatalog.getSpawnableIds().getFirst();
         serverPlayer.openMenu(new MenuProvider() {
             @Override

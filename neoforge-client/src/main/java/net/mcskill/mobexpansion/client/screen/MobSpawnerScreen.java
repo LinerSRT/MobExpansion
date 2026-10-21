@@ -275,15 +275,15 @@ public class MobSpawnerScreen extends AbstractContainerScreen<MobSpawnerMenu> {
         this.countMinBox = createEditBox(fieldX, top + 96, fieldW, 16, Component.empty());
         this.countMaxBox = createEditBox(fieldX, top + 122, fieldW, 16, Component.empty());
         this.maxSimultaneousBox = createEditBox(fieldX, top + 148, fieldW, 16, Component.empty());
+        // Радиус активации больше не используется (спавнер работает, пока чанк загружен) — поле не показываем.
         this.activationRadiusBox = createEditBox(fieldX, top + 174, fieldW, 16, Component.empty());
-        this.spawnRadiusBox = createEditBox(fieldX, top + 200, fieldW, 16, Component.empty());
-        this.spawnYMinBox = createEditBox(fieldX, top + 226, fieldW, 16, Component.empty());
-        this.spawnYMaxBox = createEditBox(fieldX, top + 252, fieldW, 16, Component.empty());
+        this.spawnRadiusBox = createEditBox(fieldX, top + 174, fieldW, 16, Component.empty());
+        this.spawnYMinBox = createEditBox(fieldX, top + 200, fieldW, 16, Component.empty());
+        this.spawnYMaxBox = createEditBox(fieldX, top + 226, fieldW, 16, Component.empty());
         addRenderableWidget(this.intervalBox);
         addRenderableWidget(this.countMinBox);
         addRenderableWidget(this.countMaxBox);
         addRenderableWidget(this.maxSimultaneousBox);
-        addRenderableWidget(this.activationRadiusBox);
         addRenderableWidget(this.spawnRadiusBox);
         addRenderableWidget(this.spawnYMinBox);
         addRenderableWidget(this.spawnYMaxBox);
@@ -291,7 +291,6 @@ public class MobSpawnerScreen extends AbstractContainerScreen<MobSpawnerMenu> {
         explain(this.countMinBox, "count_min");
         explain(this.countMaxBox, "count_max");
         explain(this.maxSimultaneousBox, "max_simultaneous");
-        explain(this.activationRadiusBox, "activation_radius");
         explain(this.spawnRadiusBox, "spawn_radius");
         explain(this.spawnYMinBox, "spawn_y_min");
         explain(this.spawnYMaxBox, "spawn_y_max");
@@ -300,12 +299,11 @@ public class MobSpawnerScreen extends AbstractContainerScreen<MobSpawnerMenu> {
         addStepperPair(stepperX, top + 94, () -> nudgeSelectedInt(this.countMinBox, -1, SpawnerEntityEntry.MIN_COUNT, SpawnerEntityEntry.MAX_COUNT), () -> nudgeSelectedInt(this.countMinBox, 1, SpawnerEntityEntry.MIN_COUNT, SpawnerEntityEntry.MAX_COUNT), "count_min");
         addStepperPair(stepperX, top + 120, () -> nudgeSelectedInt(this.countMaxBox, -1, SpawnerEntityEntry.MIN_COUNT, SpawnerEntityEntry.MAX_COUNT), () -> nudgeSelectedInt(this.countMaxBox, 1, SpawnerEntityEntry.MIN_COUNT, SpawnerEntityEntry.MAX_COUNT), "count_max");
         addStepperPair(stepperX, top + 146, () -> nudgeSelectedInt(this.maxSimultaneousBox, -1, SpawnerEntityEntry.MIN_SIMULTANEOUS, SpawnerEntityEntry.MAX_SIMULTANEOUS), () -> nudgeSelectedInt(this.maxSimultaneousBox, 1, SpawnerEntityEntry.MIN_SIMULTANEOUS, SpawnerEntityEntry.MAX_SIMULTANEOUS), "max_simultaneous");
-        addStepperPair(stepperX, top + 172, () -> nudgeSelectedFloat(this.activationRadiusBox, -1.0F, SpawnerEntityEntry.MIN_RADIUS, SpawnerEntityEntry.MAX_RADIUS), () -> nudgeSelectedFloat(this.activationRadiusBox, 1.0F, SpawnerEntityEntry.MIN_RADIUS, SpawnerEntityEntry.MAX_RADIUS), "activation_radius");
-        addStepperPair(stepperX, top + 198, () -> nudgeSelectedFloat(this.spawnRadiusBox, -0.5F, SpawnerEntityEntry.MIN_RADIUS, SpawnerEntityEntry.MAX_RADIUS), () -> nudgeSelectedFloat(this.spawnRadiusBox, 0.5F, SpawnerEntityEntry.MIN_RADIUS, SpawnerEntityEntry.MAX_RADIUS), "spawn_radius");
-        addStepperPair(stepperX, top + 224, () -> nudgeSelectedInt(this.spawnYMinBox, -1, SpawnerEntityEntry.MIN_SPAWN_Y, SpawnerEntityEntry.MAX_SPAWN_Y), () -> nudgeSelectedInt(this.spawnYMinBox, 1, SpawnerEntityEntry.MIN_SPAWN_Y, SpawnerEntityEntry.MAX_SPAWN_Y), "spawn_y_min");
-        addStepperPair(stepperX, top + 250, () -> nudgeSelectedInt(this.spawnYMaxBox, -1, SpawnerEntityEntry.MIN_SPAWN_Y, SpawnerEntityEntry.MAX_SPAWN_Y), () -> nudgeSelectedInt(this.spawnYMaxBox, 1, SpawnerEntityEntry.MIN_SPAWN_Y, SpawnerEntityEntry.MAX_SPAWN_Y), "spawn_y_max");
+        addStepperPair(stepperX, top + 172, () -> nudgeSelectedFloat(this.spawnRadiusBox, -0.5F, SpawnerEntityEntry.MIN_RADIUS, SpawnerEntityEntry.MAX_RADIUS), () -> nudgeSelectedFloat(this.spawnRadiusBox, 0.5F, SpawnerEntityEntry.MIN_RADIUS, SpawnerEntityEntry.MAX_RADIUS), "spawn_radius");
+        addStepperPair(stepperX, top + 198, () -> nudgeSelectedInt(this.spawnYMinBox, -1, SpawnerEntityEntry.MIN_SPAWN_Y, SpawnerEntityEntry.MAX_SPAWN_Y), () -> nudgeSelectedInt(this.spawnYMinBox, 1, SpawnerEntityEntry.MIN_SPAWN_Y, SpawnerEntityEntry.MAX_SPAWN_Y), "spawn_y_min");
+        addStepperPair(stepperX, top + 224, () -> nudgeSelectedInt(this.spawnYMaxBox, -1, SpawnerEntityEntry.MIN_SPAWN_Y, SpawnerEntityEntry.MAX_SPAWN_Y), () -> nudgeSelectedInt(this.spawnYMaxBox, 1, SpawnerEntityEntry.MIN_SPAWN_Y, SpawnerEntityEntry.MAX_SPAWN_Y), "spawn_y_max");
 
-        this.enabledButton = addOreButton(fieldX, top + 276, 110, 18, Component.empty(), this::toggleSelectedEnabled);
+        this.enabledButton = addOreButton(fieldX, top + 250, 110, 18, Component.empty(), this::toggleSelectedEnabled);
         explain(this.enabledButton, "enabled");
 
         this.spawnModeButton = addOreButton(rightFieldX, top + 70, rightFieldW, 18, spawnModeLabel(this.workingSpawnMode), this::cycleSpawnMode);
@@ -316,16 +314,15 @@ public class MobSpawnerScreen extends AbstractContainerScreen<MobSpawnerMenu> {
         explain(addOreButton(rightFieldX + rightFieldW - 20, top + 106, 18, 18, Component.literal("+"), () -> nudgeGlobalInt(this.activationDelayBox, 20, MobSpawnerBlockEntity.MIN_ACTIVATION_DELAY, MobSpawnerBlockEntity.MAX_ACTIVATION_DELAY)), "activation_delay");
 
 
-        this.checkLosButton = addRenderableWidget(new OreUIToggleButton(rightFieldX, top + 132, rightFieldW, checkboxLabel("check_los"), this.requireLos, toggle -> this.requireLos = toggle.isToggled()));
-        this.checkDaylightButton = addRenderableWidget(new OreUIToggleButton(rightFieldX, top + 150, rightFieldW, checkboxLabel("check_daylight"), this.requireDaylight, toggle -> this.requireDaylight = toggle.isToggled()));
-        this.checkSpectatorButton = addRenderableWidget(new OreUIToggleButton(rightFieldX, top + 168, rightFieldW, checkboxLabel("check_spectator"), this.ignoreSpectators, toggle -> this.ignoreSpectators = toggle.isToggled()));
-        this.checkHeightButton = addRenderableWidget(new OreUIToggleButton(rightFieldX, top + 186, rightFieldW, checkboxLabel("check_height"), this.heightLimit, toggle -> this.heightLimit = toggle.isToggled()));
-        explain(this.checkLosButton, "check_los");
+        // Видимость / наблюдатели / высота / дистанция активации проверяли игрока рядом — спавнер больше
+        // не зависит от игроков (работает, пока чанк загружен), поэтому эти настройки не показываем.
+        this.checkDaylightButton = addRenderableWidget(new OreUIToggleButton(rightFieldX, top + 132, rightFieldW, checkboxLabel("check_daylight"), this.requireDaylight, toggle -> this.requireDaylight = toggle.isToggled()));
+        this.checkLosButton = new OreUIToggleButton(rightFieldX, top + 150, rightFieldW, checkboxLabel("check_los"), this.requireLos, toggle -> this.requireLos = toggle.isToggled());
+        this.checkSpectatorButton = new OreUIToggleButton(rightFieldX, top + 168, rightFieldW, checkboxLabel("check_spectator"), this.ignoreSpectators, toggle -> this.ignoreSpectators = toggle.isToggled());
+        this.checkHeightButton = new OreUIToggleButton(rightFieldX, top + 186, rightFieldW, checkboxLabel("check_height"), this.heightLimit, toggle -> this.heightLimit = toggle.isToggled());
         explain(this.checkDaylightButton, "check_daylight");
-        explain(this.checkSpectatorButton, "check_spectator");
-        explain(this.checkHeightButton, "check_height");
 
-        this.activationDistSlider = addRenderableWidget(new OreUIRangedSlider(rightFieldX, top + 241, rightFieldW)
+        this.activationDistSlider = (new OreUIRangedSlider(rightFieldX, top + 241, rightFieldW)
                 .range(MobSpawnerBlockEntity.MIN_ACTIVATION_DIST, MobSpawnerBlockEntity.MAX_ACTIVATION_DIST)
                 .step(1)
                 .values(this.workingActivationDistMin, this.workingActivationDistMax)
@@ -484,7 +481,7 @@ public class MobSpawnerScreen extends AbstractContainerScreen<MobSpawnerMenu> {
         setShown(this.countMinBox, mainVisible);
         setShown(this.countMaxBox, mainVisible);
         setShown(this.maxSimultaneousBox, mainVisible);
-        setShown(this.activationRadiusBox, mainVisible);
+        setShown(this.activationRadiusBox, false);
         setShown(this.spawnRadiusBox, mainVisible);
         setShown(this.spawnYMinBox, mainVisible);
         setShown(this.spawnYMaxBox, mainVisible);
@@ -1227,11 +1224,10 @@ public class MobSpawnerScreen extends AbstractContainerScreen<MobSpawnerMenu> {
         guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.count_min"), labelX, 100, COLOR_MUTED, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.count_max"), labelX, 126, COLOR_MUTED, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.max_simultaneous"), labelX, 152, COLOR_MUTED, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.activation_radius"), labelX, 178, COLOR_MUTED, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.spawn_radius"), labelX, 204, COLOR_MUTED, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.spawn_y_min"), labelX, 230, COLOR_MUTED, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.spawn_y_max"), labelX, 256, COLOR_MUTED, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.enabled"), labelX, 280, COLOR_MUTED, false);
+        guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.spawn_radius"), labelX, 178, COLOR_MUTED, false);
+        guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.spawn_y_min"), labelX, 204, COLOR_MUTED, false);
+        guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.spawn_y_max"), labelX, 230, COLOR_MUTED, false);
+        guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.enabled"), labelX, 254, COLOR_MUTED, false);
     }
 
     private void renderVisualLabels(GuiGraphics guiGraphics) {
@@ -1302,9 +1298,6 @@ public class MobSpawnerScreen extends AbstractContainerScreen<MobSpawnerMenu> {
         guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.properties"), labelX, CONTENT_TOP + 8, COLOR_TEXT, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.spawn_mode"), labelX, 56, COLOR_MUTED, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.activation_delay"), labelX, 96, COLOR_MUTED, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.activation_distance"), labelX, 226, COLOR_MUTED, false);
-        final String distRange = formatFloat(this.workingActivationDistMin) + " - " + formatFloat(this.workingActivationDistMax);
-        guiGraphics.drawString(this.font, distRange, RIGHT_X + RIGHT_W - 8 - this.font.width(distRange), 226, COLOR_TEXT, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.block_requirements"), labelX, 272, COLOR_MUTED, false);
     }
 

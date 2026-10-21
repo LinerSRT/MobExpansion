@@ -2,9 +2,11 @@ package net.mcskill.mobexpansion.network;
 
 import net.mcskill.mobexpansion.Core;
 import net.mcskill.mobexpansion.attributes.EntityAttributeConfig;
+import net.mcskill.mobexpansion.attributes.EntityAttributeDefaults;
 import net.mcskill.mobexpansion.attributes.EntityAttributesConfigIO;
 import net.mcskill.mobexpansion.clearance.MobClearance;
 import net.mcskill.mobexpansion.drops.DropDestination;
+import net.mcskill.mobexpansion.drops.DropConfigSessions;
 import net.mcskill.mobexpansion.drops.EntityLootConfig;
 import net.mcskill.mobexpansion.drops.EntityLootConfigIO;
 import net.mcskill.mobexpansion.drops.LootConditionEntry;
@@ -236,8 +238,18 @@ public record UpdateMobDropsPacket(List<EntityDropsData> entities) implements Cu
                 attributesByEntity.put(entityId, entityDropsData.attributes().toConfig(entityId));
             }
 
-            EntityLootConfigIO.writeAll(configsByEntity);
-            EntityAttributesConfigIO.writeAll(attributesByEntity);
+            final DropConfigSessions.Snapshot snapshot = DropConfigSessions.take(serverPlayer.getUUID());
+            if (snapshot == null) {
+                EntityLootConfigIO.writeAll(configsByEntity);
+                EntityAttributesConfigIO.writeAll(attributesByEntity);
+            } else {
+                // Накладываем только изменения этого игрока поверх текущего состояния — правки,
+                // сохранённые после открытия его окна, не откатываются.
+                EntityLootConfigIO.writeAll(DropConfigSessions.merge(
+                        EntityLootConfigIO.getCached(), snapshot.loot(), configsByEntity, id -> EntityLootConfig.EMPTY));
+                EntityAttributesConfigIO.writeAll(DropConfigSessions.merge(
+                        EntityAttributesConfigIO.getCached(), snapshot.attributes(), attributesByEntity, EntityAttributeDefaults::get));
+            }
             MobClearance.syncToAll();
             serverPlayer.displayClientMessage(Component.translatable("gui.mobexpansion.mob_drop_config.saved"), true);
         });

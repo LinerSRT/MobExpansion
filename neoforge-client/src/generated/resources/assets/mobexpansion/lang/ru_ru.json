@@ -629,7 +629,7 @@
   "gui.mobexpansion.mob_drop_config.xp_params": "Параметры опыта",
   "gui.mobexpansion.mob_drop_config.xp_table": "Таблица опыта",
   "gui.mobexpansion.mob_spawner.activation_delay": "Задержка активации",
-  "gui.mobexpansion.mob_spawner.activation_delay.tooltip": "После первого входа игрока в зону — ждать столько тиков до первой волны. 0 = сразу. Сбрасывается, если все ушли.",
+  "gui.mobexpansion.mob_spawner.activation_delay.tooltip": "После загрузки чанка со спавнером — ждать столько тиков до первой волны. 0 = сразу.",
   "gui.mobexpansion.mob_spawner.activation_dist_max.tooltip": "Игроки дальше этого (в блоках) не будят спавнер. Максимум 64.",
   "gui.mobexpansion.mob_spawner.activation_dist_min.tooltip": "Игроки ближе этого (в блоках) не будят спавнер. 0 = нет мёртвой зоны у блока.",
   "gui.mobexpansion.mob_spawner.activation_distance": "Дистанция активации",

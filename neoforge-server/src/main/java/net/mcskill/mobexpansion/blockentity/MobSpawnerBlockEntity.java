@@ -23,21 +23,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -53,6 +48,7 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
     public static final int HEIGHT_LIMIT_RANGE = 16;
     /** Интервалы в настройках заданы в тиках; КД считается по реальному времени: 1 тик = 50 мс (20 тиков = 1 сек). */
     public static final long MILLIS_PER_TICK = 50L;
+    private static final float COUNT_RADIUS = 16.0F;
     private final List<SpawnerEntityEntry> entries = new ArrayList<>();
     private SpawnMode spawnMode = SpawnMode.STANDARD;
     private int activationDelay;
@@ -75,7 +71,6 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
     private long lastSpawnTime;
     private int nextEntityIndex;
     private int activationDelayLeft;
-    private boolean wasActivated;
 
     public MobSpawnerBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(MobExBlockEntities.MOB_SPAWNER.get(), blockPos, blockState);
@@ -247,17 +242,9 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
         if (!spawner.hasEnabledEntries())
             return;
 
-        final Player activatingPlayer = spawner.findActivatingPlayer(serverLevel, blockPos);
-        if (activatingPlayer == null) {
-            spawner.wasActivated = false;
-            spawner.activationDelayLeft = spawner.activationDelay;
+        // Спавнер работает, пока его чанк загружен (тикает) — игроки рядом не нужны.
+        if (spawner.requireDaylight && !isDaytime(serverLevel))
             return;
-        }
-
-        if (!spawner.wasActivated) {
-            spawner.wasActivated = true;
-            spawner.activationDelayLeft = spawner.activationDelay;
-        }
         if (spawner.activationDelayLeft > 0) {
             spawner.activationDelayLeft--;
             return;
@@ -267,17 +254,23 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
         if (!spawner.isCooldownOver(now))
             return;
 
-        // Игрок ещё не в радиусе ни одной записи — КД не трогаем: накопленное время не сгорает,
-        // волна выйдет, как только игрок подойдёт ближе.
-        final SpawnerEntityEntry selectedEntry = spawner.selectEntry(serverLevel, blockPos, activatingPlayer);
+        // Ни одна запись сейчас не подходит (например, не тот блок под спавнером) — КД не трогаем.
+        final SpawnerEntityEntry selectedEntry = spawner.selectEntry(serverLevel, blockPos);
         if (selectedEntry == null)
             return;
 
-        final WaveResult result = spawner.trySpawnWave(serverLevel, blockPos, selectedEntry, activatingPlayer);
+        final WaveResult result = spawner.trySpawnWave(serverLevel, blockPos, selectedEntry);
         spawner.lastSpawnTime = now;
         // Не нашлось места для мобов — повторяем через секунду, а не через полный интервал.
         spawner.spawnCooldown = result == WaveResult.NO_ROOM ? SpawnerEntityEntry.MIN_INTERVAL : selectedEntry.getInterval();
         spawner.setChanged();
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        // Задержка активации отсчитывается заново при каждой загрузке чанка.
+        activationDelayLeft = activationDelay;
     }
 
     private boolean isCooldownOver(long now) {
@@ -295,52 +288,16 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
         return false;
     }
 
-    @Nullable
-    private Player findActivatingPlayer(ServerLevel serverLevel, BlockPos blockPos) {
-        final double searchRadius = Math.max(activationDistMax, 1.0F) + 1.0D;
-        final AABB searchArea = new AABB(blockPos).inflate(searchRadius);
-        final Vec3 spawnerCenter = Vec3.atCenterOf(blockPos);
-        Player bestPlayer = null;
-        double bestDistance = Double.MAX_VALUE;
-
-        for (Player player : serverLevel.getEntitiesOfClass(Player.class, searchArea, LivingEntity::isAlive)) {
-            if (ignoreSpectators && player.isSpectator())
-                continue;
-            final double distance = Math.sqrt(player.distanceToSqr(spawnerCenter));
-            if (distance < activationDistMin || distance > activationDistMax)
-                continue;
-            if (requireDaylight && !isDaytime(serverLevel))
-                continue;
-            if (heightLimit && Math.abs(player.getY() - blockPos.getY()) > HEIGHT_LIMIT_RANGE)
-                continue;
-            if (requireLos && !hasLineOfSight(serverLevel, spawnerCenter, player))
-                continue;
-            if (distance < bestDistance) {
-                bestDistance = distance;
-                bestPlayer = player;
-            }
-        }
-        return bestPlayer;
-    }
-
     private static boolean isDaytime(ServerLevel serverLevel) {
         final long dayTime = serverLevel.getDayTime() % 24000L;
         return dayTime < 12000L;
     }
 
-    private static boolean hasLineOfSight(ServerLevel serverLevel, Vec3 from, Player player) {
-        final Vec3 to = player.getEyePosition();
-        final BlockHitResult hitResult = serverLevel.clip(new ClipContext(from, to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
-        return hitResult.getType() == HitResult.Type.MISS || hitResult.getBlockPos().closerThan(player.blockPosition(), 1.5D);
-    }
-
     @Nullable
-    private SpawnerEntityEntry selectEntry(ServerLevel serverLevel, BlockPos blockPos, Player activatingPlayer) {
+    private SpawnerEntityEntry selectEntry(ServerLevel serverLevel, BlockPos blockPos) {
         final List<SpawnerEntityEntry> candidates = new ArrayList<>();
         for (SpawnerEntityEntry entry : entries) {
             if (!entry.isEnabled())
-                continue;
-            if (!isPlayerInEntityRadius(blockPos, activatingPlayer, entry))
                 continue;
             if (!matchesBlockUnder(serverLevel, blockPos))
                 continue;
@@ -363,10 +320,6 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
         return candidates.getFirst();
     }
 
-    private static boolean isPlayerInEntityRadius(BlockPos blockPos, Player player, SpawnerEntityEntry entry) {
-        return player.distanceToSqr(Vec3.atCenterOf(blockPos)) <= (double) entry.getActivationRadius() * entry.getActivationRadius();
-    }
-
     private boolean matchesBlockUnder(ServerLevel serverLevel, BlockPos blockPos) {
         if (blockUnder == null)
             return true;
@@ -387,11 +340,12 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
 
     private enum WaveResult { SPAWNED, LIMIT_REACHED, NO_ROOM }
 
-    private WaveResult trySpawnWave(ServerLevel serverLevel, BlockPos blockPos, SpawnerEntityEntry entry, Player activatingPlayer) {
+    private WaveResult trySpawnWave(ServerLevel serverLevel, BlockPos blockPos, SpawnerEntityEntry entry) {
         if (!SpawnerMobCatalog.isSpawnable(entry.getEntityId()))
             return WaveResult.LIMIT_REACHED;
 
-        final double checkRadius = Math.max(entry.getSpawnRadius(), entry.getActivationRadius()) * 2.0D;
+        // Живых мобов этого типа считаем в зоне не меньше 32 блоков (как раньше при радиусе активации 16 по умолчанию).
+        final double checkRadius = Math.max(entry.getSpawnRadius(), COUNT_RADIUS) * 2.0D;
         final AABB nearbyArea = new AABB(blockPos).inflate(checkRadius);
         final int nearbyCount = serverLevel.getEntitiesOfClass(
                 Mob.class,
@@ -415,8 +369,6 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
             final BlockPos spawnFeetPos = BlockPos.containing(spawnX, spawnY, spawnZ);
 
             if (!matchesBlockAround(serverLevel, spawnFeetPos))
-                continue;
-            if (heightLimit && Math.abs(spawnY - activatingPlayer.getY()) > HEIGHT_LIMIT_RANGE)
                 continue;
 
             final Mob mob = SpawnerMobCatalog.tryCreateMob(entry.getEntityId(), serverLevel);
@@ -461,7 +413,6 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
         compoundTag.putLong("LastSpawnTime", lastSpawnTime);
         compoundTag.putInt("NextEntityIndex", nextEntityIndex);
         compoundTag.putInt("ActivationDelayLeft", activationDelayLeft);
-        compoundTag.putBoolean("WasActivated", wasActivated);
     }
 
     @Override
@@ -497,7 +448,6 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
         lastSpawnTime = compoundTag.contains("LastSpawnTime", Tag.TAG_LONG) ? compoundTag.getLong("LastSpawnTime") : System.currentTimeMillis();
         nextEntityIndex = Math.max(0, compoundTag.getInt("NextEntityIndex"));
         activationDelayLeft = Math.max(0, compoundTag.getInt("ActivationDelayLeft"));
-        wasActivated = compoundTag.getBoolean("WasActivated");
         if (!entries.isEmpty())
             nextEntityIndex %= entries.size();
     }

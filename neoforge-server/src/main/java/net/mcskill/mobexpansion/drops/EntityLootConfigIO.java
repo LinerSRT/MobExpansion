@@ -9,10 +9,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.loading.FMLPaths;
 import org.jetbrains.annotations.Nullable;
 
+import com.mojang.logging.LogUtils;
+import org.slf4j.Logger;
+
 import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -25,7 +25,10 @@ public final class EntityLootConfigIO {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final String RELATIVE_PATH = "mobexpansion/entity_drops.json";
 
+    private static final Logger LOGGER = LogUtils.getLogger();
+
     private static Map<ResourceLocation, EntityLootConfig> cached = Collections.emptyMap();
+    private static boolean loaded;
 
     private EntityLootConfigIO() {
     }
@@ -35,17 +38,34 @@ public final class EntityLootConfigIO {
     }
 
     public static synchronized void reload() {
-        cached = loadFromDisk();
-        if (cached.isEmpty()) {
+        final Path path = configPath();
+        if (!Files.exists(path)) {
+            // Импорт старого KubeJS-скрипта — только если JSON-конфига ещё нет совсем.
+            // Раньше импорт срабатывал и при пустом/битом JSON и мог откатить дроп к старым значениям.
+            Map<ResourceLocation, EntityLootConfig> imported = Collections.emptyMap();
             try {
-                final Map<ResourceLocation, EntityLootConfig> imported = LegacyLootJsScript.importIfPresent();
-                if (!imported.isEmpty()) {
-                    writeAll(imported);
-                    return;
-                }
-            } catch (RuntimeException | Error ignored) {
+                imported = LegacyLootJsScript.importIfPresent();
+            } catch (RuntimeException | Error e) {
+                LOGGER.error("[MobExpansion] Failed to import legacy loot script", e);
             }
+            if (!imported.isEmpty()) {
+                writeAll(imported);
+                LOGGER.info("[MobExpansion] Imported {} entity drop configs from legacy KubeJS script", imported.size());
+                return;
+            }
+            cached = Collections.emptyMap();
+            loaded = true;
+            return;
         }
+        final Map<ResourceLocation, EntityLootConfig> fromDisk = loadFromDisk();
+        if (fromDisk == null) {
+            // Файл есть, но не читается (и .bak тоже) — оставляем то, что уже в памяти, и ничего не перезаписываем.
+            LOGGER.error("[MobExpansion] {} is unreadable, keeping {} cached entity drop configs", path, cached.size());
+            loaded = true;
+            return;
+        }
+        cached = fromDisk;
+        loaded = true;
         try {
             LegacyLootJsScript.deleteIfPresent();
         } catch (RuntimeException | Error ignored) {
@@ -53,7 +73,7 @@ public final class EntityLootConfigIO {
     }
 
     public static synchronized Map<ResourceLocation, EntityLootConfig> getCached() {
-        if (cached.isEmpty())
+        if (!loaded)
             reload();
         return cached;
     }
@@ -64,47 +84,65 @@ public final class EntityLootConfigIO {
         return getCached().getOrDefault(entityId, EntityLootConfig.EMPTY);
     }
 
+    /**
+     * Конфиги с диска; при битом основном файле — из резервной копии. {@code null} — прочитать не удалось.
+     */
+    @Nullable
     public static Map<ResourceLocation, EntityLootConfig> loadFromDisk() {
         final Path path = configPath();
-        if (!Files.isRegularFile(path))
-            return Collections.emptyMap();
-        try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
-            final JsonObject root = GSON.fromJson(reader, JsonObject.class);
-            if (root == null)
-                return Collections.emptyMap();
-            final Map<ResourceLocation, EntityLootConfig> configs = new LinkedHashMap<>();
-            for (Map.Entry<String, JsonElement> entry : root.entrySet()) {
-                final ResourceLocation entityId = ResourceLocation.tryParse(entry.getKey());
-                if (entityId == null || !entry.getValue().isJsonObject())
-                    continue;
-                final EntityLootConfig config = fromJson(entry.getValue().getAsJsonObject());
-                if (!config.isEmpty())
-                    configs.put(entityId, config);
-            }
-            return configs;
-        } catch (IOException | RuntimeException ignored) {
-            return Collections.emptyMap();
+        try {
+            final JsonObject root = SafeJsonFile.read(path, GSON);
+            return root == null ? Collections.emptyMap() : parseRoot(root);
+        } catch (IOException e) {
+            LOGGER.error("[MobExpansion] Failed to read {}: {}", path, e.getMessage());
         }
+        final Path backup = SafeJsonFile.backupPath(path);
+        try {
+            final JsonObject root = SafeJsonFile.read(backup, GSON);
+            if (root != null) {
+                LOGGER.warn("[MobExpansion] Loaded entity drops from backup {}", backup);
+                return parseRoot(root);
+            }
+        } catch (IOException e) {
+            LOGGER.error("[MobExpansion] Failed to read {}: {}", backup, e.getMessage());
+        }
+        return null;
+    }
+
+    private static Map<ResourceLocation, EntityLootConfig> parseRoot(JsonObject root) {
+        final Map<ResourceLocation, EntityLootConfig> configs = new LinkedHashMap<>();
+        for (Map.Entry<String, JsonElement> entry : root.entrySet()) {
+            final ResourceLocation entityId = ResourceLocation.tryParse(entry.getKey());
+            if (entityId == null || !entry.getValue().isJsonObject())
+                continue;
+            final EntityLootConfig config = fromJson(entry.getValue().getAsJsonObject());
+            if (!config.isEmpty())
+                configs.put(entityId, config);
+        }
+        return configs;
     }
 
     public static synchronized void writeAll(Map<ResourceLocation, EntityLootConfig> configsByEntity) {
         final Path path = configPath();
+        final JsonObject root = new JsonObject();
+        final Map<ResourceLocation, EntityLootConfig> nextCached = new LinkedHashMap<>();
+        for (Map.Entry<ResourceLocation, EntityLootConfig> entry : configsByEntity.entrySet()) {
+            if (entry.getKey() == null || entry.getValue() == null || entry.getValue().isEmpty())
+                continue;
+            root.add(entry.getKey().toString(), toJson(entry.getValue()));
+            nextCached.put(entry.getKey(), entry.getValue());
+        }
         try {
-            Files.createDirectories(path.getParent());
-            final JsonObject root = new JsonObject();
-            final Map<ResourceLocation, EntityLootConfig> nextCached = new LinkedHashMap<>();
-            for (Map.Entry<ResourceLocation, EntityLootConfig> entry : configsByEntity.entrySet()) {
-                if (entry.getKey() == null || entry.getValue() == null || entry.getValue().isEmpty())
-                    continue;
-                root.add(entry.getKey().toString(), toJson(entry.getValue()));
-                nextCached.put(entry.getKey(), entry.getValue());
-            }
-            try (Writer writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8)) {
-                GSON.toJson(root, writer);
-            }
-            cached = nextCached;
+            SafeJsonFile.write(path, GSON, root);
+        } catch (IOException e) {
+            LOGGER.error("[MobExpansion] Failed to save {}", path, e);
+            return;
+        }
+        cached = nextCached;
+        loaded = true;
+        try {
             LegacyLootJsScript.deleteIfPresent();
-        } catch (IOException ignored) {
+        } catch (RuntimeException | Error ignored) {
         }
     }
 

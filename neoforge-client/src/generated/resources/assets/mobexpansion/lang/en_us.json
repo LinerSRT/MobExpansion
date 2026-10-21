@@ -629,7 +629,7 @@
   "gui.mobexpansion.mob_drop_config.xp_params": "Selected experience",
   "gui.mobexpansion.mob_drop_config.xp_table": "Experience table",
   "gui.mobexpansion.mob_spawner.activation_delay": "Activation delay",
-  "gui.mobexpansion.mob_spawner.activation_delay.tooltip": "After a player first enters range, wait this many ticks before the first wave. 0 = spawn immediately. Resets if everyone leaves.",
+  "gui.mobexpansion.mob_spawner.activation_delay.tooltip": "After the spawner's chunk loads, wait this many ticks before the first wave. 0 = spawn immediately.",
   "gui.mobexpansion.mob_spawner.activation_dist_max.tooltip": "Players farther than this (blocks) will not wake the spawner. Maximum 64.",
   "gui.mobexpansion.mob_spawner.activation_dist_min.tooltip": "Players closer than this (blocks) will not wake the spawner. 0 = no inner dead zone.",
   "gui.mobexpansion.mob_spawner.activation_distance": "Activation distance",
