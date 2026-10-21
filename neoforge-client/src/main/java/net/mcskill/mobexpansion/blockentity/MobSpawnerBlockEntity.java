@@ -55,6 +55,7 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
     @Nullable
     private BlockState maskState;
     private int spawnCooldown;
+    private long lastSpawnTime;
     private int nextEntityIndex;
     private int activationDelayLeft;
     private boolean wasActivated;
@@ -62,6 +63,7 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
     public MobSpawnerBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(MobExBlockEntities.MOB_SPAWNER.get(), blockPos, blockState);
         spawnCooldown = 200;
+        lastSpawnTime = System.currentTimeMillis();
     }
 
     public List<SpawnerEntityEntry> getEntries() {
@@ -214,6 +216,7 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
             compoundTag.putString("BlockAround", blockAround.toString());
         saveMaskState(compoundTag, maskState);
         compoundTag.putInt("SpawnCooldown", spawnCooldown);
+        compoundTag.putLong("LastSpawnTime", lastSpawnTime);
         compoundTag.putInt("NextEntityIndex", nextEntityIndex);
         compoundTag.putInt("ActivationDelayLeft", activationDelayLeft);
         compoundTag.putBoolean("WasActivated", wasActivated);
@@ -249,6 +252,7 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
             blockAround = null;
 
         spawnCooldown = Math.max(0, compoundTag.getInt("SpawnCooldown"));
+        lastSpawnTime = compoundTag.contains("LastSpawnTime", Tag.TAG_LONG) ? compoundTag.getLong("LastSpawnTime") : System.currentTimeMillis();
         nextEntityIndex = Math.max(0, compoundTag.getInt("NextEntityIndex"));
         activationDelayLeft = Math.max(0, compoundTag.getInt("ActivationDelayLeft"));
         wasActivated = compoundTag.getBoolean("WasActivated");

@@ -51,6 +51,8 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
     public static final int MIN_ACTIVATION_DELAY = 0;
     public static final int MAX_ACTIVATION_DELAY = 20 * 60;
     public static final int HEIGHT_LIMIT_RANGE = 16;
+    /** Интервалы в настройках заданы в тиках; КД считается по реальному времени: 1 тик = 50 мс (20 тиков = 1 сек). */
+    public static final long MILLIS_PER_TICK = 50L;
     private final List<SpawnerEntityEntry> entries = new ArrayList<>();
     private SpawnMode spawnMode = SpawnMode.STANDARD;
     private int activationDelay;
@@ -67,7 +69,10 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
     @Nullable
     private BlockState maskState;
 
+    /** КД до следующей волны в тиках (интервал выбранной записи), отсчитывается от lastSpawnTime. */
     private int spawnCooldown;
+    /** Реальное время (мс) последнего спавна / начала отсчёта КД — идёт и пока чанк не загружен. */
+    private long lastSpawnTime;
     private int nextEntityIndex;
     private int activationDelayLeft;
     private boolean wasActivated;
@@ -75,6 +80,7 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
     public MobSpawnerBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(MobExBlockEntities.MOB_SPAWNER.get(), blockPos, blockState);
         spawnCooldown = 200;
+        lastSpawnTime = System.currentTimeMillis();
     }
 
     public List<SpawnerEntityEntry> getEntries() {
@@ -257,17 +263,27 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
             return;
         }
 
-        if (--spawner.spawnCooldown > 0)
+        final long now = System.currentTimeMillis();
+        if (!spawner.isCooldownOver(now))
             return;
 
         final SpawnerEntityEntry selectedEntry = spawner.selectEntry(serverLevel, blockPos, activatingPlayer);
+        spawner.lastSpawnTime = now;
         if (selectedEntry == null) {
             spawner.spawnCooldown = SpawnerEntityEntry.MIN_INTERVAL;
+            spawner.setChanged();
             return;
         }
 
         spawner.spawnCooldown = selectedEntry.getInterval();
         spawner.trySpawnWave(serverLevel, blockPos, selectedEntry, activatingPlayer);
+    }
+
+    private boolean isCooldownOver(long now) {
+        // Часы откатились назад (смена системного времени) — начинаем отсчёт заново, чтобы спавнер не завис.
+        if (now < lastSpawnTime)
+            lastSpawnTime = now;
+        return now - lastSpawnTime >= spawnCooldown * MILLIS_PER_TICK;
     }
 
     private boolean hasEnabledEntries() {
@@ -439,6 +455,7 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
             compoundTag.putString("BlockAround", blockAround.toString());
         saveMaskState(compoundTag, maskState);
         compoundTag.putInt("SpawnCooldown", spawnCooldown);
+        compoundTag.putLong("LastSpawnTime", lastSpawnTime);
         compoundTag.putInt("NextEntityIndex", nextEntityIndex);
         compoundTag.putInt("ActivationDelayLeft", activationDelayLeft);
         compoundTag.putBoolean("WasActivated", wasActivated);
@@ -473,6 +490,8 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
         if (!isValidBlockId(blockAround))
             blockAround = null;
         spawnCooldown = Math.max(0, compoundTag.getInt("SpawnCooldown"));
+        // Старые сохранения: SpawnCooldown был остатком в тиках — отсчитываем его от момента загрузки.
+        lastSpawnTime = compoundTag.contains("LastSpawnTime", Tag.TAG_LONG) ? compoundTag.getLong("LastSpawnTime") : System.currentTimeMillis();
         nextEntityIndex = Math.max(0, compoundTag.getInt("NextEntityIndex"));
         activationDelayLeft = Math.max(0, compoundTag.getInt("ActivationDelayLeft"));
         wasActivated = compoundTag.getBoolean("WasActivated");
