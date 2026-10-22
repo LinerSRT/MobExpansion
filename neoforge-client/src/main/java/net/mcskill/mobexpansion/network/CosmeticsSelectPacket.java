@@ -20,7 +20,7 @@ public record CosmeticsSelectPacket(Category category, String id) implements Cus
 
     /** Строки GUI. Новые категории (скины предметов, питомцы) — добавлять в конец, порядок = номер в пакете. */
     public enum Category {
-        SKIN, TRAIL
+        SKIN, TRAIL, PREFIX
     }
 
     public static final StreamCodec<RegistryFriendlyByteBuf, CosmeticsSelectPacket> STREAM_CODEC = StreamCodec.composite(

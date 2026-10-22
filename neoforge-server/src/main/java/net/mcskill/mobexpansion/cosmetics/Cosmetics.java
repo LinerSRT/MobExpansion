@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * GUI кастомизации персонажа, серверная часть: что игроку доступно и выбор карточек.
- * Скины — свои ({@link PlayerSkins}, права {@code cosmetics.skin.<id>}), шлейфы — MSEss ({@link CosmeticTrails}).
+ * Скины — свои ({@link PlayerSkins}, права {@code cosmetics.skin.<id>}), шлейфы — MSEss ({@link CosmeticTrails}), префиксы — LuckPerms ({@link CosmeticPrefixes}).
  * Новая строка GUI (скины предметов, питомцы) — новая {@link CosmeticsSelectPacket.Category}, список в
  * {@link CosmeticsStatePacket} и ветка в {@link #select}.
  */
@@ -42,7 +42,8 @@ public final class Cosmetics {
             if (player.hasDisconnected())
                 return;
             PacketDistributor.sendToPlayer(player, new CosmeticsStatePacket(skins(player), trails,
-                    PlayerSkins.get(player), CosmeticTrails.current(player), CosmeticTrails.available(server)));
+                    PlayerSkins.get(player), CosmeticTrails.current(player), CosmeticTrails.available(server),
+                    prefixes(player), CosmeticPrefixes.current(player), CosmeticPrefixes.available()));
         }));
     }
 
@@ -50,6 +51,14 @@ public final class Cosmetics {
         final List<CosmeticsStatePacket.Entry> entries = new ArrayList<>();
         for (String skin : PlayerSkins.SKINS)
             entries.add(new CosmeticsStatePacket.Entry(skin, CosmeticPermissions.canUseSkin(player, skin)));
+        return entries;
+    }
+
+    private static List<CosmeticsStatePacket.Entry> prefixes(ServerPlayer player) {
+        final List<CosmeticsStatePacket.Entry> entries = new ArrayList<>();
+        if (CosmeticPrefixes.available())
+            for (CosmeticPrefixes.Definition prefix : CosmeticPrefixes.ALL)
+                entries.add(new CosmeticsStatePacket.Entry(prefix.id(), CosmeticPrefixes.canUse(player, prefix.id())));
         return entries;
     }
 
@@ -80,6 +89,20 @@ public final class Cosmetics {
                     else
                         denied(player);
                     sendState(player);
+                }));
+            }
+            case PREFIX -> {
+                final CosmeticPrefixes.Definition prefix = CosmeticPrefixes.get(id);
+                if (!id.isEmpty() && (prefix == null || !CosmeticPrefixes.canUse(player, id))) {
+                    denied(player);
+                    sendState(player);
+                    return;
+                }
+                // состояние отправляем после записи в LuckPerms, иначе GUI покажет старый выбор
+                final MinecraftServer server = player.server;
+                CosmeticPrefixes.set(player, prefix).whenComplete((done, error) -> server.execute(() -> {
+                    if (!player.hasDisconnected())
+                        sendState(player);
                 }));
             }
         }

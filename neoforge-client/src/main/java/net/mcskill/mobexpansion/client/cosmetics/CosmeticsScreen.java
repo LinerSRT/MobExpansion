@@ -36,14 +36,14 @@ import java.util.Map;
  */
 public class CosmeticsScreen extends Screen {
     private static final int GUI_W = 452;
-    private static final int GUI_H = 256;
+    private static final int GUI_H = 368;
 
     private static final int PREVIEW_X = 10;
     private static final int PREVIEW_Y = 28;
     private static final int PREVIEW_W = 140;
-    private static final int PREVIEW_H = 218;
+    private static final int PREVIEW_H = 330;
     private static final int STAGE_INSET = 5;
-    private static final int STAGE_H = 168;
+    private static final int STAGE_H = 270;
 
     private static final int ROWS_X = 160;
     private static final int ROWS_W = 282;
@@ -77,6 +77,7 @@ public class CosmeticsScreen extends Screen {
         super(Component.translatable("gui.mobexpansion.cosmetics.title"));
         rows.add(new Row(CosmeticsSelectPacket.Category.SKIN, "gui.mobexpansion.cosmetics.skins", "gui.mobexpansion.cosmetics.no_skin"));
         rows.add(new Row(CosmeticsSelectPacket.Category.TRAIL, "gui.mobexpansion.cosmetics.trails", "gui.mobexpansion.cosmetics.no_trail"));
+        rows.add(new Row(CosmeticsSelectPacket.Category.PREFIX, "gui.mobexpansion.cosmetics.prefixes", "gui.mobexpansion.cosmetics.no_prefix"));
         state = CosmeticsClient.state();
         if (state != null)
             onState(state);
@@ -86,6 +87,7 @@ public class CosmeticsScreen extends Screen {
         state = packet;
         rows.get(0).set(packet.skins(), packet.skin(), true);
         rows.get(1).set(packet.trails(), packet.trail(), packet.trailsAvailable());
+        rows.get(2).set(packet.prefixes(), packet.prefix(), packet.prefixesAvailable());
     }
 
     @Override
@@ -146,9 +148,10 @@ public class CosmeticsScreen extends Screen {
             focusRow = hover.row;
             focus = hover.entry;
             final String id = focus == null ? "" : focus.id();
+            // префикс на превью игрока не виден — меняется только подпись
             if (hover.row.category == CosmeticsSelectPacket.Category.SKIN)
                 skin = id;
-            else
+            else if (hover.row.category == CosmeticsSelectPacket.Category.TRAIL)
                 trail = id;
         }
 
@@ -297,6 +300,25 @@ public class CosmeticsScreen extends Screen {
                 guiGraphics.blit(texture, x + 2, y + 2, w - 4, h - 4, 0.0F, 0.0F, 1024, 1024, 1024, 1024);
                 RenderSystem.disableBlend();
             }
+            case PREFIX -> {
+                if (entry == null) {
+                    renderNone(guiGraphics, x + w / 2, y + h / 2);
+                    return;
+                }
+                final ResourceLocation texture = prefixTexture(entry.id());
+                if (texture == null) {
+                    // иконки нет — показываем название префикса
+                    final List<net.minecraft.util.FormattedCharSequence> lines = font.split(row.name(entry), w - 4);
+                    final int count = Math.min(3, lines.size());
+                    for (int line = 0; line < count; line++)
+                        guiGraphics.drawString(font, lines.get(line), x + (w - font.width(lines.get(line))) / 2,
+                                y + h / 2 - 4 + (line - (count - 1) / 2) * 9, COLOR_ACCENT, false);
+                    return;
+                }
+                RenderSystem.enableBlend();
+                guiGraphics.blit(texture, x + (w - 32) / 2, y + (h - 32) / 2, 32, 32, 0.0F, 0.0F, 128, 128, 128, 128);
+                RenderSystem.disableBlend();
+            }
         }
     }
 
@@ -331,6 +353,15 @@ public class CosmeticsScreen extends Screen {
         final ResourceLocation texture = ResourceLocation.tryParse("msess:trails/" + id + ".png");
         if (texture == null)
             return null;
+        final boolean exists = textureExists.computeIfAbsent(texture,
+                location -> Minecraft.getInstance().getResourceManager().getResource(location).isPresent());
+        return exists ? texture : null;
+    }
+
+    /** Иконка префикса: {@code textures/gui/prefix/<id>.png} в мод-ассетах, 128x128; нет файла — null. */
+    @Nullable
+    private ResourceLocation prefixTexture(String id) {
+        final ResourceLocation texture = Core.loc("textures/gui/prefix/" + id + ".png");
         final boolean exists = textureExists.computeIfAbsent(texture,
                 location -> Minecraft.getInstance().getResourceManager().getResource(location).isPresent());
         return exists ? texture : null;

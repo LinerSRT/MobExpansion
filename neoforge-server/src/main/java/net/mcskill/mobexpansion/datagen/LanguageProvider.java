@@ -60,7 +60,7 @@ public class LanguageProvider implements DataProvider {
         add(MobExEntities.SEWER_POTION_PROJECTILE.get(), "Sewer Potion", "Канальная отрава");
         add(MobExEntities.SWARMER_ANT.get(), "Swarmer Ant", "Муравей-роевик");
         add(MobExEntities.BEETLE_TROOPER.get(), "Beetle Trooper", "Жук-штурмовик");
-        add(MobExEntities.GUNSHIP_MOTH.get(), "Gunship Moth", "Моль-канонерка");
+        add(MobExEntities.GUNSHIP_MOTH.get(), "Gunship Moth", "§6Авиа-Моль");
         add(MobExEntities.HUNTSMAN_SPIDER.get(), "Huntsman Spider", "Паук-охотник");
         add(MobExEntities.LADYBUG_MORTAR.get(), "Ladybug Mortar", "Божья коровка-миномёт");
         add(MobExEntities.WOODLOUSE_TANK.get(), "Woodlouse Tank", "Мокрица-танк");
@@ -72,8 +72,8 @@ public class LanguageProvider implements DataProvider {
         add(MobExEntities.SOUL_BEARER.get(), "Soul Bearer", "Носитель душ");
         add(MobExEntities.POSSESSED_CINDER_ARMOR.get(), "Possessed Cinder Armor", "Одержимый пепельный доспех");
         add(MobExEntities.POSSESSED_RUIN_ARMOR.get(), "Possessed Ruin Armor", "Одержимый доспех руин");
-        add(MobExEntities.POSSESSED_VIKING_ARMOR.get(), "Possessed Viking Armor", "Одержимый доспех викинга");
-        add(MobExEntities.APOCALYPSE_TYPE_A.get(), "Apocalypse Type A", "Апокалипсис: тип А");
+        add(MobExEntities.POSSESSED_VIKING_ARMOR.get(), "Possessed Viking Armor", "Одержимый доспех мерзлоты");
+        add(MobExEntities.APOCALYPSE_TYPE_A.get(), "Apocalypse Type A", "§5Апокалипсис");
         add(MobExEntities.BLOSSOM_DRAKE.get(), "Blossom Drake", "Цветочный дракон");
         add(MobExEntities.FLORAL_SERPENT.get(), "Floral Serpent", "Цветочный змей");
         add(MobExEntities.GLIMMERING_UNICORN.get(), "Glimmering Unicorn", "Мерцающий единорог");
@@ -99,7 +99,7 @@ public class LanguageProvider implements DataProvider {
         add(MobExItems.RAT_KING_SPAWN_EGG.get(), "Rat King spawn egg", "Яйцо призыва Короля крыс");
         add(MobExItems.SWARMER_ANT_SPAWN_EGG.get(), "Swarmer Ant spawn egg", "Яйцо призыва: Муравей-роевик");
         add(MobExItems.BEETLE_TROOPER_SPAWN_EGG.get(), "Beetle Trooper spawn egg", "Яйцо призыва: Жук-штурмовик");
-        add(MobExItems.GUNSHIP_MOTH_SPAWN_EGG.get(), "Gunship Moth spawn egg", "Яйцо призыва: Моль-канонерка");
+        add(MobExItems.GUNSHIP_MOTH_SPAWN_EGG.get(), "Gunship Moth spawn egg", "Яйцо призыва: §6Авиа-Моль");
         add(MobExItems.HUNTSMAN_SPIDER_SPAWN_EGG.get(), "Huntsman Spider spawn egg", "Яйцо призыва: Паук-охотник");
         add(MobExItems.LADYBUG_MORTAR_SPAWN_EGG.get(), "Ladybug Mortar spawn egg", "Яйцо призыва: Божья коровка-миномёт");
         add(MobExItems.WOODLOUSE_TANK_SPAWN_EGG.get(), "Woodlouse Tank spawn egg", "Яйцо призыва: Мокрица-танк");
@@ -111,8 +111,8 @@ public class LanguageProvider implements DataProvider {
         add(MobExItems.SOUL_BEARER_SPAWN_EGG.get(), "Soul Bearer spawn egg", "Яйцо призыва: Носитель душ");
         add(MobExItems.POSSESSED_CINDER_ARMOR_SPAWN_EGG.get(), "Possessed Cinder Armor spawn egg", "Яйцо призыва: Одержимый пепельный доспех");
         add(MobExItems.POSSESSED_RUIN_ARMOR_SPAWN_EGG.get(), "Possessed Ruin Armor spawn egg", "Яйцо призыва: Одержимый доспех руин");
-        add(MobExItems.POSSESSED_VIKING_ARMOR_SPAWN_EGG.get(), "Possessed Viking Armor spawn egg", "Яйцо призыва: Одержимый доспех викинга");
-        add(MobExItems.APOCALYPSE_TYPE_A_SPAWN_EGG.get(), "Apocalypse Type A spawn egg", "Яйцо призыва: Апокалипсис: тип А");
+        add(MobExItems.POSSESSED_VIKING_ARMOR_SPAWN_EGG.get(), "Possessed Viking Armor spawn egg", "Яйцо призыва: Одержимый доспех мерзлоты");
+        add(MobExItems.APOCALYPSE_TYPE_A_SPAWN_EGG.get(), "Apocalypse Type A spawn egg", "Яйцо призыва: §5Апокалипсис");
         add(MobExItems.BLOSSOM_DRAKE_SPAWN_EGG.get(), "Blossom Drake spawn egg", "Яйцо призыва: Цветочный дракон");
         add(MobExItems.FLORAL_SERPENT_SPAWN_EGG.get(), "Floral Serpent spawn egg", "Яйцо призыва: Цветочный змей");
         add(MobExItems.GLIMMERING_UNICORN_SPAWN_EGG.get(), "Glimmering Unicorn spawn egg", "Яйцо призыва: Мерцающий единорог");

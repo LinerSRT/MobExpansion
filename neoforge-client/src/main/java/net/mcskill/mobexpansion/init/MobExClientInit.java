@@ -68,7 +68,7 @@ public class MobExClientInit {
         event.registerEntityRenderer(MobExEntities.SEWER_POISON_AREA.get(), InvisibleRenderer::new);
         event.registerEntityRenderer(MobExEntities.SWARMER_ANT.get(), AbilityMobRenderer.noCull(1.0F, 0.5F));
         event.registerEntityRenderer(MobExEntities.BEETLE_TROOPER.get(), AbilityMobRenderer.noCull(1.0F, 1.2F));
-        event.registerEntityRenderer(MobExEntities.GUNSHIP_MOTH.get(), AbilityMobRenderer.noCull(3.0F, 4.2F));
+        event.registerEntityRenderer(MobExEntities.GUNSHIP_MOTH.get(), AbilityMobRenderer.noCull(4.5F, 6.3F));
         event.registerEntityRenderer(MobExEntities.HUNTSMAN_SPIDER.get(), AbilityMobRenderer.noCull(1.0F, 1.4F));
         event.registerEntityRenderer(MobExEntities.LADYBUG_MORTAR.get(), AbilityMobRenderer.noCull(1.0F, 1.1F));
         event.registerEntityRenderer(MobExEntities.WOODLOUSE_TANK.get(), AbilityMobRenderer.noCull(1.0F, 1.6F));

@@ -14,9 +14,10 @@ import java.util.List;
 
 /**
  * Что игрок может выбрать в GUI кастомизации: скины и шлейфы (id + открыт ли), что сейчас надето и есть ли шлейфы
- * на сервере вообще (их даёт MSEss).
+ * на сервере вообще (их даёт MSEss), префиксы LuckPerms и какой включён.
  */
-public record CosmeticsStatePacket(List<Entry> skins, List<Entry> trails, String skin, String trail, boolean trailsAvailable)
+public record CosmeticsStatePacket(List<Entry> skins, List<Entry> trails, String skin, String trail, boolean trailsAvailable,
+                                   List<Entry> prefixes, String prefix, boolean prefixesAvailable)
         implements CustomPacketPayload {
     public static final Type<CosmeticsStatePacket> TYPE = new Type<>(Core.loc("cosmetics_state"));
 
@@ -29,13 +30,23 @@ public record CosmeticsStatePacket(List<Entry> skins, List<Entry> trails, String
         );
     }
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, CosmeticsStatePacket> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.collection(ArrayList::new, Entry.STREAM_CODEC), CosmeticsStatePacket::skins,
-            ByteBufCodecs.collection(ArrayList::new, Entry.STREAM_CODEC), CosmeticsStatePacket::trails,
-            ByteBufCodecs.STRING_UTF8, CosmeticsStatePacket::skin,
-            ByteBufCodecs.STRING_UTF8, CosmeticsStatePacket::trail,
-            ByteBufCodecs.BOOL, CosmeticsStatePacket::trailsAvailable,
-            CosmeticsStatePacket::new
+    private static final StreamCodec<RegistryFriendlyByteBuf, List<Entry>> ENTRIES = ByteBufCodecs.collection(ArrayList::new, Entry.STREAM_CODEC);
+
+    // composite() держит максимум 6 полей, здесь их 8
+    public static final StreamCodec<RegistryFriendlyByteBuf, CosmeticsStatePacket> STREAM_CODEC = StreamCodec.of(
+            (buf, packet) -> {
+                ENTRIES.encode(buf, packet.skins);
+                ENTRIES.encode(buf, packet.trails);
+                ByteBufCodecs.STRING_UTF8.encode(buf, packet.skin);
+                ByteBufCodecs.STRING_UTF8.encode(buf, packet.trail);
+                buf.writeBoolean(packet.trailsAvailable);
+                ENTRIES.encode(buf, packet.prefixes);
+                ByteBufCodecs.STRING_UTF8.encode(buf, packet.prefix);
+                buf.writeBoolean(packet.prefixesAvailable);
+            },
+            buf -> new CosmeticsStatePacket(ENTRIES.decode(buf), ENTRIES.decode(buf),
+                    ByteBufCodecs.STRING_UTF8.decode(buf), ByteBufCodecs.STRING_UTF8.decode(buf), buf.readBoolean(),
+                    ENTRIES.decode(buf), ByteBufCodecs.STRING_UTF8.decode(buf), buf.readBoolean())
     );
 
     @Override

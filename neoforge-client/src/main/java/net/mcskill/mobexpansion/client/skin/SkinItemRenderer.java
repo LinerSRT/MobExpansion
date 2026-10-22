@@ -23,11 +23,14 @@ public class SkinItemRenderer extends GeoItemRenderer<SkinItem> {
         final SkinDefinition definition = definition(stack);
         if (definition == null)
             return;
-        // GeoItemRenderer ставит начало модели в середину блока по высоте, а ноги скина стоят на нуле — опускаем на пол-блока
+        // GeoItemRenderer сам масштабирует модель ДО сдвига в центр блока (translate 0.5, 0.51, 0.5 попадает под масштаб) —
+        // поэтому свой масштаб применяем здесь и ставим ноги модели так, чтобы вся модель (рост + крылья) стояла в центре слота
         final float scale = ITEM_SIZE_PX / modelSizePx(definition);
-        withScale(scale);
+        withScale(1.0F);
         poseStack.pushPose();
-        poseStack.translate(0, -0.5, -modelCenterZPx(definition) * scale / 16.0F);
+        poseStack.translate(0.5, 0.5 - modelHeightPx(definition) * scale / 32.0F, 0.5 - modelCenterZPx(definition) * scale / 16.0F);
+        poseStack.scale(scale, scale, scale);
+        poseStack.translate(-0.5, -0.51, -0.5);
         super.renderByItem(stack, context, poseStack, bufferSource, packedLight, packedOverlay);
         poseStack.popPose();
     }
@@ -39,6 +42,11 @@ public class SkinItemRenderer extends GeoItemRenderer<SkinItem> {
     /** Габарит модели скина (с крыльями) в пикселях: по нему модель вписывается в слот. */
     private static float modelSizePx(SkinDefinition definition) {
         return definition == SkinDefinition.CAPRA ? 86.0F : 62.0F;
+    }
+
+    /** Рост модели скина в пикселях (без крыльев). */
+    private static float modelHeightPx(SkinDefinition definition) {
+        return definition == SkinDefinition.CAPRA ? 81.0F : 40.0F;
     }
 
     /** Середина модели по оси Z (крылья и хвост уходят назад), чтобы модель стояла в слоте по центру. */

@@ -63,6 +63,7 @@ public class SerenitySentinelEntity extends MeadowsCreatureEntity {
     public void wakeUp(@Nullable LivingEntity target) {
         if (!isAsleep() || level().isClientSide())
             return;
+        abilities(); // способности регистрируются лениво: у свежепризванного awaken ещё null
         setStance(AWAKE);
         sound(SoundEvents.IRON_GOLEM_REPAIR, 2.0F, 0.5F);
         if (target != null)
