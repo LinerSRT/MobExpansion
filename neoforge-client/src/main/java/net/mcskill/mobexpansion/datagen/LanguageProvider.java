@@ -135,7 +135,6 @@ public class LanguageProvider implements DataProvider {
         add("gui.mobexpansion.mob_spawner.max_simultaneous", "Max near spawner", "Макс. рядом");
         add("gui.mobexpansion.mob_spawner.activation_radius", "Activation radius", "Радиус активации");
         add("gui.mobexpansion.mob_spawner.spawn_radius", "Spawn radius", "Радиус спавна");
-        add("gui.mobexpansion.mob_spawner.leash_radius", "Home radius", "Радиус дома");
         add("gui.mobexpansion.mob_spawner.spawn_y_min", "Spawn Y min", "Y спавна мин.");
         add("gui.mobexpansion.mob_spawner.spawn_y_max", "Spawn Y max", "Y спавна макс.");
         add("gui.mobexpansion.mob_spawner.enabled", "Enabled", "Включён");
@@ -181,7 +180,6 @@ public class LanguageProvider implements DataProvider {
         add("gui.mobexpansion.mob_spawner.max_simultaneous.tooltip", "If this many living copies of this mob are already near the spawner, no more will spawn.", "Если рядом со спавнером уже столько живых копий этого моба — новые не появятся.");
         add("gui.mobexpansion.mob_spawner.activation_radius.tooltip", "Extra per-mob range: the player must also be this close for THIS mob to be eligible. Separate from global activation distance.", "Доп. радиус именно этого моба: игрок должен быть ещё и так близко. Это не то же самое, что глобальная дистанция активации.");
         add("gui.mobexpansion.mob_spawner.spawn_radius.tooltip", "How far horizontally from the spawner this mob can appear, in blocks.", "Насколько далеко по горизонтали от спавнера может появиться этот моб (в блоках).");
-        add("gui.mobexpansion.mob_spawner.leash_radius.tooltip", "Max distance in blocks the spawned mob can move away from the spawner (1-64). 0 = no limit. The mob will not chase targets beyond it and returns home.", "Максимальное расстояние в блоках, на которое заспавненный моб может отойти от спавнера (1-64). 0 — без ограничения. Моб не преследует цели за пределами радиуса и возвращается домой.");
         add("gui.mobexpansion.mob_spawner.spawn_y_min.tooltip", "Lowest world Y where this mob can appear. Random between min and max. Default is one block above the spawner.", "Нижняя мировая Y, где появляется этот моб. Случайно между мин. и макс. По умолчанию — блок над спавнером.");
         add("gui.mobexpansion.mob_spawner.spawn_y_max.tooltip", "Highest world Y where this mob can appear. Random between min and max.", "Верхняя мировая Y, где появляется этот моб. Случайно между мин. и макс.");
         add("gui.mobexpansion.mob_spawner.enabled.tooltip", "If off, this mob stays in the set but never spawns.", "Если выкл., моб остаётся в наборе, но никогда не спавнится.");
@@ -631,6 +629,9 @@ public class LanguageProvider implements DataProvider {
         addExtra("holdDistance", "Preferred fight distance", "Дистанция ведения боя",
                 "Distance the mob tries to maintain from its target during combat.",
                 "Дистанция, на которой моб старается держаться от цели в бою.");
+        addExtra("spawnerHomeRadius", "Home radius (spawner)", "Радиус дома (спавнер)",
+                "Max distance in blocks a mob spawned by a Mob Expansion spawner can move away from it (1-64). 0 = no limit. The mob will not chase targets beyond it and returns home.",
+                "Максимальное расстояние в блоках, на которое моб из спавнера Mob Expansion может отойти от него (1-64). 0 — без ограничения. Моб не преследует цели за пределами радиуса и возвращается домой.");
         addExtra("homeRadius", "Territory radius", "Радиус территории",
                 "How far from the nest/home the mob may patrol.",
                 "Как далеко от гнезда/дома моб может патрулировать.");

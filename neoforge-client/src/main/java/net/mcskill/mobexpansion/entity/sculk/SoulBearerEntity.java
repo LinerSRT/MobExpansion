@@ -50,7 +50,7 @@ public class SoulBearerEntity extends FlyingAbilityMobEntity {
                     for (int i = -1; i <= 1; i++) {
                         final double angle = Math.toRadians(12.0D * i);
                         final Vec3 dir = new Vec3(aim.x * Math.cos(angle) - aim.z * Math.sin(angle), aim.y, aim.x * Math.sin(angle) + aim.z * Math.cos(angle));
-                        final var flame = mob.projectile("", core).damage(mob.damage(0.8)).fire(3).life(60)
+                        final var flame = mob.projectile("", core).damage(mob.damage(0.8)).life(60)
                                 .trail(ParticleTypes.SOUL_FIRE_FLAME, 2).impact(ParticleTypes.SOUL, null);
                         flame.shoot(dir.x, dir.y, dir.z, 0.85F, 0.5F);
                         mob.level().addFreshEntity(flame);
@@ -79,8 +79,7 @@ public class SoulBearerEntity extends FlyingAbilityMobEntity {
     public void die(@NotNull DamageSource source) {
         if (!dead && !level().isClientSide()) {
             final Vec3 core = position().add(0.0D, 1.0D, 0.0D);
-            for (LivingEntity hit : hitArea(core, 3.5D, damage(1.0), 0.6D, 0.3D))
-                hit.igniteForSeconds(3);
+            hitArea(core, 3.5D, damage(1.0), 0.6D, 0.3D);
             particles(ParticleTypes.SOUL_FIRE_FLAME, core, 40, 1.2, 0.05);
             sound(SoundEvents.SOUL_ESCAPE.value(), 2.0F, 0.6F);
         }

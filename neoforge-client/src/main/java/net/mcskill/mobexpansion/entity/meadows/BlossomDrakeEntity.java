@@ -74,8 +74,7 @@ public class BlossomDrakeEntity extends MeadowsCreatureEntity {
                         mob.particles(pollen(2.0F), mouth.add(direction.scale(i * 2.0D)).add(0.0D, -i * 0.12D, 0.0D), 4, 0.15D + i * 0.06D, 0.0D);
                 })
                 .every(20, 56, 10, (mob, target, tick) -> {
-                    for (LivingEntity hit : mob.hitCone(15.0, 40.0F, mob.damage(0.35), 0.2, 0.05))
-                        hit.igniteForSeconds(3.0F);
+                    mob.hitCone(15.0, 40.0F, mob.damage(0.35), 0.2, 0.05);
                 })
                 .build());
 

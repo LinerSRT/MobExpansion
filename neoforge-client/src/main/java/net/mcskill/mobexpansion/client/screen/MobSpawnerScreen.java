@@ -110,7 +110,6 @@ public class MobSpawnerScreen extends AbstractContainerScreen<MobSpawnerMenu> {
     private OreUIEditText spawnRadiusBox;
     private OreUIEditText spawnYMinBox;
     private OreUIEditText spawnYMaxBox;
-    private OreUIEditText leashRadiusBox;
     private OreUIEditText activationDelayBox;
     private OreUIRangedSlider activationDistSlider;
 
@@ -281,7 +280,6 @@ public class MobSpawnerScreen extends AbstractContainerScreen<MobSpawnerMenu> {
         this.spawnRadiusBox = createEditBox(fieldX, top + 174, fieldW, 16, Component.empty());
         this.spawnYMinBox = createEditBox(fieldX, top + 200, fieldW, 16, Component.empty());
         this.spawnYMaxBox = createEditBox(fieldX, top + 226, fieldW, 16, Component.empty());
-        this.leashRadiusBox = createEditBox(fieldX, top + 252, fieldW, 16, Component.empty());
         addRenderableWidget(this.intervalBox);
         addRenderableWidget(this.countMinBox);
         addRenderableWidget(this.countMaxBox);
@@ -289,7 +287,6 @@ public class MobSpawnerScreen extends AbstractContainerScreen<MobSpawnerMenu> {
         addRenderableWidget(this.spawnRadiusBox);
         addRenderableWidget(this.spawnYMinBox);
         addRenderableWidget(this.spawnYMaxBox);
-        addRenderableWidget(this.leashRadiusBox);
         explain(this.intervalBox, "interval");
         explain(this.countMinBox, "count_min");
         explain(this.countMaxBox, "count_max");
@@ -297,7 +294,6 @@ public class MobSpawnerScreen extends AbstractContainerScreen<MobSpawnerMenu> {
         explain(this.spawnRadiusBox, "spawn_radius");
         explain(this.spawnYMinBox, "spawn_y_min");
         explain(this.spawnYMaxBox, "spawn_y_max");
-        explain(this.leashRadiusBox, "leash_radius");
 
         addStepperPair(stepperX, top + 68, () -> nudgeSelectedInt(this.intervalBox, -20, SpawnerEntityEntry.MIN_INTERVAL, SpawnerEntityEntry.MAX_INTERVAL), () -> nudgeSelectedInt(this.intervalBox, 20, SpawnerEntityEntry.MIN_INTERVAL, SpawnerEntityEntry.MAX_INTERVAL), "interval");
         addStepperPair(stepperX, top + 94, () -> nudgeSelectedInt(this.countMinBox, -1, SpawnerEntityEntry.MIN_COUNT, SpawnerEntityEntry.MAX_COUNT), () -> nudgeSelectedInt(this.countMinBox, 1, SpawnerEntityEntry.MIN_COUNT, SpawnerEntityEntry.MAX_COUNT), "count_min");
@@ -307,9 +303,7 @@ public class MobSpawnerScreen extends AbstractContainerScreen<MobSpawnerMenu> {
         addStepperPair(stepperX, top + 198, () -> nudgeSelectedInt(this.spawnYMinBox, -1, SpawnerEntityEntry.MIN_SPAWN_Y, SpawnerEntityEntry.MAX_SPAWN_Y), () -> nudgeSelectedInt(this.spawnYMinBox, 1, SpawnerEntityEntry.MIN_SPAWN_Y, SpawnerEntityEntry.MAX_SPAWN_Y), "spawn_y_min");
         addStepperPair(stepperX, top + 224, () -> nudgeSelectedInt(this.spawnYMaxBox, -1, SpawnerEntityEntry.MIN_SPAWN_Y, SpawnerEntityEntry.MAX_SPAWN_Y), () -> nudgeSelectedInt(this.spawnYMaxBox, 1, SpawnerEntityEntry.MIN_SPAWN_Y, SpawnerEntityEntry.MAX_SPAWN_Y), "spawn_y_max");
 
-        addStepperPair(stepperX, top + 250, () -> nudgeSelectedInt(this.leashRadiusBox, -1, SpawnerEntityEntry.MIN_LEASH, SpawnerEntityEntry.MAX_LEASH), () -> nudgeSelectedInt(this.leashRadiusBox, 1, SpawnerEntityEntry.MIN_LEASH, SpawnerEntityEntry.MAX_LEASH), "leash_radius");
-
-        this.enabledButton = addOreButton(fieldX, top + 276, 110, 18, Component.empty(), this::toggleSelectedEnabled);
+        this.enabledButton = addOreButton(fieldX, top + 250, 110, 18, Component.empty(), this::toggleSelectedEnabled);
         explain(this.enabledButton, "enabled");
 
         this.spawnModeButton = addOreButton(rightFieldX, top + 70, rightFieldW, 18, spawnModeLabel(this.workingSpawnMode), this::cycleSpawnMode);
@@ -491,7 +485,6 @@ public class MobSpawnerScreen extends AbstractContainerScreen<MobSpawnerMenu> {
         setShown(this.spawnRadiusBox, mainVisible);
         setShown(this.spawnYMinBox, mainVisible);
         setShown(this.spawnYMaxBox, mainVisible);
-        setShown(this.leashRadiusBox, mainVisible);
         setShown(this.enabledButton, mainVisible);
         for (OreUITextButton stepperButton : this.mainStepperButtons)
             setShown(stepperButton, mainVisible);
@@ -659,7 +652,6 @@ public class MobSpawnerScreen extends AbstractContainerScreen<MobSpawnerMenu> {
         this.spawnRadiusBox.setValue(formatFloat(entry.getSpawnRadius()));
         this.spawnYMinBox.setValue(String.valueOf(entry.getSpawnYMin()));
         this.spawnYMaxBox.setValue(String.valueOf(entry.getSpawnYMax()));
-        this.leashRadiusBox.setValue(String.valueOf(entry.getLeashRadius()));
         this.enabledButton.setMessage(enabledLabel(entry.isEnabled()));
         this.suppressFieldSync = false;
         updateCenterVisibility();
@@ -697,7 +689,6 @@ public class MobSpawnerScreen extends AbstractContainerScreen<MobSpawnerMenu> {
             entry.setSpawnRadius(parseFloat(this.spawnRadiusBox.getValue(), entry.getSpawnRadius()));
             entry.setSpawnYMin(parseInt(this.spawnYMinBox.getValue(), entry.getSpawnYMin()));
             entry.setSpawnYMax(parseInt(this.spawnYMaxBox.getValue(), entry.getSpawnYMax()));
-            entry.setLeashRadius(parseInt(this.leashRadiusBox.getValue(), entry.getLeashRadius()));
         }
         if (this.activationDelayBox != null)
             this.workingActivationDelay = parseInt(this.activationDelayBox.getValue(), this.workingActivationDelay);
@@ -1236,8 +1227,7 @@ public class MobSpawnerScreen extends AbstractContainerScreen<MobSpawnerMenu> {
         guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.spawn_radius"), labelX, 178, COLOR_MUTED, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.spawn_y_min"), labelX, 204, COLOR_MUTED, false);
         guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.spawn_y_max"), labelX, 230, COLOR_MUTED, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.leash_radius"), labelX, 256, COLOR_MUTED, false);
-        guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.enabled"), labelX, 280, COLOR_MUTED, false);
+        guiGraphics.drawString(this.font, Component.translatable("gui.mobexpansion.mob_spawner.enabled"), labelX, 254, COLOR_MUTED, false);
     }
 
     private void renderVisualLabels(GuiGraphics guiGraphics) {

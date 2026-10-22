@@ -711,8 +711,6 @@
   "gui.mobexpansion.mob_spawner.spawn_mode.random.tooltip": "Каждая волна берёт случайного моба, который сейчас подходит по условиям.",
   "gui.mobexpansion.mob_spawner.spawn_mode.standard": "Стандартный",
   "gui.mobexpansion.mob_spawner.spawn_mode.standard.tooltip": "Идёт по набору сверху вниз. Стрелки вверх/вниз меняют приоритет.",
-  "gui.mobexpansion.mob_spawner.leash_radius": "Радиус дома",
-  "gui.mobexpansion.mob_spawner.leash_radius.tooltip": "Максимальное расстояние в блоках, на которое заспавненный моб может отойти от спавнера (1-64). 0 — без ограничения. Моб не преследует цели за пределами радиуса и возвращается домой.",
   "gui.mobexpansion.mob_spawner.spawn_radius": "Радиус спавна",
   "gui.mobexpansion.mob_spawner.spawn_radius.tooltip": "Насколько далеко по горизонтали от спавнера может появиться этот моб (в блоках).",
   "gui.mobexpansion.mob_spawner.spawn_y_max": "Y спавна макс.",
@@ -771,5 +769,7 @@
   "message.mobexpansion.clearance.changed": "Ваш уровень допуска: %s",
   "message.mobexpansion.clearance.denied": "Нужен уровень допуска %s (у вас %s)",
   "message.mobexpansion.cosmetics.locked": "Эта косметика вам не открыта",
-  "mobexpansion": "MobExpansion"
+  "mobexpansion": "MobExpansion",
+  "gui.mobexpansion.mob_drop_config.extra.spawnerHomeRadius": "Радиус дома (спавнер)",
+  "gui.mobexpansion.mob_drop_config.extra.spawnerHomeRadius.tooltip": "Максимальное расстояние в блоках, на которое моб из спавнера Mob Expansion может отойти от него (1-64). 0 — без ограничения. Моб не преследует цели за пределами радиуса и возвращается домой."
 }

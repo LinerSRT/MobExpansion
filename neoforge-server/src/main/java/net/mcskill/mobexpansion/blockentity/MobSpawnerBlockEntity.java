@@ -373,7 +373,7 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
         if (nearbyCount >= entry.getMaxSimultaneous())
             return WaveResult.LIMIT_REACHED;
 
-        final int leash = entry.getLeashRadius();
+        final int leash = MobHome.radiusFor(entry.getEntityId());
         final int waveCount = entry.getCountMin() + serverLevel.random.nextInt(Math.max(1, entry.getCountMax() - entry.getCountMin() + 1));
         int spawnedAmount = 0;
         for (int attempt = 0; attempt < waveCount * 4 && spawnedAmount < waveCount; attempt++) {
@@ -406,8 +406,7 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
 
             mob.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.SPAWNER, null);
             mob.setPersistenceRequired();
-            if (leash > 0)
-                MobHome.set(mob, blockPos, leash);
+            MobHome.set(mob, blockPos);
             serverLevel.addFreshEntityWithPassengers(mob);
             spawnedAmount++;
         }

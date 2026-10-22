@@ -11,7 +11,7 @@ import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 /**
- * Привязка мобов к спавнеру (радиус дома из {@link MobHome}): моб не берёт целью то, что вне дома,
+ * Привязка мобов к спавнеру (радиус дома из конфигуратора мобов, см. {@link MobHome}): моб не берёт целью то, что вне дома,
  * бросает цель, выйдя за границу, и возвращается домой. Проверка — раз в {@link #CHECK_INTERVAL} тиков,
  * у мобов без дома цена — одно сравнение поля.
  */

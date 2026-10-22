@@ -11,6 +11,12 @@ import java.util.Map;
 public final class EntityExtraParametersCatalog {
     public static final String DAMAGE_SUFFIX = "_damage";
     public static final String SPEED_SUFFIX = "_speed";
+    /** Радиус «дома» вокруг спавнера MobExpansion (блоков), общий для всех мобов. 0 — без привязки. */
+    public static final String SPAWNER_HOME_RADIUS = "spawnerHomeRadius";
+    public static final int MAX_SPAWNER_HOME_RADIUS = 64;
+    private static final List<ExtraParameterDefinition> COMMON_PARAMS = List.of(
+            parameter(SPAWNER_HOME_RADIUS, 0, 0, MAX_SPAWNER_HOME_RADIUS)
+    );
     private static final Map<ResourceLocation, List<ExtraParameterDefinition>> PARAMS;
 
     static {
@@ -192,6 +198,8 @@ public final class EntityExtraParametersCatalog {
         map.put(id("serenity_sentinel"), abilityParameters("awaken", 0, "punch", 1, "shock", 1, "shield", 0, "throw_stone", 1, "block", 0));
         map.put(id("queen_everbloom"), abilityParameters("slash_right", 1, "slash_left", 1, "slash_huge", 2.5, "luminous_area", 0.5, "radiant_shot", 1, "buff_armor", 0, "rose_pull", 0, "summon", 0, "jump_back", 0));
         map.put(id("scarlet_queen_everbloom"), abilityParameters("slash_right", 1, "slash_left", 1, "slash_huge", 2.5, "luminous_area", 0.5, "radiant_shot", 1, "buff_armor", 0, "rose_pull", 0, "summon", 0, "jump_back", 0, "savage", 0.4, "scarlet_wave", 2));
+        // общие параметры (радиус дома) идут первыми у каждого моба
+        map.replaceAll((entityId, params) -> withCommon(params));
         PARAMS = Collections.unmodifiableMap(map);
     }
 
@@ -199,7 +207,7 @@ public final class EntityExtraParametersCatalog {
     }
 
     public static List<ExtraParameterDefinition> paramsFor(ResourceLocation entityId) {
-        return PARAMS.getOrDefault(entityId, List.of());
+        return PARAMS.getOrDefault(entityId, COMMON_PARAMS);
     }
 
     public static Map<String, Double> defaultExtras(ResourceLocation entityId) {
@@ -224,6 +232,12 @@ public final class EntityExtraParametersCatalog {
             sanitized.put(def.key(), def.sanitize(value));
         }
         return sanitized;
+    }
+
+    private static List<ExtraParameterDefinition> withCommon(List<ExtraParameterDefinition> params) {
+        final List<ExtraParameterDefinition> list = new java.util.ArrayList<>(COMMON_PARAMS);
+        list.addAll(params);
+        return List.copyOf(list);
     }
 
     private static ResourceLocation id(String path) {

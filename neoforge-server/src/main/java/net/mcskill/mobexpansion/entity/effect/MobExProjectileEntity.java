@@ -55,7 +55,6 @@ public class MobExProjectileEntity extends ThrowableProjectile implements GeoEnt
     private double knockback = 0.3D;
     private double explosionRadius;
     private float explosionDamage;
-    private int fireSeconds;
     private int maxLife = 100;
     private double homing;
     private boolean pierce;
@@ -110,11 +109,6 @@ public class MobExProjectileEntity extends ThrowableProjectile implements GeoEnt
     public MobExProjectileEntity explosion(double radius, float damage) {
         this.explosionRadius = radius;
         this.explosionDamage = damage;
-        return this;
-    }
-
-    public MobExProjectileEntity fire(int seconds) {
-        this.fireSeconds = seconds;
         return this;
     }
 
@@ -256,8 +250,6 @@ public class MobExProjectileEntity extends ThrowableProjectile implements GeoEnt
             if (hit instanceof LivingEntity living) {
                 for (MobEffectInstance effect : hitEffects)
                     living.addEffect(new MobEffectInstance(effect), owner);
-                if (fireSeconds > 0)
-                    living.igniteForSeconds(fireSeconds);
                 if (knockback > 0.0D)
                     AbilityMobEntity.push(living, position().subtract(getDeltaMovement()), knockback, 0.15D);
             }
@@ -294,8 +286,6 @@ public class MobExProjectileEntity extends ThrowableProjectile implements GeoEnt
                         AbilityMobEntity.push(living, at, 0.6D, 0.35D);
                         for (MobEffectInstance effect : hitEffects)
                             living.addEffect(new MobEffectInstance(effect), mob);
-                        if (fireSeconds > 0)
-                            living.igniteForSeconds(fireSeconds);
                     }
                 }
             }

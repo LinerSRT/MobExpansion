@@ -67,7 +67,7 @@ public class ScarletQueenEverbloomEntity extends EverbloomQueenEntity {
                     final Vec3 direction = mob.forward();
                     final MobExProjectileEntity wave = mob.projectile("scarlet_wave", mob.localPos(0.0D, 1.2D, 1.2D))
                             .item(new ItemStack(Items.FIRE_CHARGE)).scale(3.0F).spin()
-                            .damage(mob.damage(2.0)).knockback(1.2D).fire(3).pierce().life(25)
+                            .damage(mob.damage(2.0)).knockback(1.2D).pierce().life(25)
                             .trail(ParticleTypes.FLAME, 3);
                     wave.shoot(direction.x, 0.02D, direction.z, 1.6F, 0.0F);
                     mob.level().addFreshEntity(wave);

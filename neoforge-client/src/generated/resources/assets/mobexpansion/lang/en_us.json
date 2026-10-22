@@ -711,8 +711,6 @@
   "gui.mobexpansion.mob_spawner.spawn_mode.random.tooltip": "Each wave picks a random mob that currently meets its conditions.",
   "gui.mobexpansion.mob_spawner.spawn_mode.standard": "Standard",
   "gui.mobexpansion.mob_spawner.spawn_mode.standard.tooltip": "Cycles through the set in list order. Use the up/down arrows to change priority.",
-  "gui.mobexpansion.mob_spawner.leash_radius": "Home radius",
-  "gui.mobexpansion.mob_spawner.leash_radius.tooltip": "Max distance in blocks the spawned mob can move away from the spawner (1-64). 0 = no limit. The mob will not chase targets beyond it and returns home.",
   "gui.mobexpansion.mob_spawner.spawn_radius": "Spawn radius",
   "gui.mobexpansion.mob_spawner.spawn_radius.tooltip": "How far horizontally from the spawner this mob can appear, in blocks.",
   "gui.mobexpansion.mob_spawner.spawn_y_max": "Spawn Y max",
@@ -771,5 +769,7 @@
   "message.mobexpansion.clearance.changed": "Your clearance level is now %s",
   "message.mobexpansion.clearance.denied": "Clearance level %s required (you have %s)",
   "message.mobexpansion.cosmetics.locked": "This cosmetic is not unlocked",
-  "mobexpansion": "MobExpansion"
+  "mobexpansion": "MobExpansion",
+  "gui.mobexpansion.mob_drop_config.extra.spawnerHomeRadius": "Home radius (spawner)",
+  "gui.mobexpansion.mob_drop_config.extra.spawnerHomeRadius.tooltip": "Max distance in blocks a mob spawned by a Mob Expansion spawner can move away from it (1-64). 0 = no limit. The mob will not chase targets beyond it and returns home."
 }
