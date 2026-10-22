@@ -76,8 +76,13 @@ public final class PlayerSkinAnimatable implements GeoAnimatable {
         return cache;
     }
 
+    /**
+     * Общие часы для всех игроков: GeoModel хранит один счётчик animTime на модель скина и прибавляет к нему разницу
+     * времени между кадрами разных игроков. С индивидуальным tickCount (у двоих он разный) время прыгало бы туда-сюда
+     * и анимация дёргалась, поэтому берём игровое время мира.
+     */
     @Override
     public double getTick(Object object) {
-        return object instanceof Entity entity ? entity.tickCount : 0;
+        return object instanceof Entity entity ? entity.level().getGameTime() : 0;
     }
 }
