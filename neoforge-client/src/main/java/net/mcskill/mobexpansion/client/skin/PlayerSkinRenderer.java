@@ -20,7 +20,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
-import software.bernie.geckolib.animation.state.BoneSnapshot;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.renderer.GeoReplacedEntityRenderer;
@@ -32,6 +31,11 @@ import software.bernie.geckolib.renderer.GeoReplacedEntityRenderer;
 public class PlayerSkinRenderer extends GeoReplacedEntityRenderer<AbstractClientPlayer, PlayerSkinAnimatable> {
     private final SkinDefinition definition;
     private final PlayerSkinModel skinModel;
+    /** Модель, с которой сняты копии рук (после перезагрузки ресурсов копии делаются заново). */
+    @Nullable
+    private BakedGeoModel armSource;
+    @Nullable
+    private GeoBone rightArmCopy, leftArmCopy;
 
     public PlayerSkinRenderer(EntityRendererProvider.Context context, SkinDefinition definition) {
         this(context, definition, new PlayerSkinModel(definition));
@@ -86,11 +90,9 @@ public class PlayerSkinRenderer extends GeoReplacedEntityRenderer<AbstractClient
         final ModelPart part = right ? vanillaModel.rightArm : vanillaModel.leftArm;
         part.xRot = 0.0F;
 
-        final BakedGeoModel baked = getGeoModel().getBakedModel(definition.model());
-        final GeoBone shoulder = baked.getBone(right ? definition.rightArm() : definition.leftArm()).orElse(null);
+        final GeoBone shoulder = firstPersonArm(right);
         if (shoulder == null)
             return;
-        resetToRest(shoulder);
 
         final float scale = definition.firstPersonScale();
         final Vector3f hand = definition.firstPersonHand();
@@ -114,15 +116,20 @@ public class PlayerSkinRenderer extends GeoReplacedEntityRenderer<AbstractClient
         poseStack.popPose();
     }
 
-    /** Кости модели общие для всех игроков: перед рукой от первого лица сбрасываем позу, оставшуюся от третьего лица. */
-    private static void resetToRest(GeoBone bone) {
-        final BoneSnapshot rest = bone.getInitialSnapshot();
-        if (rest != null)
-            bone.updateRotation(rest.getRotX(), rest.getRotY(), rest.getRotZ());
-        bone.updatePosition(0, 0, 0);
-        bone.updateScale(1, 1, 1);
-        for (GeoBone child : bone.getChildBones())
-            resetToRest(child);
+    /**
+     * Цепочка костей руки для вида от первого лица — копия в позе покоя. Общие кости модели трогать нельзя: в остальных
+     * кадрах тика GeckoLib не пересчитывает позу игрока (время анимации скина меняется раз в тик, см.
+     * PlayerSkinAnimatable#getTick), и рука других игроков в этом скине дёргалась бы в позу покоя.
+     */
+    @Nullable
+    private GeoBone firstPersonArm(boolean right) {
+        final BakedGeoModel baked = getGeoModel().getBakedModel(definition.model());
+        if (baked != armSource) {
+            armSource = baked;
+            rightArmCopy = baked.getBone(definition.rightArm()).map(bone -> GeoBoneCopies.copyOf(bone, null)).orElse(null);
+            leftArmCopy = baked.getBone(definition.leftArm()).map(bone -> GeoBoneCopies.copyOf(bone, null)).orElse(null);
+        }
+        return right ? rightArmCopy : leftArmCopy;
     }
 
     /** Копия расчёта позы из LivingEntityRenderer#render (1.21.1). */
