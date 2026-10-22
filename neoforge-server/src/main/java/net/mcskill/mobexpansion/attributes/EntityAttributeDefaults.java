@@ -51,6 +51,12 @@ public final class EntityAttributeDefaults {
         put(defaults, "possessed_ruin_armor", 320, 18, 0, 13, 0.24, 1.0, 40);
         put(defaults, "possessed_viking_armor", 280, 14, 0, 12, 0.27, 0.8, 40);
         put(defaults, "apocalypse_type_a", 600, 16, 0, 14, 0.3, 1.0, 48);
+        put(defaults, "blossom_drake", 100, 6, 0, 14, 0.3, 0.8, 32);
+        put(defaults, "floral_serpent", 100, 4, 0, 10, 0.3, 0.8, 32);
+        put(defaults, "glimmering_unicorn", 100, 2, 0, 10, 0.3, 0.4, 32);
+        put(defaults, "serenity_sentinel", 300, 12, 0, 10, 0.22, 1.0, 32);
+        put(defaults, "queen_everbloom", 300, 10, 0, 15, 0.26, 1.0, 40);
+        put(defaults, "scarlet_queen_everbloom", 500, 14, 0, 25, 0.3, 1.0, 40);
         DEFAULTS = Collections.unmodifiableMap(defaults);
     }
 

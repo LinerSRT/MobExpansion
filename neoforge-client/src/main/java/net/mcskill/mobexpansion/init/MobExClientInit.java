@@ -82,6 +82,12 @@ public class MobExClientInit {
         event.registerEntityRenderer(MobExEntities.POSSESSED_RUIN_ARMOR.get(), AbilityMobRenderer.of(1.0F, 0.9F));
         event.registerEntityRenderer(MobExEntities.POSSESSED_VIKING_ARMOR.get(), AbilityMobRenderer.of(1.0F, 0.9F));
         event.registerEntityRenderer(MobExEntities.APOCALYPSE_TYPE_A.get(), AbilityMobRenderer.of(1.0F, 1.0F));
+        event.registerEntityRenderer(MobExEntities.BLOSSOM_DRAKE.get(), AbilityMobRenderer.of(1.0F, 1.6F));
+        event.registerEntityRenderer(MobExEntities.FLORAL_SERPENT.get(), AbilityMobRenderer.of(1.0F, 1.2F));
+        event.registerEntityRenderer(MobExEntities.GLIMMERING_UNICORN.get(), AbilityMobRenderer.of(1.0F, 0.9F));
+        event.registerEntityRenderer(MobExEntities.SERENITY_SENTINEL.get(), AbilityMobRenderer.of(1.0F, 2.2F));
+        event.registerEntityRenderer(MobExEntities.QUEEN_EVERBLOOM.get(), AbilityMobRenderer.of(1.0F, 1.0F));
+        event.registerEntityRenderer(MobExEntities.SCARLET_QUEEN_EVERBLOOM.get(), AbilityMobRenderer.of(1.0F, 1.0F));
         event.registerEntityRenderer(MobExEntities.ABILITY_PROJECTILE.get(), MobExProjectileRenderer::new);
         event.registerEntityRenderer(MobExEntities.ABILITY_EFFECT.get(), MobExEffectRenderer::new);
     }

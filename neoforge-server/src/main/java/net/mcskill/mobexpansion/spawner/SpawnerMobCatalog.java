@@ -51,7 +51,13 @@ public final class SpawnerMobCatalog {
             MobExEntities.POSSESSED_CINDER_ARMOR.getId(),
             MobExEntities.POSSESSED_RUIN_ARMOR.getId(),
             MobExEntities.POSSESSED_VIKING_ARMOR.getId(),
-            MobExEntities.APOCALYPSE_TYPE_A.getId()
+            MobExEntities.APOCALYPSE_TYPE_A.getId(),
+            MobExEntities.BLOSSOM_DRAKE.getId(),
+            MobExEntities.FLORAL_SERPENT.getId(),
+            MobExEntities.GLIMMERING_UNICORN.getId(),
+            MobExEntities.SERENITY_SENTINEL.getId(),
+            MobExEntities.QUEEN_EVERBLOOM.getId(),
+            MobExEntities.SCARLET_QUEEN_EVERBLOOM.getId()
     );
 
     private static volatile List<ResourceLocation> cachedIds;

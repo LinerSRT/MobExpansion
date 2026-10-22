@@ -53,6 +53,12 @@ public class ItemsModelProvider extends ItemModelProvider {
         spawnEggItem(MobExItems.POSSESSED_RUIN_ARMOR_SPAWN_EGG.asItem());
         spawnEggItem(MobExItems.POSSESSED_VIKING_ARMOR_SPAWN_EGG.asItem());
         spawnEggItem(MobExItems.APOCALYPSE_TYPE_A_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.BLOSSOM_DRAKE_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.FLORAL_SERPENT_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.GLIMMERING_UNICORN_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.SERENITY_SENTINEL_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.QUEEN_EVERBLOOM_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.SCARLET_QUEEN_EVERBLOOM_SPAWN_EGG.asItem());
         skinItem(MobExItems.CAPRA_SKIN.asItem());
         skinItem(MobExItems.LILLITH_SKIN.asItem());
     }

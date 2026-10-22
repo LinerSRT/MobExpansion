@@ -48,6 +48,12 @@ public final class MobClearance {
         put("sentinel_golem", 3);
         put("rat_king", 3);
         put("apocalypse_type_a", 4);
+        put("blossom_drake", 2);
+        put("floral_serpent", 2);
+        put("glimmering_unicorn", 2);
+        put("serenity_sentinel", 3);
+        put("queen_everbloom", 4);
+        put("scarlet_queen_everbloom", 4);
         REQUIRED.putAll(DEFAULTS);
     }
 

@@ -74,6 +74,12 @@ public class LanguageProvider implements DataProvider {
         add(MobExEntities.POSSESSED_RUIN_ARMOR.get(), "Possessed Ruin Armor", "Одержимый доспех руин");
         add(MobExEntities.POSSESSED_VIKING_ARMOR.get(), "Possessed Viking Armor", "Одержимый доспех викинга");
         add(MobExEntities.APOCALYPSE_TYPE_A.get(), "Apocalypse Type A", "Апокалипсис: тип А");
+        add(MobExEntities.BLOSSOM_DRAKE.get(), "Blossom Drake", "Цветочный дракон");
+        add(MobExEntities.FLORAL_SERPENT.get(), "Floral Serpent", "Цветочный змей");
+        add(MobExEntities.GLIMMERING_UNICORN.get(), "Glimmering Unicorn", "Мерцающий единорог");
+        add(MobExEntities.SERENITY_SENTINEL.get(), "Serenity Sentinel", "Страж безмятежности");
+        add(MobExEntities.QUEEN_EVERBLOOM.get(), "Queen Everbloom", "Королева Эвербллум");
+        add(MobExEntities.SCARLET_QUEEN_EVERBLOOM.get(), "Scarlet Queen Everbloom", "Алая королева Эвербллум");
         add(MobExEntities.ABILITY_PROJECTILE.get(), "Projectile", "Снаряд");
         add(MobExEntities.ABILITY_EFFECT.get(), "Ability Effect", "Эффект способности");
         add(MobExEntities.SEWER_BOLT_PROJECTILE.get(), "Sewer Bolt", "Болт Короля крыс");
@@ -107,6 +113,12 @@ public class LanguageProvider implements DataProvider {
         add(MobExItems.POSSESSED_RUIN_ARMOR_SPAWN_EGG.get(), "Possessed Ruin Armor spawn egg", "Яйцо призыва: Одержимый доспех руин");
         add(MobExItems.POSSESSED_VIKING_ARMOR_SPAWN_EGG.get(), "Possessed Viking Armor spawn egg", "Яйцо призыва: Одержимый доспех викинга");
         add(MobExItems.APOCALYPSE_TYPE_A_SPAWN_EGG.get(), "Apocalypse Type A spawn egg", "Яйцо призыва: Апокалипсис: тип А");
+        add(MobExItems.BLOSSOM_DRAKE_SPAWN_EGG.get(), "Blossom Drake spawn egg", "Яйцо призыва: Цветочный дракон");
+        add(MobExItems.FLORAL_SERPENT_SPAWN_EGG.get(), "Floral Serpent spawn egg", "Яйцо призыва: Цветочный змей");
+        add(MobExItems.GLIMMERING_UNICORN_SPAWN_EGG.get(), "Glimmering Unicorn spawn egg", "Яйцо призыва: Мерцающий единорог");
+        add(MobExItems.SERENITY_SENTINEL_SPAWN_EGG.get(), "Serenity Sentinel spawn egg", "Яйцо призыва: Страж безмятежности");
+        add(MobExItems.QUEEN_EVERBLOOM_SPAWN_EGG.get(), "Queen Everbloom spawn egg", "Яйцо призыва: Королева Эвербллум");
+        add(MobExItems.SCARLET_QUEEN_EVERBLOOM_SPAWN_EGG.get(), "Scarlet Queen Everbloom spawn egg", "Яйцо призыва: Алая королева Эвербллум");
         add(MobExBlocks.MOB_SPAWNER.get(), "Mob Spawner", "Спавнер мобов");
         add(MobExItems.DROP_CONFIGURATOR.get(), "Mob Configurator", "Настройка мобов");
         add(MobExItems.CAPRA_SKIN.get(), "Skin: Capra", "Скин: Capra");

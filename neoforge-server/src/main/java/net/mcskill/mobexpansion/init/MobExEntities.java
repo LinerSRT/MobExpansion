@@ -37,6 +37,12 @@ import net.mcskill.mobexpansion.entity.possessed.PossessedCinderArmorEntity;
 import net.mcskill.mobexpansion.entity.possessed.PossessedRuinArmorEntity;
 import net.mcskill.mobexpansion.entity.possessed.PossessedVikingArmorEntity;
 import net.mcskill.mobexpansion.entity.apocalypse.ApocalypseTypeAEntity;
+import net.mcskill.mobexpansion.entity.meadows.BlossomDrakeEntity;
+import net.mcskill.mobexpansion.entity.meadows.FloralSerpentEntity;
+import net.mcskill.mobexpansion.entity.meadows.GlimmeringUnicornEntity;
+import net.mcskill.mobexpansion.entity.meadows.SerenitySentinelEntity;
+import net.mcskill.mobexpansion.entity.meadows.QueenEverbloomEntity;
+import net.mcskill.mobexpansion.entity.meadows.ScarletQueenEverbloomEntity;
 import net.mcskill.mobexpansion.entity.effect.MobExEffectEntity;
 import net.mcskill.mobexpansion.entity.effect.MobExProjectileEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -94,6 +100,12 @@ public class MobExEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<PossessedRuinArmorEntity>> POSSESSED_RUIN_ARMOR = register("possessed_ruin_armor", PossessedRuinArmorEntity::new, 0.9F, 2.25F);
     public static final DeferredHolder<EntityType<?>, EntityType<PossessedVikingArmorEntity>> POSSESSED_VIKING_ARMOR = register("possessed_viking_armor", PossessedVikingArmorEntity::new, 0.9F, 2.25F);
     public static final DeferredHolder<EntityType<?>, EntityType<ApocalypseTypeAEntity>> APOCALYPSE_TYPE_A = register("apocalypse_type_a", ApocalypseTypeAEntity::new, 1.0F, 3.6F);
+    public static final DeferredHolder<EntityType<?>, EntityType<BlossomDrakeEntity>> BLOSSOM_DRAKE = register("blossom_drake", BlossomDrakeEntity::new, 2.4F, 2.4F);
+    public static final DeferredHolder<EntityType<?>, EntityType<FloralSerpentEntity>> FLORAL_SERPENT = register("floral_serpent", FloralSerpentEntity::new, 1.8F, 1.7F);
+    public static final DeferredHolder<EntityType<?>, EntityType<GlimmeringUnicornEntity>> GLIMMERING_UNICORN = register("glimmering_unicorn", GlimmeringUnicornEntity::new, 1.3F, 2.4F);
+    public static final DeferredHolder<EntityType<?>, EntityType<SerenitySentinelEntity>> SERENITY_SENTINEL = register("serenity_sentinel", SerenitySentinelEntity::new, 2.8F, 6.0F);
+    public static final DeferredHolder<EntityType<?>, EntityType<QueenEverbloomEntity>> QUEEN_EVERBLOOM = register("queen_everbloom", QueenEverbloomEntity::new, 1.2F, 3.8F);
+    public static final DeferredHolder<EntityType<?>, EntityType<ScarletQueenEverbloomEntity>> SCARLET_QUEEN_EVERBLOOM = register("scarlet_queen_everbloom", ScarletQueenEverbloomEntity::new, 1.2F, 3.8F);
 
     public static final DeferredHolder<EntityType<?>, EntityType<MobExProjectileEntity>> ABILITY_PROJECTILE = registerProjectile("ability_projectile", MobExProjectileEntity::new, 0.3F, 0.3F);
     public static final DeferredHolder<EntityType<?>, EntityType<MobExEffectEntity>> ABILITY_EFFECT = registerMisc("ability_effect", MobExEffectEntity::new, 0.5F, 0.5F);
@@ -133,6 +145,12 @@ public class MobExEntities {
         event.put(POSSESSED_RUIN_ARMOR.get(), PossessedRuinArmorEntity.createAttributes().build());
         event.put(POSSESSED_VIKING_ARMOR.get(), PossessedVikingArmorEntity.createAttributes().build());
         event.put(APOCALYPSE_TYPE_A.get(), ApocalypseTypeAEntity.createAttributes().build());
+        event.put(BLOSSOM_DRAKE.get(), BlossomDrakeEntity.createAttributes().build());
+        event.put(FLORAL_SERPENT.get(), FloralSerpentEntity.createAttributes().build());
+        event.put(GLIMMERING_UNICORN.get(), GlimmeringUnicornEntity.createAttributes().build());
+        event.put(SERENITY_SENTINEL.get(), SerenitySentinelEntity.createAttributes().build());
+        event.put(QUEEN_EVERBLOOM.get(), QueenEverbloomEntity.createAttributes().build());
+        event.put(SCARLET_QUEEN_EVERBLOOM.get(), ScarletQueenEverbloomEntity.createAttributes().build());
     }
 
     private static <T extends Entity & GeoAnimatable & IModel> DeferredHolder<EntityType<?>, EntityType<T>> register(String name, EntityType.EntityFactory<T> factory, float width, float height) {

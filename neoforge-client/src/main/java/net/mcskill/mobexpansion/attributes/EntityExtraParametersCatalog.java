@@ -186,6 +186,12 @@ public final class EntityExtraParametersCatalog {
         map.put(id("possessed_ruin_armor"), abilityParameters("headbutt", 0.9, "swing", 1.2, "overhead_attack", 1.6, "stab", 1.3, "underslash", 1.1, "rampage", 1.3, "ruination", 1.5));
         map.put(id("possessed_viking_armor"), abilityParameters("headbutt", 0.8, "right_chop", 1, "left_chop", 1, "axe_combo", 1.2, "axe_throw", 1.3, "reckless_strike", 2, "reckless_leap", 1.6, "ice_spikes", 1));
         map.put(id("apocalypse_type_a"), abilityParameters("basic_attack", 1, "basic_attack2", 0.9, "combo", 1.5, "uppercut", 1.3, "throw", 1, "vanish", 1.5, "beam", 0.5, "void_storm", 0.5, "black_star_field", 0.7, "buildings_collapse", 2, "black_hole", 1.5, "blackbox", 0.4, "white_void", 1.8));
+        map.put(id("blossom_drake"), abilityParameters("claws", 1, "tail", 1, "pollen_breath", 0.35, "grasp", 0, "bite", 0.7, "fly_up", 0, "smash", 0.5));
+        map.put(id("floral_serpent"), abilityParameters("bite", 1, "constrict_jump", 0, "constrict", 0.15, "constrict_failed", 0));
+        map.put(id("glimmering_unicorn"), abilityParameters("horn", 1, "backfoot", 1, "charge", 0.35));
+        map.put(id("serenity_sentinel"), abilityParameters("awaken", 0, "punch", 1, "shock", 1, "shield", 0, "throw_stone", 1, "block", 0));
+        map.put(id("queen_everbloom"), abilityParameters("slash_right", 1, "slash_left", 1, "slash_huge", 2.5, "luminous_area", 0.5, "radiant_shot", 1, "buff_armor", 0, "rose_pull", 0, "summon", 0, "jump_back", 0));
+        map.put(id("scarlet_queen_everbloom"), abilityParameters("slash_right", 1, "slash_left", 1, "slash_huge", 2.5, "luminous_area", 0.5, "radiant_shot", 1, "buff_armor", 0, "rose_pull", 0, "summon", 0, "jump_back", 0, "savage", 0.4, "scarlet_wave", 2));
         PARAMS = Collections.unmodifiableMap(map);
     }
 
