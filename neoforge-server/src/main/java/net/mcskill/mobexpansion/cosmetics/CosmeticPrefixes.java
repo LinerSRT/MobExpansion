@@ -22,9 +22,16 @@ public final class CosmeticPrefixes {
     }
 
     public static final List<Definition> ALL = List.of(
-            new Definition("chaos", "&8[:chaos:<hover:show_text:'<red>Получено за прохождение ветки квестов'>"
-                    + "<gradient:#7e1294:#420469>Хаос</gradient></hover>&8] &7")
+            chaos("chaos", ":chaos:"),
+            chaos("chaos2", ":chaos2:"),
+            chaos("chaos3", ":chaos3:")
     );
+
+    /** Хаос разных уровней: отличается только эмодзи. */
+    private static Definition chaos(String id, String emoji) {
+        return new Definition(id, "&8[" + emoji + "<hover:show_text:'<red>Получено за прохождение ветки квестов'>"
+                + "<gradient:#7e1294:#420469>Хаос</gradient></hover>&8] &7");
+    }
 
     private static final List<String> TEXTS = ALL.stream().map(Definition::text).toList();
 

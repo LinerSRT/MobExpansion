@@ -989,6 +989,8 @@ public class LanguageProvider implements DataProvider {
         add("gui.mobexpansion.cosmetics.prefixes", "Prefixes", "Префиксы");
         add("gui.mobexpansion.cosmetics.no_prefix", "No prefix", "Без префикса");
         add("cosmetics.mobexpansion.prefix.chaos", "Chaos", "Хаос");
+        add("cosmetics.mobexpansion.prefix.chaos2", "Chaos II", "Хаос II");
+        add("cosmetics.mobexpansion.prefix.chaos3", "Chaos III", "Хаос III");
         add("gui.mobexpansion.cosmetics.skins", "Skins", "Скины");
         add("gui.mobexpansion.cosmetics.trails", "Trails", "Шлейфы");
         add("gui.mobexpansion.cosmetics.no_skin", "No skin", "Без скина");

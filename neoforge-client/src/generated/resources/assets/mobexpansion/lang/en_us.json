@@ -11,6 +11,8 @@
   "commands.mobexpansion.spawnall": "Spawners activated: %s of %s found within %s blocks",
   "config.mobexpansion.hide_skin_attack_fx_first_person": "Hide skin attack effect in first person",
   "cosmetics.mobexpansion.prefix.chaos": "Chaos",
+  "cosmetics.mobexpansion.prefix.chaos2": "Chaos II",
+  "cosmetics.mobexpansion.prefix.chaos3": "Chaos III",
   "cosmetics.mobexpansion.skin.capra": "Capra",
   "cosmetics.mobexpansion.skin.lillith": "Lillith",
   "cosmetics.mobexpansion.trail.bloks": "Blocks",

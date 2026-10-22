@@ -11,6 +11,8 @@
   "commands.mobexpansion.spawnall": "Спавнеры сработали: %s из %s в радиусе %s блоков",
   "config.mobexpansion.hide_skin_attack_fx_first_person": "Скрывать эффект удара скина от первого лица",
   "cosmetics.mobexpansion.prefix.chaos": "Хаос",
+  "cosmetics.mobexpansion.prefix.chaos2": "Хаос II",
+  "cosmetics.mobexpansion.prefix.chaos3": "Хаос III",
   "cosmetics.mobexpansion.skin.capra": "Капра",
   "cosmetics.mobexpansion.skin.lillith": "Лилит",
   "cosmetics.mobexpansion.trail.bloks": "Блоки",
