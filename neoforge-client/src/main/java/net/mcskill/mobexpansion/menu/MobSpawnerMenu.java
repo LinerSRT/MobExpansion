@@ -109,6 +109,7 @@ public class MobSpawnerMenu extends AbstractContainerMenu {
         buffer.writeFloat(entry.getSpawnRadius());
         buffer.writeVarInt(entry.getSpawnYMin());
         buffer.writeVarInt(entry.getSpawnYMax());
+        buffer.writeVarInt(entry.getLeashRadius());
         buffer.writeBoolean(entry.isEnabled());
     }
 
@@ -123,6 +124,7 @@ public class MobSpawnerMenu extends AbstractContainerMenu {
         final float spawnRadius = buffer.readFloat();
         final int spawnYMin = buffer.readVarInt();
         final int spawnYMax = buffer.readVarInt();
+        final int leashRadius = buffer.readVarInt();
         final boolean enabled = buffer.readBoolean();
         if (!SpawnerMobCatalog.isSpawnable(entityId))
             return null;
@@ -135,6 +137,7 @@ public class MobSpawnerMenu extends AbstractContainerMenu {
         entry.setSpawnRadius(spawnRadius);
         entry.setSpawnYMin(spawnYMin);
         entry.setSpawnYMax(spawnYMax);
+        entry.setLeashRadius(leashRadius);
         entry.setEnabled(enabled);
         return entry;
     }

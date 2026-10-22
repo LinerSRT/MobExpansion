@@ -3,6 +3,7 @@ package net.mcskill.mobexpansion.blockentity;
 import net.mcskill.mobexpansion.init.MobExBlockEntities;
 import net.mcskill.mobexpansion.init.MobExBlocks;
 import net.mcskill.mobexpansion.menu.MobSpawnerMenu;
+import net.mcskill.mobexpansion.spawner.MobHome;
 import net.mcskill.mobexpansion.spawner.SpawnMode;
 import net.mcskill.mobexpansion.spawner.SpawnerEntityEntry;
 import net.mcskill.mobexpansion.spawner.SpawnerMobCatalog;
@@ -372,6 +373,7 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
         if (nearbyCount >= entry.getMaxSimultaneous())
             return WaveResult.LIMIT_REACHED;
 
+        final int leash = entry.getLeashRadius();
         final int waveCount = entry.getCountMin() + serverLevel.random.nextInt(Math.max(1, entry.getCountMax() - entry.getCountMin() + 1));
         int spawnedAmount = 0;
         for (int attempt = 0; attempt < waveCount * 4 && spawnedAmount < waveCount; attempt++) {
@@ -384,6 +386,10 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
             final double spawnZ = blockPos.getZ() + 0.5D + offsetZ;
             final int spawnY = entry.getSpawnYMin() + serverLevel.random.nextInt(Math.max(1, entry.getSpawnYMax() - entry.getSpawnYMin() + 1));
             final BlockPos spawnFeetPos = BlockPos.containing(spawnX, spawnY, spawnZ);
+
+            // Точка спавна должна лежать в «доме» моба, иначе он сразу бы пошёл обратно.
+            if (leash > 0 && blockPos.distSqr(spawnFeetPos) > (double) leash * leash)
+                continue;
 
             if (!matchesBlockAround(serverLevel, spawnFeetPos))
                 continue;
@@ -400,6 +406,8 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
 
             mob.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.SPAWNER, null);
             mob.setPersistenceRequired();
+            if (leash > 0)
+                MobHome.set(mob, blockPos, leash);
             serverLevel.addFreshEntityWithPassengers(mob);
             spawnedAmount++;
         }

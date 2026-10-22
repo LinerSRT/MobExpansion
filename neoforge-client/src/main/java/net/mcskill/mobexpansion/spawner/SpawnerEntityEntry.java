@@ -14,6 +14,9 @@ public final class SpawnerEntityEntry {
     public static final int MAX_SIMULTANEOUS = 64;
     public static final float MIN_RADIUS = 1.0F;
     public static final float MAX_RADIUS = 64.0F;
+    /** Радиус «дома»: моб не уходит дальше от спавнера. 0 — привязка выключена. */
+    public static final int MIN_LEASH = 0;
+    public static final int MAX_LEASH = 64;
     public static final int MIN_SPAWN_Y = -64;
     public static final int MAX_SPAWN_Y = 320;
 
@@ -26,6 +29,7 @@ public final class SpawnerEntityEntry {
     private float spawnRadius = 4.0F;
     private int spawnYMin;
     private int spawnYMax;
+    private int leashRadius;
     private boolean enabled = true;
 
     public SpawnerEntityEntry(ResourceLocation entityId) {
@@ -49,6 +53,7 @@ public final class SpawnerEntityEntry {
         copy.spawnRadius = spawnRadius;
         copy.spawnYMin = spawnYMin;
         copy.spawnYMax = spawnYMax;
+        copy.leashRadius = leashRadius;
         copy.enabled = enabled;
         return copy;
     }
@@ -129,6 +134,14 @@ public final class SpawnerEntityEntry {
         this.spawnYMax = Mth.clamp(Math.max(spawnYMax, this.spawnYMin), MIN_SPAWN_Y, MAX_SPAWN_Y);
     }
 
+    public int getLeashRadius() {
+        return leashRadius;
+    }
+
+    public void setLeashRadius(int leashRadius) {
+        this.leashRadius = Mth.clamp(leashRadius, MIN_LEASH, MAX_LEASH);
+    }
+
     public boolean isEnabled() {
         return enabled;
     }
@@ -146,6 +159,7 @@ public final class SpawnerEntityEntry {
         setSpawnRadius(spawnRadius);
         setSpawnYMin(spawnYMin);
         setSpawnYMax(spawnYMax);
+        setLeashRadius(leashRadius);
     }
 
     public CompoundTag save() {
@@ -159,6 +173,7 @@ public final class SpawnerEntityEntry {
         tag.putFloat("SpawnRadius", spawnRadius);
         tag.putInt("SpawnYMin", spawnYMin);
         tag.putInt("SpawnYMax", spawnYMax);
+        tag.putInt("LeashRadius", leashRadius);
         tag.putBoolean("Enabled", enabled);
         return tag;
     }
@@ -177,6 +192,7 @@ public final class SpawnerEntityEntry {
         entry.setSpawnRadius(tag.contains("SpawnRadius") ? tag.getFloat("SpawnRadius") : 4.0F);
         entry.setSpawnYMin(tag.contains("SpawnYMin") ? tag.getInt("SpawnYMin") : fallbackY);
         entry.setSpawnYMax(tag.contains("SpawnYMax") ? tag.getInt("SpawnYMax") : entry.getSpawnYMin());
+        entry.setLeashRadius(tag.getInt("LeashRadius"));
         entry.setEnabled(!tag.contains("Enabled") || tag.getBoolean("Enabled"));
         return entry;
     }
