@@ -6,7 +6,16 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import software.bernie.geckolib.animation.state.BoneSnapshot;
+import software.bernie.geckolib.cache.GeckoLibCache;
+import software.bernie.geckolib.cache.object.BakedGeoModel;
+import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.model.GeoModel;
+
+import java.util.ArrayList;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 
 /**
@@ -58,6 +67,48 @@ public class SkinItemRenderer extends GeoItemRenderer<SkinItem> {
     private static final float ITEM_SIZE_PX = 15.0F;
 
     private static final class Model extends GeoModel<SkinItem> {
+        /**
+         * Кости BakedGeoModel общие для всех, кто рисует эту модель, а рендерер игрока в скине пропускает расчёт анимации,
+         * если уже считал его в этом кадре, — доверяя, что позу никто не трогал. Предмет (инвентарь, рука) двигал те же
+         * кости, и анимация персонажа дёргалась. Поэтому предмет получает свою копию костей.
+         */
+        private final Map<BakedGeoModel, BakedGeoModel> copies = new IdentityHashMap<>();
+        private BakedGeoModel active;
+
+        @Override
+        public BakedGeoModel getBakedModel(ResourceLocation location) {
+            final BakedGeoModel shared = GeckoLibCache.getBakedModels().get(location);
+            if (shared == null)
+                return super.getBakedModel(location);
+            final BakedGeoModel copy = copies.computeIfAbsent(shared, Model::copyOf);
+            if (copy != active) {
+                getAnimationProcessor().setActiveModel(copy);
+                active = copy;
+            }
+            return copy;
+        }
+
+        private static BakedGeoModel copyOf(BakedGeoModel source) {
+            final List<GeoBone> top = new ArrayList<>();
+            for (GeoBone bone : source.topLevelBones())
+                top.add(copyOf(bone, null));
+            return new BakedGeoModel(top, source.properties());
+        }
+
+        private static GeoBone copyOf(GeoBone source, GeoBone parent) {
+            final GeoBone bone = new GeoBone(parent, source.getName(), source.getMirror(), source.getInflate(), source.shouldNeverRender(), source.getReset());
+            bone.updatePivot(source.getPivotX(), source.getPivotY(), source.getPivotZ());
+            final BoneSnapshot rest = source.getInitialSnapshot();
+            if (rest != null)
+                bone.updateRotation(rest.getRotX(), rest.getRotY(), rest.getRotZ());
+            else
+                bone.updateRotation(source.getRotX(), source.getRotY(), source.getRotZ());
+            bone.getCubes().addAll(source.getCubes());
+            for (GeoBone child : source.getChildBones())
+                bone.getChildBones().add(copyOf(child, bone));
+            return bone;
+        }
+
         private static SkinDefinition of(SkinItem item) {
             return SkinRenderers.definition(item.skin());
         }

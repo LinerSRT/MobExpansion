@@ -36,14 +36,14 @@ import java.util.Map;
  */
 public class CosmeticsScreen extends Screen {
     private static final int GUI_W = 452;
-    private static final int GUI_H = 368;
+    private static final int GUI_H = 256;
 
     private static final int PREVIEW_X = 10;
     private static final int PREVIEW_Y = 28;
     private static final int PREVIEW_W = 140;
-    private static final int PREVIEW_H = 330;
+    private static final int PREVIEW_H = 218;
     private static final int STAGE_INSET = 5;
-    private static final int STAGE_H = 270;
+    private static final int STAGE_H = 168;
 
     private static final int ROWS_X = 160;
     private static final int ROWS_W = 282;
@@ -69,6 +69,8 @@ public class CosmeticsScreen extends Screen {
     private final List<Row> rows = new ArrayList<>();
     private final Map<ResourceLocation, Boolean> textureExists = new HashMap<>();
     private int left;
+    /** Сдвиг строк вверх в пикселях: в окно влезают две строки, остальные — за прокруткой. */
+    private int rowsScroll;
     private int top;
     @Nullable
     private CosmeticsStatePacket state;
@@ -115,8 +117,14 @@ public class CosmeticsScreen extends Screen {
             guiGraphics.drawString(font, title, left + 10, top + 10, COLOR_TEXT, false);
             final Hover hover = hover(mouseX, mouseY);
             renderPreview(guiGraphics, mouseX, mouseY, hover, partialTick);
-            for (int index = 0; index < rows.size(); index++)
-                renderRow(guiGraphics, rows.get(index), rowY(index), mouseX, mouseY, hover);
+            guiGraphics.enableScissor(left + ROWS_X, top + PREVIEW_Y, left + ROWS_X + ROWS_W, top + PREVIEW_Y + PREVIEW_H);
+            for (int index = 0; index < rows.size(); index++) {
+                final int y = rowY(index);
+                if (y + ROW_H > top + PREVIEW_Y && y < top + PREVIEW_Y + PREVIEW_H)
+                    renderRow(guiGraphics, rows.get(index), y, mouseX, mouseY, hover);
+            }
+            guiGraphics.disableScissor();
+            renderScrollbar(guiGraphics);
             if (hover != null && hover.entry != null && !hover.entry.unlocked())
                 guiGraphics.renderTooltip(font, List.of(Component.translatable("gui.mobexpansion.cosmetics.locked_tooltip")),
                         java.util.Optional.empty(), mouseX, mouseY);
@@ -126,7 +134,27 @@ public class CosmeticsScreen extends Screen {
     }
 
     private int rowY(int index) {
-        return top + PREVIEW_Y + index * (ROW_H + ROW_GAP);
+        return top + PREVIEW_Y + index * (ROW_H + ROW_GAP) - rowsScroll;
+    }
+
+    private int maxRowsScroll() {
+        return Math.max(0, rows.size() * (ROW_H + ROW_GAP) - ROW_GAP - PREVIEW_H);
+    }
+
+    /** Мышь над областью строк (всё, что вне неё, обрезано прокруткой). */
+    private boolean inRowsViewport(int mouseX, int mouseY) {
+        return isOver(mouseX, mouseY, left + ROWS_X, top + PREVIEW_Y, ROWS_W, PREVIEW_H);
+    }
+
+    private void renderScrollbar(GuiGraphics guiGraphics) {
+        final int max = maxRowsScroll();
+        if (max <= 0)
+            return;
+        final int x = left + ROWS_X + ROWS_W + 3, y = top + PREVIEW_Y;
+        final int thumb = Math.max(16, PREVIEW_H * PREVIEW_H / (PREVIEW_H + max));
+        final int thumbY = y + (PREVIEW_H - thumb) * rowsScroll / max;
+        guiGraphics.fill(x, y, x + 4, y + PREVIEW_H, 0x66000000);
+        guiGraphics.fill(x, thumbY, x + 4, thumbY + thumb, 0xFFAAAAAA);
     }
 
     private void renderPreview(GuiGraphics guiGraphics, int mouseX, int mouseY, @Nullable Hover hover, float partialTick) {
@@ -375,6 +403,8 @@ public class CosmeticsScreen extends Screen {
 
     @Nullable
     private Hover hover(int mouseX, int mouseY) {
+        if (!inRowsViewport(mouseX, mouseY))
+            return null;
         for (int r = 0; r < rows.size(); r++) {
             final Row row = rows.get(r);
             if (row.loading || !row.available)
@@ -426,13 +456,20 @@ public class CosmeticsScreen extends Screen {
     @Override
     public boolean mouseScrolled(double rawMouseX, double rawMouseY, double scrollX, double scrollY) {
         final int mouseX = GuiFitScale.unscaleMouseX(rawMouseX), mouseY = GuiFitScale.unscaleMouseY(rawMouseY);
-        for (int r = 0; r < rows.size(); r++) {
-            if (isOver(mouseX, mouseY, left + ROWS_X, rowY(r), ROWS_W, ROW_H)) {
-                rows.get(r).scrollBy(scrollY > 0 ? -1 : 1);
-                return true;
+        if (!inRowsViewport(mouseX, mouseY))
+            return super.mouseScrolled(rawMouseX, rawMouseY, scrollX, scrollY);
+        // Shift — карточки внутри строки, обычное колесо — строки вверх/вниз
+        if (hasShiftDown() || scrollX != 0) {
+            for (int r = 0; r < rows.size(); r++) {
+                if (isOver(mouseX, mouseY, left + ROWS_X, rowY(r), ROWS_W, ROW_H)) {
+                    rows.get(r).scrollBy((scrollY != 0 ? scrollY : scrollX) > 0 ? -1 : 1);
+                    return true;
+                }
             }
+            return true;
         }
-        return super.mouseScrolled(rawMouseX, rawMouseY, scrollX, scrollY);
+        rowsScroll = Mth.clamp(rowsScroll - (int) Math.signum(scrollY) * 28, 0, maxRowsScroll());
+        return true;
     }
 
     @Override
