@@ -27,10 +27,10 @@ public final class CosmeticPrefixes {
             chaos("chaos3", ":chaos3:")
     );
 
-    /** Хаос разных уровней: отличается только эмодзи. */
+    /** Хаос разных уровней: отличается только эмодзи (по бокам от слова). */
     private static Definition chaos(String id, String emoji) {
         return new Definition(id, "&8[" + emoji + "<hover:show_text:'<red>Получено за прохождение ветки квестов'>"
-                + "<gradient:#7e1294:#420469>Хаос</gradient></hover>&8] &7");
+                + "<gradient:#7e1294:#420469>Хаос</gradient></hover>" + emoji + "&8] &7");
     }
 
     private static final List<String> TEXTS = ALL.stream().map(Definition::text).toList();
