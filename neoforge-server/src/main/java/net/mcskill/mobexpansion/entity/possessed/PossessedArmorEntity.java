@@ -5,16 +5,14 @@ import net.mcskill.mobexpansion.entity.ability.AbilityMobEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
- * Одержимые доспехи — мини-боссы ближнего боя: общая фракция, полоска босса, тяжёлые шаги и звон металла.
+ * Одержимые доспехи — мини-боссы ближнего боя: общая фракция, тяжёлые шаги и звон металла.
  * Удары по одержимой броне частично «вязнут» — урон от снарядов снижен на четверть.
  */
 public abstract class PossessedArmorEntity extends AbilityMobEntity {
@@ -28,12 +26,6 @@ public abstract class PossessedArmorEntity extends AbilityMobEntity {
     @Override
     public String faction() {
         return FACTION;
-    }
-
-    @Override
-    @Nullable
-    protected BossEvent.BossBarColor bossBarColor() {
-        return BossEvent.BossBarColor.PURPLE;
     }
 
     @Override

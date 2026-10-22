@@ -5,7 +5,6 @@ import net.mcskill.mobexpansion.entity.ability.AbilityMobEntity;
 import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -210,12 +209,6 @@ public class SerenitySentinelEntity extends MeadowsCreatureEntity {
     @Override
     protected int deathTicks() {
         return Ability.ticks(4.5);
-    }
-
-    @Override
-    @Nullable
-    protected BossEvent.BossBarColor bossBarColor() {
-        return BossEvent.BossBarColor.GREEN;
     }
 
     @Override
