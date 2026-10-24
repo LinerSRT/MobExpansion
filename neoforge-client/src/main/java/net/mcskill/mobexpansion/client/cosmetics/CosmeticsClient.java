@@ -19,13 +19,13 @@ import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 /**
- * GUI кастомизации на клиенте: клавиша (по умолчанию K), открытие экрана по команде /cosmetics,
+ * GUI кастомизации на клиенте: клавиша (по умолчанию H), открытие экрана по команде /cosmetics,
  * последнее состояние с сервера и отправка выбора.
  */
 @EventBusSubscriber(modid = Core.MODID, value = Dist.CLIENT)
 public final class CosmeticsClient {
     public static final KeyMapping OPEN_KEY = new KeyMapping("key.mobexpansion.cosmetics", KeyConflictContext.IN_GAME,
-            InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, "key.categories.mobexpansion");
+            InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_H, "key.categories.mobexpansion");
 
     @Nullable
     private static CosmeticsStatePacket state;
