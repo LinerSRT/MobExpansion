@@ -17,8 +17,6 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -86,8 +84,10 @@ public class MobInfoEmiRecipe implements EmiRecipe {
 
     private static final int COLOR_LABEL = 0xFF9DA3A6;
     private static final int COLOR_VALUE = 0xFFFFFFFF;
-    private static final int LOCATION_MAX_LINES = 3;
-    private static final int RESPAWN_MAX_LINES = 2;
+    // Строки правой панели
+    private static final int LINE_LOCATION = 0;
+    private static final int LINE_DAMAGE = 1;
+    private static final int LINE_RESPAWN = 2;
     private static final int COLOR_DROPS_LABEL = 0xFF404040;
 
     private final MobInfo info;
@@ -98,11 +98,6 @@ public class MobInfoEmiRecipe implements EmiRecipe {
     private final List<EmiStack> outputs;
     /** Дроп без повторов: один предмет — один слот. */
     private final List<MobInfo.Drop> drops;
-
-    /** Строки «Расположение» (с переносом) и «До респавна» (в строку с подписью или с переносом). */
-    private List<String> locationLines = List.of();
-    private List<String> respawnLines = List.of();
-    private boolean respawnInline = true;
 
     @Nullable
     private LivingEntity previewEntity;
@@ -184,7 +179,6 @@ public class MobInfoEmiRecipe implements EmiRecipe {
     @Override
     public void addWidgets(WidgetHolder widgets) {
         final Font font = Minecraft.getInstance().font;
-        layoutInfoTexts(font);
 
         widgets.addTexture(TEXTURE, 0, 0, WIDTH, HEIGHT, 0, 0);
         widgets.addDrawable(0, 0, WIDTH, HEIGHT, (graphics, mouseX, mouseY, delta) -> {
@@ -204,7 +198,10 @@ public class MobInfoEmiRecipe implements EmiRecipe {
 
         // Подсказка справа: урон способностей
         if (!info.abilityDamage().isEmpty())
-            widgets.addTooltip((mouseX, mouseY) -> toTooltip(damageTooltip()), INFO_X, damageLineY(), INFO_W, LINE_H);
+            widgets.addTooltip((mouseX, mouseY) -> toTooltip(damageTooltip()), INFO_X, lineY(LINE_DAMAGE), INFO_W, LINE_H);
+        // Длинный текст обрезается многоточием — полный показываем в подсказке.
+        addFullTextTooltip(widgets, font, "gui.mobexpansion.emi.location", info.location(), LINE_LOCATION);
+        addFullTextTooltip(widgets, font, "gui.mobexpansion.emi.respawn", info.respawn(), LINE_RESPAWN);
 
         // Дроп
         final Component dropsLabel = Component.translatable("gui.mobexpansion.emi.drops");
@@ -350,30 +347,10 @@ public class MobInfoEmiRecipe implements EmiRecipe {
     // ---------------------------------------------------------------- правая часть
 
     private void renderInfoPanel(GuiGraphics graphics, Font font) {
-        int y = INFO_Y;
-
-        drawText(graphics, font, Component.translatable("gui.mobexpansion.emi.location").getString(), INFO_X, y, COLOR_LABEL, false);
-        y += LINE_H;
-        for (String line : locationLines) {
-            drawText(graphics, font, line, INFO_X + 4, y, COLOR_VALUE, false);
-            y += LINE_H;
-        }
-
-        drawLine(graphics, font, Component.translatable("gui.mobexpansion.emi.damage"), damageValue(), COLOR_VALUE, y);
-        y += LINE_H;
-
-        final Component respawnLabel = Component.translatable("gui.mobexpansion.emi.respawn");
-        if (respawnInline) {
-            drawLine(graphics, font, respawnLabel, Component.literal(respawnLines.getFirst()), COLOR_VALUE, y);
-            y += LINE_H;
-        } else {
-            drawText(graphics, font, respawnLabel.getString(), INFO_X, y, COLOR_LABEL, false);
-            y += LINE_H;
-            for (String line : respawnLines) {
-                drawText(graphics, font, line, INFO_X + 4, y, COLOR_VALUE, false);
-                y += LINE_H;
-            }
-        }
+        drawLine(graphics, font, Component.translatable("gui.mobexpansion.emi.location"), Component.literal(orDash(info.location())), COLOR_VALUE, lineY(LINE_LOCATION));
+        drawLine(graphics, font, Component.translatable("gui.mobexpansion.emi.damage"), damageValue(), COLOR_VALUE, lineY(LINE_DAMAGE));
+        drawLine(graphics, font, Component.translatable("gui.mobexpansion.emi.respawn"), Component.literal(orDash(info.respawn())), COLOR_VALUE, lineY(LINE_RESPAWN));
+        int y = lineY(LINE_RESPAWN + 1);
 
         drawLine(graphics, font, Component.translatable("gui.mobexpansion.emi.armor.short"), Component.literal(formatPlain(info.armor())), COLOR_VALUE, y);
         y += LINE_H;
@@ -416,37 +393,22 @@ public class MobInfoEmiRecipe implements EmiRecipe {
         return font.plainSubstrByWidth(text, unscaledMax - font.width("…")) + "…";
     }
 
-    private void layoutInfoTexts(Font font) {
-        locationLines = wrap(font, orDash(info.location()), INFO_W - 4, LOCATION_MAX_LINES);
-        final String respawn = orDash(info.respawn());
-        final int labelWidth = scaledWidth(font, Component.translatable("gui.mobexpansion.emi.respawn").getString() + " ");
-        respawnInline = scaledWidth(font, respawn) <= INFO_W - labelWidth;
-        respawnLines = respawnInline ? List.of(respawn) : wrap(font, respawn, INFO_W - 4, RESPAWN_MAX_LINES);
+    private static int lineY(int line) {
+        return INFO_Y + LINE_H * line;
     }
 
-    /** Y строки «Урон» (зависит от числа строк расположения). */
-    private int damageLineY() {
-        return INFO_Y + LINE_H * (1 + locationLines.size());
+    private static void addFullTextTooltip(WidgetHolder widgets, Font font, String labelKey, String text, int line) {
+        if (text == null || text.isBlank())
+            return;
+        final int valueX = INFO_X + scaledWidth(font, Component.translatable(labelKey).getString() + " ");
+        if (scaledWidth(font, text) <= INFO_X + INFO_W - valueX)
+            return;
+        widgets.addTooltipText(List.of(Component.translatable(labelKey), Component.literal(text).withStyle(ChatFormatting.GRAY)),
+                INFO_X, lineY(line), INFO_W, LINE_H);
     }
 
     private static String orDash(String text) {
         return text == null || text.isBlank() ? "—" : text;
-    }
-
-    /** Перенос по словам под ширину {@code maxWidth} пикселей страницы; лишние строки — многоточием в последней. */
-    private static List<String> wrap(Font font, String text, int maxWidth, int maxLines) {
-        final int unscaledWidth = (int) (maxWidth / TEXT_SCALE);
-        final List<String> lines = new ArrayList<>();
-        for (FormattedText part : font.getSplitter().splitLines(text, unscaledWidth, Style.EMPTY))
-            lines.add(part.getString());
-        if (lines.isEmpty())
-            return List.of(text);
-        if (lines.size() > maxLines) {
-            final List<String> cut = new ArrayList<>(lines.subList(0, maxLines));
-            cut.set(maxLines - 1, clip(font, cut.get(maxLines - 1) + "…", maxWidth));
-            return cut;
-        }
-        return lines;
     }
 
     private Component damageValue() {
