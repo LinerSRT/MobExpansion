@@ -24,7 +24,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -53,17 +52,17 @@ public class MobInfoEmiRecipe implements EmiRecipe {
     private static final int MODEL_TOP = 11;
     private static final int MODEL_RIGHT = 105;
     private static final int MODEL_BOTTOM = 103;
-    private static final int NAME_Y = 106;
+    private static final float NAME_Y = 106.5F;
     /** Доля панели, которую занимает хитбокс моба. */
     private static final float MODEL_FILL = 0.5F;
     // Левая нижняя панель (HP + допуск)
     private static final int STATS_X = 16;
-    private static final int HP_LABEL_Y = 121;
+    private static final int HP_LABEL_Y = 122;
     private static final int HP_BAR_X = 16;
     private static final int HP_BAR_Y = 130;
     private static final int HP_BAR_W = 84;
     private static final int HP_BAR_H = 6;
-    private static final int CLEARANCE_LABEL_Y = 137;
+    private static final int CLEARANCE_LABEL_Y = 139;
     private static final int SEGMENT_X = 16;
     private static final int SEGMENT_Y = 146;
     private static final int SEGMENT_W = 16;
@@ -74,14 +73,17 @@ public class MobInfoEmiRecipe implements EmiRecipe {
     private static final int INFO_X = 123;
     private static final int INFO_Y = 13;
     private static final int INFO_W = 111;
-    private static final int LINE_H = 10;
+    private static final int LINE_H = 8;
     // Дроп
-    private static final int DROPS_LABEL_Y = 110;
+    private static final int DROPS_LABEL_Y = 111;
     private static final int SLOTS_X = 125;
     private static final int SLOTS_Y = 120;
     private static final int SLOT_SIZE = 18;
     private static final int SLOT_COLUMNS = 6;
     private static final int SLOT_COUNT = 12;
+
+    /** Масштаб всего текста страницы (обычный шрифт слишком крупный для панелей). */
+    private static final float TEXT_SCALE = 0.75F;
 
     private static final int COLOR_LABEL = 0xFF9DA3A6;
     private static final int COLOR_VALUE = 0xFFFFFFFF;
@@ -94,6 +96,8 @@ public class MobInfoEmiRecipe implements EmiRecipe {
     private final EntityType<?> entityType;
     private final List<EmiIngredient> inputs;
     private final List<EmiStack> outputs;
+    /** Дроп без повторов: один предмет — один слот. */
+    private final List<MobInfo.Drop> drops;
 
     @Nullable
     private LivingEntity previewEntity;
@@ -111,12 +115,26 @@ public class MobInfoEmiRecipe implements EmiRecipe {
         final SpawnEggItem egg = SpawnEggItem.byId(entityType);
         this.inputs = egg == null ? List.of() : List.of(EmiStack.of(egg));
 
-        final Map<Item, EmiStack> unique = new LinkedHashMap<>();
-        for (MobInfo.Drop drop : info.drops()) {
-            final Item item = BuiltInRegistries.ITEM.get(drop.itemId());
-            unique.putIfAbsent(item, EmiStack.of(item));
+        this.drops = mergeDuplicates(info.drops());
+        final List<EmiStack> stacks = new ArrayList<>(drops.size());
+        for (MobInfo.Drop drop : drops)
+            stacks.add(EmiStack.of(BuiltInRegistries.ITEM.get(drop.itemId())));
+        this.outputs = List.copyOf(stacks);
+    }
+
+    /** Слить записи с одним предметом (как на сервере — на случай, если сервер со старой версией мода). */
+    private static List<MobInfo.Drop> mergeDuplicates(List<MobInfo.Drop> source) {
+        final Map<ResourceLocation, MobInfo.Drop> byItem = new LinkedHashMap<>();
+        for (MobInfo.Drop drop : source) {
+            byItem.merge(drop.itemId(), drop, (a, b) -> new MobInfo.Drop(
+                    a.itemId(),
+                    Math.min(a.minCount(), b.minCount()),
+                    Math.max(a.maxCount(), b.maxCount()),
+                    Math.max(a.chance(), b.chance()),
+                    a.conditional() && b.conditional(),
+                    a.lootTable() && b.lootTable()));
         }
-        this.outputs = List.copyOf(unique.values());
+        return List.copyOf(byItem.values());
     }
 
     public int order() {
@@ -186,9 +204,10 @@ public class MobInfoEmiRecipe implements EmiRecipe {
 
         // Дроп
         final Component dropsLabel = Component.translatable("gui.mobexpansion.emi.drops");
-        final int labelX = SLOTS_X + (SLOT_SIZE * SLOT_COLUMNS - font.width(dropsLabel)) / 2;
-        widgets.addText(dropsLabel, labelX, DROPS_LABEL_Y, COLOR_DROPS_LABEL, false);
-        final List<MobInfo.Drop> drops = info.drops();
+        final int labelWidth = scaledWidth(font, dropsLabel.getString());
+        final float labelX = SLOTS_X + (SLOT_SIZE * SLOT_COLUMNS - labelWidth) / 2.0F;
+        widgets.addDrawable(0, 0, WIDTH, HEIGHT, (graphics, mouseX, mouseY, delta) ->
+                drawText(graphics, font, dropsLabel.getString(), labelX, DROPS_LABEL_Y, COLOR_DROPS_LABEL, false));
         for (int i = 0; i < Math.min(SLOT_COUNT, drops.size()); i++) {
             final MobInfo.Drop drop = drops.get(i);
             // Количество рисуем сами (см. renderDropCounts) — EMI диапазон не умеет.
@@ -212,13 +231,12 @@ public class MobInfoEmiRecipe implements EmiRecipe {
             more.add(Component.translatable("gui.mobexpansion.emi.drops.more", drops.size() - SLOT_COUNT));
             for (int i = SLOT_COUNT; i < drops.size(); i++)
                 more.add(BuiltInRegistries.ITEM.get(drops.get(i).itemId()).getDescription().copy().withStyle(ChatFormatting.GRAY));
-            widgets.addTooltipText(more, labelX, DROPS_LABEL_Y - 1, font.width(dropsLabel), 10);
+            widgets.addTooltipText(more, Math.round(labelX), DROPS_LABEL_Y - 1, labelWidth, 8);
         }
     }
 
     /** Количество в правом нижнем углу слота, как у стака: «4» или «2-4» (не влезает в слот — мельче). */
     private void renderDropCounts(GuiGraphics graphics, Font font) {
-        final List<MobInfo.Drop> drops = info.drops();
         for (int i = 0; i < Math.min(SLOT_COUNT, drops.size()); i++) {
             final MobInfo.Drop drop = drops.get(i);
             if (drop.maxCount() <= 1)
@@ -299,14 +317,14 @@ public class MobInfoEmiRecipe implements EmiRecipe {
     }
 
     private void renderLeftPanel(GuiGraphics graphics, Font font) {
-        final String name = font.plainSubstrByWidth(entityType.getDescription().getString().toUpperCase(Locale.ROOT), MODEL_RIGHT - MODEL_LEFT - 4);
-        graphics.drawString(font, name, (MODEL_LEFT + MODEL_RIGHT - font.width(name)) / 2, NAME_Y, COLOR_VALUE, false);
+        final String name = clip(font, entityType.getDescription().getString().toUpperCase(Locale.ROOT), MODEL_RIGHT - MODEL_LEFT - 4);
+        drawText(graphics, font, name, (MODEL_LEFT + MODEL_RIGHT - scaledWidth(font, name)) / 2.0F, NAME_Y, COLOR_VALUE, false);
 
-        graphics.drawString(font, Component.translatable("gui.mobexpansion.emi.hp"), STATS_X, HP_LABEL_Y, COLOR_VALUE, false);
+        drawText(graphics, font, Component.translatable("gui.mobexpansion.emi.hp").getString(), STATS_X, HP_LABEL_Y, COLOR_VALUE, false);
         final String hp = formatCompact(info.maxHealth());
-        graphics.drawString(font, hp, HP_BAR_X + (HP_BAR_W - font.width(hp)) / 2, HP_BAR_Y - 1, COLOR_VALUE, true);
+        drawText(graphics, font, hp, HP_BAR_X + (HP_BAR_W - scaledWidth(font, hp)) / 2.0F, HP_BAR_Y + 0.5F, COLOR_VALUE, true);
 
-        graphics.drawString(font, Component.translatable("gui.mobexpansion.emi.clearance"), STATS_X, CLEARANCE_LABEL_Y, COLOR_VALUE, false);
+        drawText(graphics, font, Component.translatable("gui.mobexpansion.emi.clearance").getString(), STATS_X, CLEARANCE_LABEL_Y, COLOR_VALUE, false);
         for (int level = 0; level < Math.min(5, info.clearance()); level++)
             graphics.blit(TEXTURE, SEGMENT_X + level * SEGMENT_STEP, SEGMENT_Y, level * SEGMENT_STEP, SEGMENT_FILLED_V, SEGMENT_W, SEGMENT_H);
     }
@@ -331,7 +349,7 @@ public class MobInfoEmiRecipe implements EmiRecipe {
         final ClientMobInfo.SpawnPoints spawns = ClientMobInfo.spawnPoints(info.entityId());
         int y = INFO_Y;
 
-        graphics.drawString(font, Component.translatable("gui.mobexpansion.emi.location"), INFO_X, y, COLOR_LABEL, false);
+        drawText(graphics, font, Component.translatable("gui.mobexpansion.emi.location").getString(), INFO_X, y, COLOR_LABEL, false);
         y += LINE_H;
         drawClipped(graphics, font, locationValue(spawns), INFO_X + 4, y, COLOR_VALUE);
         y += LINE_H;
@@ -354,18 +372,34 @@ public class MobInfoEmiRecipe implements EmiRecipe {
     }
 
     private void drawLine(GuiGraphics graphics, Font font, Component label, Component value, int valueColor, int y) {
-        final Component labelText = label.copy().append(" ");
-        graphics.drawString(font, labelText, INFO_X, y, COLOR_LABEL, false);
-        final int labelWidth = font.width(labelText);
-        drawClipped(graphics, font, value, INFO_X + labelWidth, y, valueColor);
+        final String labelText = label.getString() + " ";
+        drawText(graphics, font, labelText, INFO_X, y, COLOR_LABEL, false);
+        drawClipped(graphics, font, value, INFO_X + scaledWidth(font, labelText), y, valueColor);
     }
 
     private void drawClipped(GuiGraphics graphics, Font font, Component text, int x, int y, int color) {
-        final int maxWidth = INFO_X + INFO_W - x;
-        String value = text.getString();
-        if (font.width(value) > maxWidth)
-            value = font.plainSubstrByWidth(value, maxWidth - font.width("…")) + "…";
-        graphics.drawString(font, value, x, y, color, false);
+        drawText(graphics, font, clip(font, text.getString(), INFO_X + INFO_W - x), x, y, color, false);
+    }
+
+    /** Текст в масштабе {@link #TEXT_SCALE}; координаты — в пикселях страницы. */
+    private static void drawText(GuiGraphics graphics, Font font, String text, float x, float y, int color, boolean shadow) {
+        graphics.pose().pushPose();
+        graphics.pose().translate(x, y, 0.0F);
+        graphics.pose().scale(TEXT_SCALE, TEXT_SCALE, 1.0F);
+        graphics.drawString(font, text, 0, 0, color, shadow);
+        graphics.pose().popPose();
+    }
+
+    private static int scaledWidth(Font font, String text) {
+        return Math.round(font.width(text) * TEXT_SCALE);
+    }
+
+    /** Обрезать до ширины {@code maxWidth} пикселей страницы (с учётом масштаба) с многоточием. */
+    private static String clip(Font font, String text, int maxWidth) {
+        final int unscaledMax = (int) (maxWidth / TEXT_SCALE);
+        if (font.width(text) <= unscaledMax)
+            return text;
+        return font.plainSubstrByWidth(text, unscaledMax - font.width("…")) + "…";
     }
 
     private Component locationValue(@Nullable ClientMobInfo.SpawnPoints spawns) {
