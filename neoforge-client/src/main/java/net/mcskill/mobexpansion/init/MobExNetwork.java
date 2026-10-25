@@ -6,6 +6,9 @@ import net.mcskill.mobexpansion.network.CosmeticsRequestPacket;
 import net.mcskill.mobexpansion.network.CosmeticsSelectPacket;
 import net.mcskill.mobexpansion.network.CosmeticsStatePacket;
 import net.mcskill.mobexpansion.network.MobClearancePacket;
+import net.mcskill.mobexpansion.network.MobInfoPacket;
+import net.mcskill.mobexpansion.network.MobSpawnInfoPacket;
+import net.mcskill.mobexpansion.network.MobSpawnInfoRequestPacket;
 import net.mcskill.mobexpansion.network.OpenCosmeticsPacket;
 import net.mcskill.mobexpansion.network.PlayerSkinPacket;
 import net.mcskill.mobexpansion.network.SkinAttackFxPacket;
@@ -36,5 +39,8 @@ public class MobExNetwork {
         registrar.playToClient(CosmeticsStatePacket.TYPE, CosmeticsStatePacket.STREAM_CODEC, CosmeticsStatePacket::handle);
         registrar.playToServer(CosmeticsRequestPacket.TYPE, CosmeticsRequestPacket.STREAM_CODEC, CosmeticsRequestPacket::handle);
         registrar.playToServer(CosmeticsSelectPacket.TYPE, CosmeticsSelectPacket.STREAM_CODEC, CosmeticsSelectPacket::handle);
+        registrar.playToClient(MobInfoPacket.TYPE, MobInfoPacket.STREAM_CODEC, MobInfoPacket::handle);
+        registrar.playToClient(MobSpawnInfoPacket.TYPE, MobSpawnInfoPacket.STREAM_CODEC, MobSpawnInfoPacket::handle);
+        registrar.playToServer(MobSpawnInfoRequestPacket.TYPE, MobSpawnInfoRequestPacket.STREAM_CODEC, MobSpawnInfoRequestPacket::handle);
     }
 }

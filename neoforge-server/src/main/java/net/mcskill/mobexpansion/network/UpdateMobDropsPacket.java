@@ -5,6 +5,7 @@ import net.mcskill.mobexpansion.attributes.EntityAttributeConfig;
 import net.mcskill.mobexpansion.attributes.EntityAttributeDefaults;
 import net.mcskill.mobexpansion.attributes.EntityAttributesConfigIO;
 import net.mcskill.mobexpansion.clearance.MobClearance;
+import net.mcskill.mobexpansion.info.MobInfoSync;
 import net.mcskill.mobexpansion.drops.DropDestination;
 import net.mcskill.mobexpansion.drops.DropConfigSessions;
 import net.mcskill.mobexpansion.drops.EntityLootConfig;
@@ -251,6 +252,7 @@ public record UpdateMobDropsPacket(List<EntityDropsData> entities) implements Cu
                         EntityAttributesConfigIO.getCached(), snapshot.attributes(), attributesByEntity, EntityAttributeDefaults::get));
             }
             MobClearance.syncToAll();
+            MobInfoSync.syncToAll();
             serverPlayer.displayClientMessage(Component.translatable("gui.mobexpansion.mob_drop_config.saved"), true);
         });
     }
