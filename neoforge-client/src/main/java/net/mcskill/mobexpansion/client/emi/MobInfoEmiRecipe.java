@@ -7,9 +7,7 @@ import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.WidgetHolder;
 import net.mcskill.mobexpansion.Core;
 import net.mcskill.mobexpansion.client.ClientClearance;
-import net.mcskill.mobexpansion.client.info.ClientMobInfo;
 import net.mcskill.mobexpansion.info.MobInfo;
-import net.mcskill.mobexpansion.info.MobSpawnPoint;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -19,7 +17,8 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -39,7 +38,7 @@ import java.util.Map;
 
 /**
  * Страница моба в EMI (текстура {@code textures/gui/emi/mob_info.png}, 248×166):
- * слева — модель, имя, HP и уровень допуска; справа — расположение (спавнеры), урон, таймер респавна,
+ * слева — модель, имя, HP и уровень допуска; справа — расположение, урон, респавн (тексты из настройщика мобов),
  * броня, опыт; снизу справа — до 12 предметов дропа.
  */
 public class MobInfoEmiRecipe implements EmiRecipe {
@@ -87,7 +86,8 @@ public class MobInfoEmiRecipe implements EmiRecipe {
 
     private static final int COLOR_LABEL = 0xFF9DA3A6;
     private static final int COLOR_VALUE = 0xFFFFFFFF;
-    private static final int COLOR_ALIVE = 0xFF6CE06C;
+    private static final int LOCATION_MAX_LINES = 3;
+    private static final int RESPAWN_MAX_LINES = 2;
     private static final int COLOR_DROPS_LABEL = 0xFF404040;
 
     private final MobInfo info;
@@ -98,6 +98,11 @@ public class MobInfoEmiRecipe implements EmiRecipe {
     private final List<EmiStack> outputs;
     /** Дроп без повторов: один предмет — один слот. */
     private final List<MobInfo.Drop> drops;
+
+    /** Строки «Расположение» (с переносом) и «До респавна» (в строку с подписью или с переносом). */
+    private List<String> locationLines = List.of();
+    private List<String> respawnLines = List.of();
+    private boolean respawnInline = true;
 
     @Nullable
     private LivingEntity previewEntity;
@@ -178,8 +183,8 @@ public class MobInfoEmiRecipe implements EmiRecipe {
 
     @Override
     public void addWidgets(WidgetHolder widgets) {
-        ClientMobInfo.requestSpawnPoints(info.entityId());
         final Font font = Minecraft.getInstance().font;
+        layoutInfoTexts(font);
 
         widgets.addTexture(TEXTURE, 0, 0, WIDTH, HEIGHT, 0, 0);
         widgets.addDrawable(0, 0, WIDTH, HEIGHT, (graphics, mouseX, mouseY, delta) -> {
@@ -197,10 +202,9 @@ public class MobInfoEmiRecipe implements EmiRecipe {
         widgets.addTooltip((mouseX, mouseY) -> toTooltip(clearanceTooltip()),
                 STATS_X, CLEARANCE_LABEL_Y, SEGMENT_STEP * 5, SEGMENT_Y + SEGMENT_H - CLEARANCE_LABEL_Y);
 
-        // Подсказки справа: все спавнеры и урон способностей
-        widgets.addTooltip((mouseX, mouseY) -> toTooltip(locationTooltip()), INFO_X, INFO_Y, INFO_W, LINE_H * 2);
+        // Подсказка справа: урон способностей
         if (!info.abilityDamage().isEmpty())
-            widgets.addTooltip((mouseX, mouseY) -> toTooltip(damageTooltip()), INFO_X, INFO_Y + LINE_H * 2, INFO_W, LINE_H);
+            widgets.addTooltip((mouseX, mouseY) -> toTooltip(damageTooltip()), INFO_X, damageLineY(), INFO_W, LINE_H);
 
         // Дроп
         final Component dropsLabel = Component.translatable("gui.mobexpansion.emi.drops");
@@ -212,11 +216,10 @@ public class MobInfoEmiRecipe implements EmiRecipe {
             final MobInfo.Drop drop = drops.get(i);
             // Количество рисуем сами (см. renderDropCounts) — EMI диапазон не умеет.
             final EmiStack stack = EmiStack.of(BuiltInRegistries.ITEM.get(drop.itemId()));
-            if (drop.chance() < 1.0F)
-                stack.setChance(drop.chance());
             final var slot = widgets.addSlot(stack, SLOTS_X + (i % SLOT_COLUMNS) * SLOT_SIZE, SLOTS_Y + (i / SLOT_COLUMNS) * SLOT_SIZE)
                     .drawBack(false)
                     .recipeContext(this);
+            slot.appendTooltip(Component.translatable("gui.mobexpansion.emi.drop.chance", formatChance(drop.chance())).withStyle(ChatFormatting.GOLD));
             if (drop.minCount() != drop.maxCount())
                 slot.appendTooltip(Component.translatable("gui.mobexpansion.emi.drop.count", drop.minCount(), drop.maxCount()).withStyle(ChatFormatting.GRAY));
             if (drop.conditional())
@@ -245,7 +248,8 @@ public class MobInfoEmiRecipe implements EmiRecipe {
             final int itemX = SLOTS_X + (i % SLOT_COLUMNS) * SLOT_SIZE + 1;
             final int itemY = SLOTS_Y + (i / SLOT_COLUMNS) * SLOT_SIZE + 1;
             final int textWidth = font.width(text);
-            final float scale = textWidth > 17 ? 0.75F : 1.0F;
+            // Подпись не должна вылезать за слот (16 px): «4» — обычным шрифтом, «2-4» — 0.75, «10-16» — 0.5.
+            final float scale = textWidth <= 16 ? 1.0F : textWidth * 0.75F <= 16.0F ? 0.75F : 0.5F;
             graphics.pose().pushPose();
             graphics.pose().translate(itemX + 17.0F, itemY + 17.0F, 300.0F);
             graphics.pose().scale(scale, scale, 1.0F);
@@ -346,20 +350,30 @@ public class MobInfoEmiRecipe implements EmiRecipe {
     // ---------------------------------------------------------------- правая часть
 
     private void renderInfoPanel(GuiGraphics graphics, Font font) {
-        final ClientMobInfo.SpawnPoints spawns = ClientMobInfo.spawnPoints(info.entityId());
         int y = INFO_Y;
 
         drawText(graphics, font, Component.translatable("gui.mobexpansion.emi.location").getString(), INFO_X, y, COLOR_LABEL, false);
         y += LINE_H;
-        drawClipped(graphics, font, locationValue(spawns), INFO_X + 4, y, COLOR_VALUE);
-        y += LINE_H;
+        for (String line : locationLines) {
+            drawText(graphics, font, line, INFO_X + 4, y, COLOR_VALUE, false);
+            y += LINE_H;
+        }
 
         drawLine(graphics, font, Component.translatable("gui.mobexpansion.emi.damage"), damageValue(), COLOR_VALUE, y);
         y += LINE_H;
 
-        final int respawnColor = isAlive(spawns) ? COLOR_ALIVE : COLOR_VALUE;
-        drawLine(graphics, font, Component.translatable("gui.mobexpansion.emi.respawn"), respawnValue(spawns), respawnColor, y);
-        y += LINE_H;
+        final Component respawnLabel = Component.translatable("gui.mobexpansion.emi.respawn");
+        if (respawnInline) {
+            drawLine(graphics, font, respawnLabel, Component.literal(respawnLines.getFirst()), COLOR_VALUE, y);
+            y += LINE_H;
+        } else {
+            drawText(graphics, font, respawnLabel.getString(), INFO_X, y, COLOR_LABEL, false);
+            y += LINE_H;
+            for (String line : respawnLines) {
+                drawText(graphics, font, line, INFO_X + 4, y, COLOR_VALUE, false);
+                y += LINE_H;
+            }
+        }
 
         drawLine(graphics, font, Component.translatable("gui.mobexpansion.emi.armor.short"), Component.literal(formatPlain(info.armor())), COLOR_VALUE, y);
         y += LINE_H;
@@ -402,44 +416,35 @@ public class MobInfoEmiRecipe implements EmiRecipe {
         return font.plainSubstrByWidth(text, unscaledMax - font.width("…")) + "…";
     }
 
-    private Component locationValue(@Nullable ClientMobInfo.SpawnPoints spawns) {
-        if (spawns == null)
-            return Component.literal("…");
-        if (spawns.points().isEmpty())
-            return Component.translatable("gui.mobexpansion.emi.location.unknown");
-        final MobSpawnPoint first = spawns.points().getFirst();
-        final MutableComponent text = describePoint(first);
-        if (spawns.points().size() > 1)
-            text.append(" (+" + (spawns.points().size() - 1) + ")");
-        return text;
+    private void layoutInfoTexts(Font font) {
+        locationLines = wrap(font, orDash(info.location()), INFO_W - 4, LOCATION_MAX_LINES);
+        final String respawn = orDash(info.respawn());
+        final int labelWidth = scaledWidth(font, Component.translatable("gui.mobexpansion.emi.respawn").getString() + " ");
+        respawnInline = scaledWidth(font, respawn) <= INFO_W - labelWidth;
+        respawnLines = respawnInline ? List.of(respawn) : wrap(font, respawn, INFO_W - 4, RESPAWN_MAX_LINES);
     }
 
-    private static MutableComponent describePoint(MobSpawnPoint point) {
-        final MutableComponent text = Component.literal(point.pos().getX() + ", " + point.pos().getY() + ", " + point.pos().getZ());
-        if (!point.dimension().equals(Level.OVERWORLD.location()))
-            text.append(" · ").append(dimensionName(point.dimension()));
-        return text;
+    /** Y строки «Урон» (зависит от числа строк расположения). */
+    private int damageLineY() {
+        return INFO_Y + LINE_H * (1 + locationLines.size());
     }
 
-    private static Component dimensionName(ResourceLocation dimension) {
-        return Component.translatableWithFallback("gui.mobexpansion.emi.dimension." + dimension.getNamespace() + "." + dimension.getPath(), dimension.getPath());
+    private static String orDash(String text) {
+        return text == null || text.isBlank() ? "—" : text;
     }
 
-    private List<Component> locationTooltip() {
-        final ClientMobInfo.SpawnPoints spawns = ClientMobInfo.spawnPoints(info.entityId());
-        final List<Component> lines = new ArrayList<>();
-        if (spawns == null || spawns.points().isEmpty()) {
-            lines.add(Component.translatable("gui.mobexpansion.emi.location.unknown.tooltip"));
-            return lines;
-        }
-        lines.add(Component.translatable("gui.mobexpansion.emi.location.spawners", spawns.points().size()));
-        for (MobSpawnPoint point : spawns.points()) {
-            final MutableComponent line = describePoint(point).withStyle(ChatFormatting.GRAY);
-            if (point.isFull())
-                line.append(Component.literal(" — ").append(Component.translatable("gui.mobexpansion.emi.respawn.alive")).withStyle(ChatFormatting.GREEN));
-            else
-                line.append(Component.literal(" — " + formatDuration(spawns.remainingMillis(point))).withStyle(ChatFormatting.WHITE));
-            lines.add(line);
+    /** Перенос по словам под ширину {@code maxWidth} пикселей страницы; лишние строки — многоточием в последней. */
+    private static List<String> wrap(Font font, String text, int maxWidth, int maxLines) {
+        final int unscaledWidth = (int) (maxWidth / TEXT_SCALE);
+        final List<String> lines = new ArrayList<>();
+        for (FormattedText part : font.getSplitter().splitLines(text, unscaledWidth, Style.EMPTY))
+            lines.add(part.getString());
+        if (lines.isEmpty())
+            return List.of(text);
+        if (lines.size() > maxLines) {
+            final List<String> cut = new ArrayList<>(lines.subList(0, maxLines));
+            cut.set(maxLines - 1, clip(font, cut.get(maxLines - 1) + "…", maxWidth));
+            return cut;
         }
         return lines;
     }
@@ -462,33 +467,6 @@ public class MobInfoEmiRecipe implements EmiRecipe {
                     .withStyle(ChatFormatting.GRAY));
         }
         return lines;
-    }
-
-    private static boolean isAlive(@Nullable ClientMobInfo.SpawnPoints spawns) {
-        if (spawns == null || spawns.points().isEmpty())
-            return false;
-        for (MobSpawnPoint point : spawns.points()) {
-            if (!point.isFull())
-                return false;
-        }
-        return true;
-    }
-
-    private static Component respawnValue(@Nullable ClientMobInfo.SpawnPoints spawns) {
-        if (spawns == null)
-            return Component.literal("…");
-        if (spawns.points().isEmpty())
-            return Component.literal("—");
-        long nearest = Long.MAX_VALUE;
-        for (MobSpawnPoint point : spawns.points()) {
-            if (!point.isFull())
-                nearest = Math.min(nearest, spawns.remainingMillis(point));
-        }
-        if (nearest == Long.MAX_VALUE)
-            return Component.translatable("gui.mobexpansion.emi.respawn.alive");
-        if (nearest <= 0L)
-            return Component.translatable("gui.mobexpansion.emi.respawn.soon");
-        return Component.literal(formatDuration(nearest));
     }
 
     // ---------------------------------------------------------------- форматирование
@@ -526,14 +504,12 @@ public class MobInfoEmiRecipe implements EmiRecipe {
         return String.format(Locale.ROOT, "%.2f", value);
     }
 
-    private static String formatDuration(long millis) {
-        final long totalSeconds = (millis + 999L) / 1000L;
-        final long hours = totalSeconds / 3600L;
-        final long minutes = totalSeconds / 60L % 60L;
-        final long seconds = totalSeconds % 60L;
-        if (hours > 0L)
-            return Component.translatable("gui.mobexpansion.emi.duration.hours", hours, String.format(Locale.ROOT, "%02d", minutes)).getString();
-        return String.format(Locale.ROOT, "%d:%02d", minutes, seconds);
+    /** 0.25 → «25%», 0.025 → «2.5%», совсем малый шанс → «<0.1%». */
+    private static String formatChance(float chance) {
+        final double percent = chance * 100.0D;
+        if (percent > 0.0D && percent < 0.1D)
+            return "<0.1%";
+        return trim(percent) + "%";
     }
 
     private static String roman(int level) {

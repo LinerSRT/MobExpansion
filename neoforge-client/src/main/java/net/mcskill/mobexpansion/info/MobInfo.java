@@ -17,6 +17,8 @@ import java.util.Map;
  *
  * @param abilityDamage урон способностей: ключ доп. параметра ({@code *_damage}) → значение
  * @param xpMax         -1 — опыт в конфиге не задан
+ * @param location      текст «Расположение» из настройщика мобов (пусто — не задан)
+ * @param respawn       текст «До респавна» из настройщика мобов (пусто — не задан)
  */
 public record MobInfo(
         ResourceLocation entityId,
@@ -29,13 +31,17 @@ public record MobInfo(
         List<Drop> drops,
         int xpMin,
         int xpMax,
-        float xpChance
+        float xpChance,
+        String location,
+        String respawn
 ) {
     public static final StreamCodec<RegistryFriendlyByteBuf, MobInfo> STREAM_CODEC = StreamCodec.of(MobInfo::write, MobInfo::read);
 
     public MobInfo {
         abilityDamage = abilityDamage == null ? Map.of() : Collections.unmodifiableMap(new LinkedHashMap<>(abilityDamage));
         drops = drops == null ? List.of() : List.copyOf(drops);
+        location = location == null ? "" : location;
+        respawn = respawn == null ? "" : respawn;
     }
 
     public boolean hasExperience() {
@@ -60,6 +66,8 @@ public record MobInfo(
         buf.writeVarInt(info.xpMin);
         buf.writeVarInt(info.xpMax);
         buf.writeFloat(info.xpChance);
+        buf.writeUtf(info.location);
+        buf.writeUtf(info.respawn);
     }
 
     private static MobInfo read(RegistryFriendlyByteBuf buf) {
@@ -78,7 +86,7 @@ public record MobInfo(
         for (int i = 0; i < dropCount; i++)
             drops.add(Drop.read(buf));
         return new MobInfo(entityId, maxHealth, armor, attackDamage, movementSpeed, abilityDamage, clearance, drops,
-                buf.readVarInt(), buf.readVarInt(), buf.readFloat());
+                buf.readVarInt(), buf.readVarInt(), buf.readFloat(), buf.readUtf(), buf.readUtf());
     }
 
     /**

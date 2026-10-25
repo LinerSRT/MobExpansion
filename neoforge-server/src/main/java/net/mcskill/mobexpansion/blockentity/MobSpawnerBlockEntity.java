@@ -4,7 +4,6 @@ import net.mcskill.mobexpansion.init.MobExBlockEntities;
 import net.mcskill.mobexpansion.init.MobExBlocks;
 import net.mcskill.mobexpansion.menu.MobSpawnerMenu;
 import net.mcskill.mobexpansion.spawner.MobHome;
-import net.mcskill.mobexpansion.spawner.MobSpawnerIndex;
 import net.mcskill.mobexpansion.spawner.SpawnMode;
 import net.mcskill.mobexpansion.spawner.SpawnerEntityEntry;
 import net.mcskill.mobexpansion.spawner.SpawnerMobCatalog;
@@ -39,9 +38,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @SuppressWarnings("deprecation")
 public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
@@ -75,8 +72,6 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
     private long lastSpawnTime;
     private int nextEntityIndex;
     private int activationDelayLeft;
-    /** Живых мобов выбранного типа после последней волны (для индекса спавнеров в EMI). */
-    private int lastWaveAlive;
 
     public MobSpawnerBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(MobExBlockEntities.MOB_SPAWNER.get(), blockPos, blockState);
@@ -89,39 +84,6 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
         for (SpawnerEntityEntry entry : entries)
             copies.add(entry.copy());
         return copies;
-    }
-
-    public long getLastSpawnTime() {
-        return lastSpawnTime;
-    }
-
-    public int getSpawnCooldown() {
-        return spawnCooldown;
-    }
-
-    /** Живые мобы типа в зоне подсчёта спавнера (как при проверке лимита волны); 0 — типа нет в спавнере. */
-    public int countAlive(ServerLevel serverLevel, ResourceLocation entityId) {
-        for (SpawnerEntityEntry entry : entries) {
-            if (entry.getEntityId().equals(entityId))
-                return countNearby(serverLevel, worldPosition, entry);
-        }
-        return 0;
-    }
-
-    private static int countNearby(ServerLevel serverLevel, BlockPos blockPos, SpawnerEntityEntry entry) {
-        // Живых мобов этого типа считаем в зоне не меньше 32 блоков (как раньше при радиусе активации 16 по умолчанию).
-        final double checkRadius = Math.max(entry.getSpawnRadius(), COUNT_RADIUS) * 2.0D;
-        final AABB nearbyArea = new AABB(blockPos).inflate(checkRadius);
-        return serverLevel.getEntitiesOfClass(
-                Mob.class,
-                nearbyArea,
-                mob -> mob.isAlive() && entry.getEntityId().equals(BuiltInRegistries.ENTITY_TYPE.getKey(mob.getType()))
-        ).size();
-    }
-
-    private void updateIndex(Map<ResourceLocation, Integer> aliveCounts) {
-        if (level instanceof ServerLevel serverLevel)
-            MobSpawnerIndex.update(serverLevel, this, aliveCounts);
     }
 
     public SpawnMode getSpawnMode() {
@@ -251,7 +213,6 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
             nextEntityIndex = 0;
         spawnCooldown = Math.min(spawnCooldown, Math.max(SpawnerEntityEntry.MIN_INTERVAL, firstEnabledInterval()));
         setChanged();
-        updateIndex(Map.of());
         if (level != null)
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
     }
@@ -304,7 +265,6 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
         // Не нашлось места для мобов — повторяем через секунду, а не через полный интервал.
         spawner.spawnCooldown = result == WaveResult.NO_ROOM ? SpawnerEntityEntry.MIN_INTERVAL : selectedEntry.getInterval();
         spawner.setChanged();
-        spawner.updateIndex(Map.of(selectedEntry.getEntityId(), spawner.lastWaveAlive));
     }
 
     /**
@@ -315,17 +275,12 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
         int spawnedEntries = 0;
         if (!matchesBlockUnder(serverLevel, worldPosition))
             return 0;
-        final Map<ResourceLocation, Integer> aliveCounts = new HashMap<>();
         for (SpawnerEntityEntry entry : entries) {
-            if (!entry.isEnabled())
-                continue;
-            if (trySpawnWave(serverLevel, worldPosition, entry) == WaveResult.SPAWNED)
+            if (entry.isEnabled() && trySpawnWave(serverLevel, worldPosition, entry) == WaveResult.SPAWNED)
                 spawnedEntries++;
-            aliveCounts.put(entry.getEntityId(), lastWaveAlive);
         }
         lastSpawnTime = System.currentTimeMillis();
         setChanged();
-        updateIndex(aliveCounts);
         return spawnedEntries;
     }
 
@@ -334,7 +289,6 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
         super.onLoad();
         // Задержка активации отсчитывается заново при каждой загрузке чанка.
         activationDelayLeft = activationDelay;
-        updateIndex(Map.of());
     }
 
     private boolean isCooldownOver(long now) {
@@ -405,12 +359,17 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
     private enum WaveResult { SPAWNED, LIMIT_REACHED, NO_ROOM }
 
     private WaveResult trySpawnWave(ServerLevel serverLevel, BlockPos blockPos, SpawnerEntityEntry entry) {
-        lastWaveAlive = 0;
         if (!SpawnerMobCatalog.isSpawnable(entry.getEntityId()))
             return WaveResult.LIMIT_REACHED;
 
-        final int nearbyCount = countNearby(serverLevel, blockPos, entry);
-        lastWaveAlive = nearbyCount;
+        // Живых мобов этого типа считаем в зоне не меньше 32 блоков (как раньше при радиусе активации 16 по умолчанию).
+        final double checkRadius = Math.max(entry.getSpawnRadius(), COUNT_RADIUS) * 2.0D;
+        final AABB nearbyArea = new AABB(blockPos).inflate(checkRadius);
+        final int nearbyCount = serverLevel.getEntitiesOfClass(
+                Mob.class,
+                nearbyArea,
+                mob -> mob.isAlive() && entry.getEntityId().equals(BuiltInRegistries.ENTITY_TYPE.getKey(mob.getType()))
+        ).size();
         if (nearbyCount >= entry.getMaxSimultaneous())
             return WaveResult.LIMIT_REACHED;
 
@@ -451,7 +410,6 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
             serverLevel.addFreshEntityWithPassengers(mob);
             spawnedAmount++;
         }
-        lastWaveAlive = nearbyCount + spawnedAmount;
         return spawnedAmount > 0 ? WaveResult.SPAWNED : WaveResult.NO_ROOM;
     }
 

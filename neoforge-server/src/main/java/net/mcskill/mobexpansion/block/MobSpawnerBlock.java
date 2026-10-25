@@ -5,10 +5,8 @@ import net.mcskill.mobexpansion.blockentity.MobSpawnerBlockEntity;
 import net.mcskill.mobexpansion.init.MobExCodecs;
 import net.mcskill.mobexpansion.init.MobExBlockEntities;
 import net.mcskill.mobexpansion.menu.MobSpawnerMenu;
-import net.mcskill.mobexpansion.spawner.MobSpawnerIndex;
 import net.mcskill.mobexpansion.spawner.MobSpawnerMask;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -58,14 +56,6 @@ public class MobSpawnerBlock extends BaseEntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState blockState, @NotNull BlockEntityType<T> blockEntityType) {
         return level.isClientSide() ? null : createTickerHelper(blockEntityType, MobExBlockEntities.MOB_SPAWNER.get(), MobSpawnerBlockEntity::serverTick);
-    }
-
-    @Override
-    protected void onRemove(@NotNull BlockState blockState, @NotNull Level level, @NotNull BlockPos blockPos, @NotNull BlockState newState, boolean movedByPiston) {
-        // Блок сломан/заменён (не выгрузка чанка) — спавнер пропадает из EMI.
-        if (!blockState.is(newState.getBlock()) && level instanceof ServerLevel serverLevel)
-            MobSpawnerIndex.remove(serverLevel, blockPos);
-        super.onRemove(blockState, level, blockPos, newState, movedByPiston);
     }
 
     @Override

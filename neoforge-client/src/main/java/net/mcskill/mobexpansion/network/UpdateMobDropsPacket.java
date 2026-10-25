@@ -67,7 +67,10 @@ public record UpdateMobDropsPacket(List<EntityDropsData> entities) implements Cu
             for (int index = 0; index < extraCount; index++)
                 extras.put(buffer.readUtf(), buffer.readDouble());
             final boolean dropToKiller = buffer.readBoolean();
-            return new AttributeData(maxHealth, armor, armorToughness, attackDamage, movementSpeed, knockbackResistance, followRange, extras, dropToKiller, buffer.readVarInt());
+            final int clearanceLevel = buffer.readVarInt();
+            final String location = buffer.readUtf();
+            final String respawn = buffer.readUtf();
+            return new AttributeData(maxHealth, armor, armorToughness, attackDamage, movementSpeed, knockbackResistance, followRange, extras, dropToKiller, clearanceLevel, location, respawn);
         }
 
         @Override
@@ -86,6 +89,8 @@ public record UpdateMobDropsPacket(List<EntityDropsData> entities) implements Cu
             }
             buffer.writeBoolean(data.dropToKiller());
             buffer.writeVarInt(data.clearanceLevel());
+            buffer.writeUtf(data.location());
+            buffer.writeUtf(data.respawn());
         }
     };
 
@@ -157,10 +162,14 @@ public record UpdateMobDropsPacket(List<EntityDropsData> entities) implements Cu
             double followRange,
             Map<String, Double> extras,
             boolean dropToKiller,
-            int clearanceLevel
+            int clearanceLevel,
+            String location,
+            String respawn
     ) {
         public AttributeData {
             extras = extras == null ? Map.of() : Map.copyOf(new LinkedHashMap<>(extras));
+            location = location == null ? "" : location;
+            respawn = respawn == null ? "" : respawn;
         }
 
         public static AttributeData from(EntityAttributeConfig config) {
@@ -174,7 +183,9 @@ public record UpdateMobDropsPacket(List<EntityDropsData> entities) implements Cu
                     config.followRange(),
                     config.extras(),
                     config.dropDestination().givesToKiller(),
-                    config.clearanceLevel()
+                    config.clearanceLevel(),
+                    config.location(),
+                    config.respawn()
             );
         }
     }

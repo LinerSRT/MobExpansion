@@ -160,6 +160,10 @@ public final class EntityAttributesConfigIO {
         }
         json.addProperty("dropDestination", config.dropDestination().name());
         json.addProperty("clearanceLevel", config.clearanceLevel());
+        if (!config.location().isEmpty())
+            json.addProperty("location", config.location());
+        if (!config.respawn().isEmpty())
+            json.addProperty("respawn", config.respawn());
         return json;
     }
 
@@ -186,7 +190,9 @@ public final class EntityAttributesConfigIO {
                 readDouble(json, "followRange", fallback.followRange()),
                 extras,
                 DropDestination.byName(readString(json, "dropDestination", fallback.dropDestination().name())),
-                (int) Math.round(readDouble(json, "clearanceLevel", fallback.clearanceLevel()))
+                (int) Math.round(readDouble(json, "clearanceLevel", fallback.clearanceLevel())),
+                readString(json, "location", fallback.location()),
+                readString(json, "respawn", fallback.respawn())
         ).sanitized(entityId);
     }
 

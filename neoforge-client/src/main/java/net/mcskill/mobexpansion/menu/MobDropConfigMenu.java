@@ -87,7 +87,9 @@ public class MobDropConfigMenu extends AbstractContainerMenu {
                 followRange,
                 extras,
                 buffer.readBoolean() ? DropDestination.KILLER_INVENTORY : DropDestination.WORLD,
-                buffer.readVarInt()
+                buffer.readVarInt(),
+                buffer.readUtf(),
+                buffer.readUtf()
         );
     }
 

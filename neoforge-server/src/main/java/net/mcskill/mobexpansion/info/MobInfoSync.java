@@ -15,9 +15,6 @@ import net.mcskill.mobexpansion.drops.EntityLootConfigIO;
 import net.mcskill.mobexpansion.drops.MobDropEntry;
 import net.mcskill.mobexpansion.drops.MobExperienceEntry;
 import net.mcskill.mobexpansion.network.MobInfoPacket;
-import net.mcskill.mobexpansion.network.MobSpawnInfoPacket;
-import net.mcskill.mobexpansion.network.MobSpawnInfoRequestPacket;
-import net.mcskill.mobexpansion.spawner.MobSpawnerIndex;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -43,26 +40,22 @@ import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * Данные для страниц мобов в EMI: собирает {@link MobInfo} по всем мобам (характеристики и допуск — из конфига
  * характеристик MobExpansion, дроп — из конфига дропа и ванильной loot-таблицы) и рассылает клиентам:
  * при входе, после сохранения настройщика мобов и после {@code /reload}.
- * Спавнеры с таймерами клиент запрашивает отдельно, когда открывает страницу моба.
+ * «Расположение» и «До респавна» — статичные тексты из настройщика (вкладка «Характеристики»).
  */
 @EventBusSubscriber(modid = Core.MODID)
 public final class MobInfoSync {
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final long REQUEST_COOLDOWN_MILLIS = 250L;
     private static final int MAX_NESTED_TABLES = 3;
 
     private static volatile List<MobInfo> cached;
-    private static final Map<UUID, Long> LAST_REQUEST = new HashMap<>();
 
     private MobInfoSync() {
     }
@@ -70,24 +63,17 @@ public final class MobInfoSync {
     @SubscribeEvent
     public static void onServerStarted(ServerStartedEvent event) {
         cached = null;
-        MobSpawnInfoRequestPacket.serverHandler = MobInfoSync::sendSpawnPoints;
     }
 
     @SubscribeEvent
     public static void onServerStopped(ServerStoppedEvent event) {
         cached = null;
-        LAST_REQUEST.clear();
     }
 
     @SubscribeEvent
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player)
             sendTo(player);
-    }
-
-    @SubscribeEvent
-    public static void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
-        LAST_REQUEST.remove(event.getEntity().getUUID());
     }
 
     /** {@code /reload} (игрок не задан) — loot-таблицы могли поменяться. */
@@ -109,15 +95,6 @@ public final class MobInfoSync {
         if (server == null)
             return;
         PacketDistributor.sendToAllPlayers(new MobInfoPacket(get(server)));
-    }
-
-    private static void sendSpawnPoints(ServerPlayer player, ResourceLocation entityId) {
-        final long now = System.currentTimeMillis();
-        final Long last = LAST_REQUEST.get(player.getUUID());
-        if (last != null && now - last < REQUEST_COOLDOWN_MILLIS)
-            return;
-        LAST_REQUEST.put(player.getUUID(), now);
-        PacketDistributor.sendToPlayer(player, new MobSpawnInfoPacket(entityId, MobSpawnerIndex.pointsFor(player.server, entityId)));
     }
 
     private static List<MobInfo> get(MinecraftServer server) {
@@ -210,7 +187,8 @@ public final class MobInfoSync {
             xpChance = xp.chance();
         }
         return new MobInfo(entityId, (float) attributes.maxHealth(), (float) attributes.armor(), (float) attributes.attackDamage(),
-                (float) attributes.movementSpeed(), abilityDamage, MobClearance.getRequired(entityId), merged, xpMin, xpMax, xpChance);
+                (float) attributes.movementSpeed(), abilityDamage, MobClearance.getRequired(entityId), merged, xpMin, xpMax, xpChance,
+                attributes.location(), attributes.respawn());
     }
 
     /**

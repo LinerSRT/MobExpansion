@@ -75,6 +75,12 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
     private static final int ATTR_LABEL_OFFSET = 0;
     private static final int ATTR_BOX_OFFSET = 12;
     private static final int EXTRA_VALUE_WIDTH = 68;
+    /** На вкладке «Характеристики» список доп. параметров короче — под ним поля текстов для EMI. */
+    private static final int CHARACTERISTICS_VISIBLE_ROWS = 5;
+    private static final int INFO_TEXT_LABEL_Y = LIST_BODY_Y + CHARACTERISTICS_VISIBLE_ROWS * ROW_HEIGHT + 6;
+    private static final int INFO_TEXT_STRIDE = 32;
+    private static final int INFO_TEXT_BOX_OFFSET = 11;
+    private static final int ATTRIBUTES_HINT_Y = INFO_TEXT_LABEL_Y + INFO_TEXT_STRIDE * 2;
 
     private enum Tab {
         LOOT,
@@ -115,6 +121,8 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
     private OreUIEditText knockbackResistanceBox;
     private OreUIEditText followRangeBox;
     private OreUIEditText clearanceLevelBox;
+    private OreUIEditText locationBox;
+    private OreUIEditText respawnBox;
     private final List<OreUIEditText> extraBoxes = new ArrayList<>();
 
     private ResourceLocation selectedEntityId;
@@ -273,6 +281,12 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
         setAttributeTooltip(knockbackResistanceBox, "knockback_resistance");
         setAttributeTooltip(followRangeBox, "follow_range");
         setAttributeTooltip(clearanceLevelBox, "clearance_level");
+        locationBox = createBox(left + CENTER_X + 8, top + INFO_TEXT_LABEL_Y + INFO_TEXT_BOX_OFFSET, CENTER_W - 16, "");
+        respawnBox = createBox(left + CENTER_X + 8, top + INFO_TEXT_LABEL_Y + INFO_TEXT_STRIDE + INFO_TEXT_BOX_OFFSET, CENTER_W - 16, "");
+        locationBox.setMaxLength(EntityAttributeConfig.INFO_TEXT_MAX_LENGTH);
+        respawnBox.setMaxLength(EntityAttributeConfig.INFO_TEXT_MAX_LENGTH);
+        setAttributeTooltip(locationBox, "location");
+        setAttributeTooltip(respawnBox, "respawn");
 
         addRenderableWidget(itemBox);
         addRenderableWidget(chanceBox);
@@ -287,6 +301,8 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
         addRenderableWidget(knockbackResistanceBox);
         addRenderableWidget(followRangeBox);
         addRenderableWidget(clearanceLevelBox);
+        addRenderableWidget(locationBox);
+        addRenderableWidget(respawnBox);
         rebuildExtraBoxes();
 
         chanceMinusButton = addOreButton(rightFieldX + 76, top + 120, 18, 18, Component.literal("-"), () -> nudgeChance(-1));
@@ -506,6 +522,8 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
         setShown(knockbackResistanceBox, characteristicsTab);
         setShown(followRangeBox, characteristicsTab);
         setShown(clearanceLevelBox, characteristicsTab);
+        setShown(locationBox, characteristicsTab);
+        setShown(respawnBox, characteristicsTab);
         if (characteristicsTab) {
             setShown(addEntryButton, false);
             setShown(removeEntryButton, false);
@@ -835,6 +853,8 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
         knockbackResistanceBox.setValue(formatAttribute(config.knockbackResistance()));
         followRangeBox.setValue(formatAttribute(config.followRange()));
         clearanceLevelBox.setValue(String.valueOf(config.clearanceLevel()));
+        locationBox.setValue(config.location());
+        respawnBox.setValue(config.respawn());
         final List<ExtraParameterDefinition> defs = currentExtraDefs();
         for (int index = 0; index < extraBoxes.size() && index < defs.size(); index++) {
             final ExtraParameterDefinition def = defs.get(index);
@@ -931,7 +951,9 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
                 parseDouble(followRangeBox.getValue(), fallback.followRange()),
                 extras,
                 workingDropDestination,
-                parseInt(clearanceLevelBox.getValue(), fallback.clearanceLevel())
+                parseInt(clearanceLevelBox.getValue(), fallback.clearanceLevel()),
+                locationBox.getValue(),
+                respawnBox.getValue()
         ).sanitized(selectedEntityId);
     }
 
@@ -1193,7 +1215,9 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
     }
 
     private int visibleRowCount() {
-        return activeTab == Tab.CONDITIONS ? CONDITION_VISIBLE_ROWS : VISIBLE_ROWS;
+        if (activeTab == Tab.CONDITIONS)
+            return CONDITION_VISIBLE_ROWS;
+        return activeTab == Tab.CHARACTERISTICS ? CHARACTERISTICS_VISIBLE_ROWS : VISIBLE_ROWS;
     }
 
     private int rowHeight() {
@@ -1726,7 +1750,9 @@ public class MobDropConfigScreen extends AbstractContainerScreen<MobDropConfigMe
             renderEntryList(guiGraphics);
             renderListScrollbar(guiGraphics);
         }
-        guiGraphics.drawWordWrap(font, Component.translatable("gui.mobexpansion.mob_drop_config.attributes_hint"), left + CENTER_X + 8, top + LIST_BODY_Y + listHeight() + 8, CENTER_W - 16, COLOR_MUTED);
+        guiGraphics.drawString(font, Component.translatable("gui.mobexpansion.mob_drop_config.attr.location"), left + CENTER_X + 8, top + INFO_TEXT_LABEL_Y, COLOR_MUTED);
+        guiGraphics.drawString(font, Component.translatable("gui.mobexpansion.mob_drop_config.attr.respawn"), left + CENTER_X + 8, top + INFO_TEXT_LABEL_Y + INFO_TEXT_STRIDE, COLOR_MUTED);
+        guiGraphics.drawWordWrap(font, Component.translatable("gui.mobexpansion.mob_drop_config.attributes_hint"), left + CENTER_X + 8, top + ATTRIBUTES_HINT_Y, CENTER_W - 16, COLOR_MUTED);
 
         guiGraphics.drawString(font, Component.translatable("gui.mobexpansion.mob_drop_config.attributes_title"), left + RIGHT_X + 8, top + 38, COLOR_TEXT);
         guiGraphics.drawString(font, Component.translatable("gui.mobexpansion.mob_drop_config.attr.max_health"), labelX, top + ATTR_FIELD_START_Y + ATTR_LABEL_OFFSET, COLOR_MUTED);
