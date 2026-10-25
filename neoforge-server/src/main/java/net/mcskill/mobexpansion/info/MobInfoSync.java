@@ -133,7 +133,10 @@ public final class MobInfoSync {
         final List<MobInfo> infos = new ArrayList<>();
         for (ResourceLocation entityId : mobIds(server)) {
             try {
-                infos.add(buildOne(server, entityId));
+                final MobInfo info = buildOne(server, entityId);
+                // Моб без дропа в EMI не показывается.
+                if (!info.drops().isEmpty())
+                    infos.add(info);
             } catch (RuntimeException e) {
                 LOGGER.warn("[MobExpansion] Failed to build EMI info for {}: {}", entityId, e.toString());
             }
@@ -195,6 +198,7 @@ public final class MobInfoSync {
             final EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.get(entityId);
             collectLootTable(server, type.getDefaultLootTable(), drops, 0);
         }
+        final List<MobInfo.Drop> merged = mergeDuplicates(drops);
 
         int xpMin = 0;
         int xpMax = -1;
@@ -206,7 +210,25 @@ public final class MobInfoSync {
             xpChance = xp.chance();
         }
         return new MobInfo(entityId, (float) attributes.maxHealth(), (float) attributes.armor(), (float) attributes.attackDamage(),
-                (float) attributes.movementSpeed(), abilityDamage, MobClearance.getRequired(entityId), drops, xpMin, xpMax, xpChance);
+                (float) attributes.movementSpeed(), abilityDamage, MobClearance.getRequired(entityId), merged, xpMin, xpMax, xpChance);
+    }
+
+    /**
+     * Один предмет — один слот: записи конфига и loot-таблицы с тем же предметом (и повторы внутри таблицы)
+     * сливаются — количество от минимума до максимума, шанс наибольший, «с условием» — только если условие у всех.
+     */
+    private static List<MobInfo.Drop> mergeDuplicates(List<MobInfo.Drop> drops) {
+        final Map<ResourceLocation, MobInfo.Drop> byItem = new LinkedHashMap<>();
+        for (MobInfo.Drop drop : drops) {
+            byItem.merge(drop.itemId(), drop, (a, b) -> new MobInfo.Drop(
+                    a.itemId(),
+                    Math.min(a.minCount(), b.minCount()),
+                    Math.max(a.maxCount(), b.maxCount()),
+                    Math.max(a.chance(), b.chance()),
+                    a.conditional() && b.conditional(),
+                    a.lootTable() && b.lootTable()));
+        }
+        return new ArrayList<>(byItem.values());
     }
 
     // ---- Ванильная loot-таблица: разбираем JSON-представление таблицы (без доступа к приватным полям) ----

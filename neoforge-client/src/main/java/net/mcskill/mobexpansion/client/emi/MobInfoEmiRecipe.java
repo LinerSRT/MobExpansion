@@ -54,6 +54,8 @@ public class MobInfoEmiRecipe implements EmiRecipe {
     private static final int MODEL_RIGHT = 105;
     private static final int MODEL_BOTTOM = 103;
     private static final int NAME_Y = 106;
+    /** Доля панели, которую занимает хитбокс моба. */
+    private static final float MODEL_FILL = 0.5F;
     // Левая нижняя панель (HP + допуск)
     private static final int STATS_X = 16;
     private static final int HP_LABEL_Y = 121;
@@ -189,7 +191,8 @@ public class MobInfoEmiRecipe implements EmiRecipe {
         final List<MobInfo.Drop> drops = info.drops();
         for (int i = 0; i < Math.min(SLOT_COUNT, drops.size()); i++) {
             final MobInfo.Drop drop = drops.get(i);
-            final EmiStack stack = EmiStack.of(BuiltInRegistries.ITEM.get(drop.itemId()), drop.minCount() == drop.maxCount() ? drop.minCount() : 1);
+            // Количество рисуем сами (см. renderDropCounts) — EMI диапазон не умеет.
+            final EmiStack stack = EmiStack.of(BuiltInRegistries.ITEM.get(drop.itemId()));
             if (drop.chance() < 1.0F)
                 stack.setChance(drop.chance());
             final var slot = widgets.addSlot(stack, SLOTS_X + (i % SLOT_COLUMNS) * SLOT_SIZE, SLOTS_Y + (i / SLOT_COLUMNS) * SLOT_SIZE)
@@ -202,12 +205,34 @@ public class MobInfoEmiRecipe implements EmiRecipe {
             slot.appendTooltip(Component.translatable(drop.lootTable() ? "gui.mobexpansion.emi.drop.loot_table" : "gui.mobexpansion.emi.drop.config")
                     .withStyle(ChatFormatting.DARK_GRAY));
         }
+        // После слотов — чтобы текст лёг поверх предметов.
+        widgets.addDrawable(0, 0, WIDTH, HEIGHT, (graphics, mouseX, mouseY, delta) -> renderDropCounts(graphics, font));
         if (drops.size() > SLOT_COUNT) {
             final List<Component> more = new ArrayList<>();
             more.add(Component.translatable("gui.mobexpansion.emi.drops.more", drops.size() - SLOT_COUNT));
             for (int i = SLOT_COUNT; i < drops.size(); i++)
                 more.add(BuiltInRegistries.ITEM.get(drops.get(i).itemId()).getDescription().copy().withStyle(ChatFormatting.GRAY));
             widgets.addTooltipText(more, labelX, DROPS_LABEL_Y - 1, font.width(dropsLabel), 10);
+        }
+    }
+
+    /** Количество в правом нижнем углу слота, как у стака: «4» или «2-4» (не влезает в слот — мельче). */
+    private void renderDropCounts(GuiGraphics graphics, Font font) {
+        final List<MobInfo.Drop> drops = info.drops();
+        for (int i = 0; i < Math.min(SLOT_COUNT, drops.size()); i++) {
+            final MobInfo.Drop drop = drops.get(i);
+            if (drop.maxCount() <= 1)
+                continue;
+            final String text = drop.minCount() == drop.maxCount() ? String.valueOf(drop.minCount()) : drop.minCount() + "-" + drop.maxCount();
+            final int itemX = SLOTS_X + (i % SLOT_COLUMNS) * SLOT_SIZE + 1;
+            final int itemY = SLOTS_Y + (i / SLOT_COLUMNS) * SLOT_SIZE + 1;
+            final int textWidth = font.width(text);
+            final float scale = textWidth > 17 ? 0.75F : 1.0F;
+            graphics.pose().pushPose();
+            graphics.pose().translate(itemX + 17.0F, itemY + 17.0F, 300.0F);
+            graphics.pose().scale(scale, scale, 1.0F);
+            graphics.drawString(font, text, -textWidth, -8, 0xFFFFFFFF, true);
+            graphics.pose().popPose();
         }
     }
 
@@ -221,7 +246,8 @@ public class MobInfoEmiRecipe implements EmiRecipe {
         final float height = Math.max(0.3F, entity.getBbHeight());
         final float areaW = MODEL_RIGHT - MODEL_LEFT;
         final float areaH = MODEL_BOTTOM - MODEL_TOP;
-        final float scale = Math.min(60.0F, Math.min(areaH * 0.8F / height, areaW * 0.8F / width));
+        // GeckoLib-модели часто заметно больше хитбокса — берём с запасом.
+        final float scale = Math.min(32.0F, Math.min(areaH * MODEL_FILL / height, areaW * MODEL_FILL / width));
         final float spin = (System.currentTimeMillis() % 12000L) / 12000.0F * 360.0F;
         final Quaternionf pose = new Quaternionf().rotateZ((float) Math.PI).rotateY((float) Math.toRadians(spin));
 

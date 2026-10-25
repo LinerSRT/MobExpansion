@@ -33,7 +33,7 @@ public class MobExEmiPlugin implements EmiPlugin {
         final List<MobInfo> mobs = ClientMobInfo.mobs();
         for (int i = 0; i < mobs.size(); i++) {
             final MobInfo info = mobs.get(i);
-            if (BuiltInRegistries.ENTITY_TYPE.containsKey(info.entityId()))
+            if (!info.drops().isEmpty() && BuiltInRegistries.ENTITY_TYPE.containsKey(info.entityId()))
                 registry.addRecipe(new MobInfoEmiRecipe(info, i));
         }
     }
