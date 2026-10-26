@@ -45,19 +45,14 @@ public final class LootJsLootApplier {
 
     private static void onLootTables(WritableRegistry<LootTable> registry) {
         EntityLootConfigIO.reload();
-        final LootTableEvent event = new LootTableEvent(registry);
-        for (Map.Entry<ResourceLocation, EntityLootConfig> entry : EntityLootConfigIO.getCached().entrySet()) {
-            try {
-                applyEntityTable(event, entry.getKey(), entry.getValue());
-            } catch (RuntimeException ignored) {
-            }
-        }
+        // Do not modify shared entity loot tables. Instance-scoped modifiers run below.
     }
 
     private static void onModifiers(Map<ResourceLocation, IGlobalLootModifier> modifiers) {
         final LootModificationEvent event = new LootModificationEvent(modifiers);
         for (Map.Entry<ResourceLocation, EntityLootConfig> entry : EntityLootConfigIO.getCached().entrySet()) {
             try {
+                applyEntityDrops(event, entry.getKey(), entry.getValue());
                 applyEntityExperience(event, entry.getKey(), entry.getValue());
             } catch (RuntimeException ignored) {
             }
@@ -66,22 +61,18 @@ public final class LootJsLootApplier {
         });
     }
 
-    private static void applyEntityTable(LootTableEvent event, ResourceLocation entityId, EntityLootConfig config) {
-        if (config.drops().isEmpty() && !config.replaceVanilla() && config.experience().isEmpty())
+    private static void applyEntityDrops(LootModificationEvent event, ResourceLocation entityId, EntityLootConfig config) {
+        final var holder = BuiltInRegistries.ENTITY_TYPE.getHolder(ResourceKey.create(Registries.ENTITY_TYPE, entityId));
+        if (holder.isEmpty() || (config.drops().isEmpty() && !config.replaceVanilla()))
             return;
-        final MutableLootTable table = entityTable(event, entityId);
+        final var builder = event.addEntityModifier(HolderSet.direct(holder.get()));
+        builder.matchEntityCustom(net.mcskill.mobexpansion.spawner.SpawnerLoot::isEligible);
         if (config.replaceVanilla())
-            table.clear();
-        if (config.drops().isEmpty()) {
-            if (!config.replaceVanilla())
-                table.createPool(pool -> pool.addEntry(LootEntry.empty()));
-            return;
-        }
-        for (MobDropEntry dropEntry : config.drops()) {
-            final LootEntry lootEntry = itemEntry(dropEntry);
-            if (lootEntry == null)
-                continue;
-            table.createPool(pool -> pool.addEntry(lootEntry));
+            builder.removeLoot(ItemFilter.ANY);
+        for (MobDropEntry drop : config.drops()) {
+            final LootEntry entry = itemEntry(drop);
+            if (entry != null)
+                builder.addLoot(entry);
         }
     }
 
@@ -96,24 +87,10 @@ public final class LootJsLootApplier {
         final HolderSet<EntityType<?>> entities = HolderSet.direct(entityHolder.get());
         for (MobExperienceEntry experienceEntry : config.experience()) {
             final LootModifier.Builder builder = event.addEntityModifier(entities);
+            builder.matchEntityCustom(net.mcskill.mobexpansion.spawner.SpawnerLoot::isEligible);
             applyConditions(builder, experienceEntry.chance(), experienceEntry.conditions());
             builder.dropExperience(countProvider(experienceEntry.minAmount(), experienceEntry.maxAmount()));
         }
-    }
-
-    private static MutableLootTable entityTable(LootTableEvent event, ResourceLocation entityId) {
-        final ResourceLocation tableId = entityLootTableId(entityId);
-        if (event.hasLootTable(tableId))
-            return event.getLootTable(tableId);
-        return event.create(tableId, LootType.ENTITY);
-    }
-
-    private static ResourceLocation entityLootTableId(ResourceLocation entityId) {
-        return BuiltInRegistries.ENTITY_TYPE.getOptional(entityId)
-                .map(EntityType::getDefaultLootTable)
-                .map(lootTableKey -> lootTableKey.location())
-                .filter(tableId -> !"empty".equals(tableId.getPath()))
-                .orElseGet(() -> ResourceLocation.fromNamespaceAndPath(entityId.getNamespace(), "entities/" + entityId.getPath()));
     }
 
     @Nullable

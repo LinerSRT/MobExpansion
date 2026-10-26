@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "net.mcskill.mobexpansion.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
+  "mixins": ["AmberSpawnerLootMixin"],
   "client": [
     "BlockBehaviourShapeMixin",
     "GuiGraphicsFitScissorMixin"

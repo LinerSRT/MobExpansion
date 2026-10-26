@@ -26,6 +26,8 @@ public final class MobExDropEvents {
             return;
         if (!(event.getEntity() instanceof Mob))
             return;
+        if (!net.mcskill.mobexpansion.spawner.SpawnerLoot.isEligible(event.getEntity()))
+            return;
 
         final ResourceLocation entityId = BuiltInRegistries.ENTITY_TYPE.getKey(event.getEntity().getType());
         if (!EntityAttributesConfigIO.hasConfigured(entityId))

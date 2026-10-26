@@ -4,6 +4,7 @@
   "package": "net.mcskill.mobexpansion.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "AmberSpawnerLootMixin",
     "LevelChunkSectionAccessor",
     "ChunkBlockEntityInfoAccessor",
     "ClientboundLevelChunkPacketDataMixin",

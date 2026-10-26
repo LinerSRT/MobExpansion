@@ -407,6 +407,7 @@ public class MobSpawnerBlockEntity extends BlockEntity implements MenuProvider {
             mob.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.SPAWNER, null);
             mob.setPersistenceRequired();
             MobHome.set(mob, blockPos);
+            net.mcskill.mobexpansion.spawner.SpawnerLoot.mark(mob);
             serverLevel.addFreshEntityWithPassengers(mob);
             spawnedAmount++;
         }
