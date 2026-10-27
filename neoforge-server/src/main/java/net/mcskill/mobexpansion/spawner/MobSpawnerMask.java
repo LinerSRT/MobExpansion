@@ -38,7 +38,16 @@ public final class MobSpawnerMask {
     }
 
     public static boolean canReveal(ServerPlayer player) {
-        return player != null && player.hasPermissions(4) && player.getInventory().getSelected().is(MobExItems.MOB_SPAWNER.get());
+        // предмет в руке — дёшево; права (поиск в ops) — только если держит спавнер
+        return player != null && player.getInventory().getSelected().is(MobExItems.MOB_SPAWNER.get()) && player.hasPermissions(4);
+    }
+
+    /** Есть ли в чанке спавнер с маской — иначе пакет чанка маскировать незачем. */
+    public static boolean hasMaskedSpawner(LevelChunk chunk) {
+        for (BlockEntity blockEntity : chunk.getBlockEntities().values())
+            if (blockEntity instanceof MobSpawnerBlockEntity spawner && spawner.getMaskBlockState() != null)
+                return true;
+        return false;
     }
 
     public static void pushTarget(ServerPlayer player) {
@@ -61,15 +70,18 @@ public final class MobSpawnerMask {
 
     @Nullable
     public static Packet<?> filterOutgoing(ServerPlayer player, Packet<?> packet) {
-        if (canReveal(player))
-            return packet;
+        // Сначала — относится ли пакет к спавнеру (зовётся на КАЖДЫЙ исходящий пакет), права — потом.
         if (packet instanceof ClientboundBlockUpdatePacket blockUpdate) {
+            if (!blockUpdate.getBlockState().is(MobExBlocks.MOB_SPAWNER.get()) || canReveal(player))
+                return packet;
             final BlockState blockState = maskOriginalState(player.serverLevel(), blockUpdate.getPos(), blockUpdate.getBlockState());
             if (blockState == blockUpdate.getBlockState())
                 return packet;
             return new ClientboundBlockUpdatePacket(blockUpdate.getPos(), blockState);
         }
-        if (packet instanceof ClientboundBlockEntityDataPacket blockEntityData && isMaskedSpawnerPacket(player.serverLevel(), blockEntityData))
+        if (packet instanceof ClientboundBlockEntityDataPacket blockEntityData
+                && blockEntityData.getType() == MobExBlockEntities.MOB_SPAWNER.get()
+                && !canReveal(player) && isMaskedSpawnerPacket(player.serverLevel(), blockEntityData))
             return null;
         return packet;
     }

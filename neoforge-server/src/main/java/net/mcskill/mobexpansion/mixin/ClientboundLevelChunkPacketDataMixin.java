@@ -26,7 +26,8 @@ public abstract class ClientboundLevelChunkPacketDataMixin {
     @Unique
     @Inject(method = "<init>(Lnet/minecraft/world/level/chunk/LevelChunk;)V", at = @At("RETURN"))
     private void maskSpawner(LevelChunk chunk, CallbackInfo callbackInfo) {
-        if (!MobSpawnerMask.shouldHide())
+        // в чанке нет замаскированных спавнеров (почти всегда) — ванильный буфер верный, не сериализуем чанк второй раз
+        if (!MobSpawnerMask.hasMaskedSpawner(chunk) || !MobSpawnerMask.shouldHide())
             return;
         final FriendlyByteBuf packed = new FriendlyByteBuf(Unpooled.buffer());
         MobSpawnerMask.writeCamouflagedChunk(packed, chunk);
