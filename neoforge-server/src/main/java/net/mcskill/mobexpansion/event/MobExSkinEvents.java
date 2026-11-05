@@ -4,6 +4,7 @@ import net.mcskill.mobexpansion.Core;
 import net.mcskill.mobexpansion.command.CosmeticsCommand;
 import net.mcskill.mobexpansion.command.SkinCommand;
 import net.mcskill.mobexpansion.cosmetics.CosmeticPermissions;
+import net.mcskill.mobexpansion.cosmetics.CosmeticPrefixes;
 import net.mcskill.mobexpansion.cosmetics.Cosmetics;
 import net.mcskill.mobexpansion.network.SkinAttackFxPacket;
 import net.mcskill.mobexpansion.skin.PlayerSkins;
@@ -49,7 +50,11 @@ public final class MobExSkinEvents {
 
     @SubscribeEvent
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        if (!(event.getEntity() instanceof ServerPlayer player) || !PlayerSkins.hasSkin(player))
+        if (!(event.getEntity() instanceof ServerPlayer player))
+            return;
+        // значок хаоса: после /chaos (новый уровень) или со старым префиксом — привести суффикс в порядок
+        CosmeticPrefixes.current(player);
+        if (!PlayerSkins.hasSkin(player))
             return;
         // право на скин могли забрать (например, кончился донат) — снимаем; без LuckPerms не трогаем
         if (CosmeticPermissions.isLuckPermsLoaded() && !CosmeticPermissions.canUseSkin(player, PlayerSkins.get(player)))

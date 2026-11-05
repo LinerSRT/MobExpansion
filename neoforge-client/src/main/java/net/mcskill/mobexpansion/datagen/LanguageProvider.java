@@ -1018,8 +1018,8 @@ public class LanguageProvider implements DataProvider {
         add("commands.mobexpansion.skin.reset.multiple", "Reset skin of %s players", "Скин снят у %s игроков");
         add("commands.mobexpansion.skin.unknown", "Unknown skin: %s", "Неизвестный скин: %s");
         add("gui.mobexpansion.cosmetics.title", "Character customization", "Кастомизация персонажа");
-        add("gui.mobexpansion.cosmetics.prefixes", "Prefixes", "Префиксы");
-        add("gui.mobexpansion.cosmetics.no_prefix", "No prefix", "Без префикса");
+        add("gui.mobexpansion.cosmetics.prefixes", "Badges", "Значки");
+        add("gui.mobexpansion.cosmetics.no_prefix", "No badge", "Без значка");
         add("cosmetics.mobexpansion.prefix.chaos", "Chaos", "Хаос");
         add("cosmetics.mobexpansion.prefix.chaos2", "Chaos II", "Хаос II");
         add("cosmetics.mobexpansion.prefix.chaos3", "Chaos III", "Хаос III");
