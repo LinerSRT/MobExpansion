@@ -3,6 +3,7 @@ package net.mcskill.mobexpansion.entity.ability;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -12,7 +13,10 @@ import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.PathNavigationRegion;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.FlyNodeEvaluator;
+import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,6 +25,13 @@ import org.jetbrains.annotations.NotNull;
  * При смерти падает на землю, чтобы анимация смерти не висела в воздухе.
  */
 public abstract class FlyingAbilityMobEntity extends AbilityMobEntity {
+    /**
+     * Предел размеров моба (блоков) для поиска пути. Ванильный FlyNodeEvaluator на каждую позицию пути проверяет все блоки
+     * хитбокса: у моли 11×12 это ~1900 блоков на позицию и секунды на путь. Летун в открытом воздухе и так проходит,
+     * путь — лишь ориентир, столкновения остаются за физикой.
+     */
+    private static final int MAX_PATHFINDING_SIZE = 3;
+
     protected FlyingAbilityMobEntity(EntityType<? extends FlyingAbilityMobEntity> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new FlyingMoveControl(this, 20, true);
@@ -40,7 +51,15 @@ public abstract class FlyingAbilityMobEntity extends AbilityMobEntity {
     @Override
     @NotNull
     protected PathNavigation createNavigation(@NotNull Level level) {
-        final FlyingPathNavigation navigation = new FlyingPathNavigation(this, level);
+        final FlyingPathNavigation navigation = new FlyingPathNavigation(this, level) {
+            @Override
+            @NotNull
+            protected PathFinder createPathFinder(int maxVisitedNodes) {
+                nodeEvaluator = new CappedFlyNodeEvaluator();
+                nodeEvaluator.setCanPassDoors(true);
+                return new PathFinder(nodeEvaluator, maxVisitedNodes);
+            }
+        };
         navigation.setCanOpenDoors(false);
         navigation.setCanFloat(true);
         navigation.setCanPassDoors(true);
@@ -93,5 +112,16 @@ public abstract class FlyingAbilityMobEntity extends AbilityMobEntity {
     @Override
     public boolean onClimbable() {
         return false;
+    }
+
+    /** {@link FlyNodeEvaluator} с ограничением размеров моба, см. {@link #MAX_PATHFINDING_SIZE}. */
+    private static final class CappedFlyNodeEvaluator extends FlyNodeEvaluator {
+        @Override
+        public void prepare(@NotNull PathNavigationRegion level, @NotNull Mob mob) {
+            super.prepare(level, mob);
+            entityWidth = Math.min(entityWidth, MAX_PATHFINDING_SIZE);
+            entityHeight = Math.min(entityHeight, MAX_PATHFINDING_SIZE);
+            entityDepth = Math.min(entityDepth, MAX_PATHFINDING_SIZE);
+        }
     }
 }

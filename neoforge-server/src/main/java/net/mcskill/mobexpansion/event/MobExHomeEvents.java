@@ -2,8 +2,11 @@ package net.mcskill.mobexpansion.event;
 
 import net.mcskill.mobexpansion.Core;
 import net.mcskill.mobexpansion.spawner.MobHome;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
@@ -18,6 +21,8 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 @EventBusSubscriber(modid = Core.MODID)
 public final class MobExHomeEvents {
     private static final int CHECK_INTERVAL = 5;
+    /** Не чаще этого (тиков) строим наземному мобу новый путь домой. */
+    private static final int REPATH_INTERVAL = 20;
     /** Дальше этого запаса за границей (блоков) моб считается унесённым и телепортируется домой. */
     private static final double TELEPORT_MARGIN = 8.0D;
 
@@ -72,6 +77,26 @@ public final class MobExHomeEvents {
             mob.teleportTo(home.center().getX() + 0.5D, home.center().getY() + 1.0D, home.center().getZ() + 0.5D);
             return;
         }
-        mob.getNavigation().moveTo(home.center().getX() + 0.5D, home.center().getY(), home.center().getZ() + 0.5D, 1.0D);
+        goHome(mob, home);
+    }
+
+    /**
+     * Путь домой. Летуны идут к спавнеру напрямую через MoveControl — поиск пути для них дорогой (у крупных особенно)
+     * и в воздухе не нужен. Наземные не перестраивают путь, пока уже идут домой, и строят новый не чаще раза в
+     * {@link #REPATH_INTERVAL} тиков (если дом недостижим, путь каждые 5 тиков съедал бы тик).
+     */
+    private static void goHome(Mob mob, MobHome home) {
+        final BlockPos center = home.center();
+        if (mob.getMoveControl() instanceof FlyingMoveControl) {
+            mob.getNavigation().stop();
+            mob.getMoveControl().setWantedPosition(center.getX() + 0.5D, center.getY() + 2.0D, center.getZ() + 0.5D, 1.0D);
+            return;
+        }
+        final PathNavigation navigation = mob.getNavigation();
+        if (!navigation.isDone() && center.equals(navigation.getTargetPos()))
+            return;
+        if ((mob.tickCount + mob.getId()) % REPATH_INTERVAL >= CHECK_INTERVAL)
+            return;
+        navigation.moveTo(center.getX() + 0.5D, center.getY(), center.getZ() + 0.5D, 1.0D);
     }
 }

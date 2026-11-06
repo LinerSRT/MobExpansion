@@ -112,8 +112,24 @@ public class AbilityCombatGoal extends Goal {
         hoverAngle += 0.03D;
         final double radius = (mob.preferredMinRange() + mob.preferredMaxRange()) * 0.5D;
         final double height = mob instanceof FlyingAbilityMobEntity flyer ? flyer.hoverHeight() : 5.0D;
-        final Vec3 wanted = target.position().add(Math.cos(hoverAngle) * radius, height, Math.sin(hoverAngle) * radius);
+        final Vec3 wanted = insideRestriction(target.position().add(Math.cos(hoverAngle) * radius, height, Math.sin(hoverAngle) * radius));
         mob.getMoveControl().setWantedPosition(wanted.x, wanted.y, wanted.z, mob.chaseSpeed());
         mob.faceTowards(target);
+    }
+
+    /**
+     * Точка кружения, подтянутая внутрь дома моба (привязка к спавнеру): иначе летун, кружащий в 20+ блоках от цели,
+     * постоянно вылетает за радиус, бросает цель и снова её берёт.
+     */
+    private Vec3 insideRestriction(Vec3 wanted) {
+        if (!mob.hasRestriction())
+            return wanted;
+        final Vec3 center = Vec3.atCenterOf(mob.getRestrictCenter());
+        final double max = Math.max(1.0D, mob.getRestrictRadius() - 2.0D);
+        final Vec3 offset = wanted.subtract(center);
+        final double distSqr = offset.lengthSqr();
+        if (distSqr <= max * max)
+            return wanted;
+        return center.add(offset.scale(max / Math.sqrt(distSqr)));
     }
 }
