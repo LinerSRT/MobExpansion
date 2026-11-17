@@ -198,6 +198,14 @@ public final class EntityExtraParametersCatalog {
         map.put(id("serenity_sentinel"), abilityParameters("awaken", 0, "punch", 1, "shock", 1, "shield", 0, "throw_stone", 1, "block", 0));
         map.put(id("queen_everbloom"), abilityParameters("slash_right", 1, "slash_left", 1, "slash_huge", 2.5, "luminous_area", 0.5, "radiant_shot", 1, "buff_armor", 0, "rose_pull", 0, "summon", 0, "jump_back", 0));
         map.put(id("scarlet_queen_everbloom"), abilityParameters("slash_right", 1, "slash_left", 1, "slash_huge", 2.5, "luminous_area", 0.5, "radiant_shot", 1, "buff_armor", 0, "rose_pull", 0, "summon", 0, "jump_back", 0, "savage", 0.4, "scarlet_wave", 2));
+        map.put(id("leviathan"), abilityParameters("bite", 1, "rip", 0.67, "bite2", 0.6, "summon", 0));
+        map.put(id("shark"), abilityParameters("bite1", 1, "bite2", 1));
+        map.put(id("hammerhead_shark"), abilityParameters("bite1", 1, "bite2", 1));
+        map.put(id("sea_mine"), abilityParameters("detonate", 1));
+        map.put(id("massive_sea_turtle"), abilityParameters("ram", 1, "flipper_wave", 0.6));
+        map.put(id("rat_reaper"), abilityParameters("right_attack", 2, "left_attack", 2, "charge_attack", 2));
+        map.put(id("rat_archer"), abilityParameters("shoot", 4, "right_attack", 2));
+        map.put(id("rat_overlord"), abilityParameters("active", 0, "combo", 4, "combo2", 4, "combo3", 5, "claw", 4, "pierce", 5, "spin", 2));
         // общие параметры (радиус дома) идут первыми у каждого моба
         map.replaceAll((entityId, params) -> withCommon(params));
         PARAMS = Collections.unmodifiableMap(map);

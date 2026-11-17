@@ -57,6 +57,17 @@ public final class EntityAttributeDefaults {
         put(defaults, "serenity_sentinel", 300, 12, 0, 10, 0.22, 1.0, 32);
         put(defaults, "queen_everbloom", 300, 10, 0, 15, 0.26, 1.0, 40);
         put(defaults, "scarlet_queen_everbloom", 500, 14, 0, 25, 0.3, 1.0, 40);
+        put(defaults, "leviathan", 500, 10, 0, 12, 0.22, 1.0, 32);
+        put(defaults, "shark", 25, 2, 0, 5, 0.25, 1.0, 24);
+        put(defaults, "hammerhead_shark", 25, 2, 0, 5, 0.25, 1.0, 24);
+        put(defaults, "jellyfish_pink", 2, 0, 0, 0, 0.05, 0.0, 8);
+        put(defaults, "jellyfish_blue", 2, 0, 0, 0, 0.05, 0.0, 8);
+        put(defaults, "jellyfish_green", 2, 0, 0, 0, 0.05, 0.0, 8);
+        put(defaults, "sea_mine", 20, 4, 0, 40, 0.0, 1.0, 8);
+        put(defaults, "massive_sea_turtle", 400, 14, 0, 12, 0.12, 1.0, 32);
+        put(defaults, "rat_reaper", 50, 4, 0, 3, 0.3, 0.8, 40);
+        put(defaults, "rat_archer", 50, 2, 0, 3, 0.28, 0.8, 40);
+        put(defaults, "rat_overlord", 250, 8, 0, 4, 0.3, 1.0, 40);
         DEFAULTS = Collections.unmodifiableMap(defaults);
     }
 

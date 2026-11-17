@@ -44,6 +44,10 @@ public class SoundsProvider extends SoundDefinitionsProvider {
         add(MobExSounds.APOCALYPSE_VANISH.get(), Core.loc("apocalypse/vanish"));
         add(MobExSounds.APOCALYPSE_VOID_STORM.get(), Core.loc("apocalypse/void_storm"));
         add(MobExSounds.APOCALYPSE_WHITE_VOID.get(), Core.loc("apocalypse/white_void"));
+        add(MobExSounds.RATS_SWORD.get(), Core.loc("rats/sword"));
+        add(MobExSounds.RATS_CLOTH.get(), Core.loc("rats/cloth"));
+        add(MobExSounds.RATS_ACTIVE.get(), Core.loc("rats/active"));
+        add(MobExSounds.RATS_WOOSH.get(), Core.loc("rats/woosh"));
     }
 
     protected void add(SoundEvent soundEvent, ResourceLocation location) {

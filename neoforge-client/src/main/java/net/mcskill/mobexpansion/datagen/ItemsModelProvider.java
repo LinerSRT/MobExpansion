@@ -59,6 +59,17 @@ public class ItemsModelProvider extends ItemModelProvider {
         spawnEggItem(MobExItems.SERENITY_SENTINEL_SPAWN_EGG.asItem());
         spawnEggItem(MobExItems.QUEEN_EVERBLOOM_SPAWN_EGG.asItem());
         spawnEggItem(MobExItems.SCARLET_QUEEN_EVERBLOOM_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.LEVIATHAN_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.SHARK_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.HAMMERHEAD_SHARK_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.JELLYFISH_PINK_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.JELLYFISH_BLUE_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.JELLYFISH_GREEN_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.SEA_MINE_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.MASSIVE_SEA_TURTLE_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.RAT_REAPER_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.RAT_ARCHER_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.RAT_OVERLORD_SPAWN_EGG.asItem());
         skinItem(MobExItems.CAPRA_SKIN.asItem());
         skinItem(MobExItems.LILLITH_SKIN.asItem());
     }

@@ -94,6 +94,26 @@
       "mobexpansion:apocalypse/white_void"
     ]
   },
+  "rats.active": {
+    "sounds": [
+      "mobexpansion:rats/active"
+    ]
+  },
+  "rats.cloth": {
+    "sounds": [
+      "mobexpansion:rats/cloth"
+    ]
+  },
+  "rats.sword": {
+    "sounds": [
+      "mobexpansion:rats/sword"
+    ]
+  },
+  "rats.woosh": {
+    "sounds": [
+      "mobexpansion:rats/woosh"
+    ]
+  },
   "sentinel.gm1": {
     "sounds": [
       "mobexpansion:sentinel/gm1"

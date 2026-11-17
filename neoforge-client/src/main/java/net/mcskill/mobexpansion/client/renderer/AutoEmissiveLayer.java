@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
+import software.bernie.geckolib.cache.texture.AnimatableTexture;
 import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
@@ -40,6 +41,8 @@ public class AutoEmissiveLayer<T extends GeoAnimatable & IModel> extends GeoRend
         final Optional<ResourceLocation> texture = emissiveTexture(animatable.textureName());
         if (texture.isEmpty())
             return;
+        // анимированная текстура (полоса кадров + .mcmeta): GeckoLib сам листает кадры, если её «обновить» перед рендером
+        AnimatableTexture.setAndUpdate(texture.get());
         final RenderType emissiveType = RenderType.eyes(texture.get());
         getRenderer().reRender(bakedModel, poseStack, bufferSource, animatable, emissiveType, bufferSource.getBuffer(emissiveType), partialTick, 0xF000F0, packedOverlay, 0xFFFFFFFF);
     }

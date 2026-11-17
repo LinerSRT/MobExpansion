@@ -54,6 +54,19 @@ public final class MobClearance {
         put("serenity_sentinel", 3);
         put("queen_everbloom", 4);
         put("scarlet_queen_everbloom", 4);
+        // Морские глубины
+        put("jellyfish_pink", 1);
+        put("jellyfish_blue", 1);
+        put("jellyfish_green", 1);
+        put("sea_mine", 1);
+        put("shark", 2);
+        put("hammerhead_shark", 2);
+        put("massive_sea_turtle", 3);
+        put("leviathan", 4);
+        // Крысиный клан
+        put("rat_reaper", 2);
+        put("rat_archer", 2);
+        put("rat_overlord", 3);
         REQUIRED.putAll(DEFAULTS);
     }
 

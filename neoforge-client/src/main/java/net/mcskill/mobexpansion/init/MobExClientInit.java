@@ -25,6 +25,8 @@ import net.mcskill.mobexpansion.client.renderer.RatKingRenderer;
 import net.mcskill.mobexpansion.client.renderer.PotionProjectileRenderer;
 import net.mcskill.mobexpansion.client.renderer.InvisibleRenderer;
 import net.mcskill.mobexpansion.client.renderer.AbilityMobRenderer;
+import net.mcskill.mobexpansion.client.renderer.SeaCreatureRenderer;
+import net.mcskill.mobexpansion.client.renderer.SeaMineRenderer;
 import net.mcskill.mobexpansion.client.renderer.MobExEffectRenderer;
 import net.mcskill.mobexpansion.client.renderer.MobExProjectileRenderer;
 import net.mcskill.mobexpansion.client.screen.MobDropConfigScreen;
@@ -88,6 +90,17 @@ public class MobExClientInit {
         event.registerEntityRenderer(MobExEntities.SERENITY_SENTINEL.get(), AbilityMobRenderer.of(1.0F, 2.2F));
         event.registerEntityRenderer(MobExEntities.QUEEN_EVERBLOOM.get(), AbilityMobRenderer.of(1.0F, 1.0F));
         event.registerEntityRenderer(MobExEntities.SCARLET_QUEEN_EVERBLOOM.get(), AbilityMobRenderer.of(1.0F, 1.0F));
+        event.registerEntityRenderer(MobExEntities.LEVIATHAN.get(), SeaCreatureRenderer.sea(1.0F, 4.0F));
+        event.registerEntityRenderer(MobExEntities.SHARK.get(), SeaCreatureRenderer.sea(1.0F, 0.8F));
+        event.registerEntityRenderer(MobExEntities.HAMMERHEAD_SHARK.get(), SeaCreatureRenderer.sea(1.0F, 0.8F));
+        event.registerEntityRenderer(MobExEntities.JELLYFISH_PINK.get(), SeaCreatureRenderer.sea(1.0F, 0.3F));
+        event.registerEntityRenderer(MobExEntities.JELLYFISH_BLUE.get(), SeaCreatureRenderer.sea(1.0F, 0.3F));
+        event.registerEntityRenderer(MobExEntities.JELLYFISH_GREEN.get(), SeaCreatureRenderer.sea(1.0F, 0.3F));
+        event.registerEntityRenderer(MobExEntities.SEA_MINE.get(), SeaMineRenderer::new);
+        event.registerEntityRenderer(MobExEntities.MASSIVE_SEA_TURTLE.get(), SeaCreatureRenderer.sea(1.0F, 6.0F));
+        event.registerEntityRenderer(MobExEntities.RAT_REAPER.get(), AbilityMobRenderer.of(1.0F, 0.6F));
+        event.registerEntityRenderer(MobExEntities.RAT_ARCHER.get(), AbilityMobRenderer.of(1.0F, 0.6F));
+        event.registerEntityRenderer(MobExEntities.RAT_OVERLORD.get(), AbilityMobRenderer.of(1.0F, 1.2F));
         event.registerEntityRenderer(MobExEntities.ABILITY_PROJECTILE.get(), MobExProjectileRenderer::new);
         event.registerEntityRenderer(MobExEntities.ABILITY_EFFECT.get(), MobExEffectRenderer::new);
     }

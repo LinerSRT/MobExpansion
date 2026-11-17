@@ -43,6 +43,14 @@ import net.mcskill.mobexpansion.entity.meadows.GlimmeringUnicornEntity;
 import net.mcskill.mobexpansion.entity.meadows.SerenitySentinelEntity;
 import net.mcskill.mobexpansion.entity.meadows.QueenEverbloomEntity;
 import net.mcskill.mobexpansion.entity.meadows.ScarletQueenEverbloomEntity;
+import net.mcskill.mobexpansion.entity.sea.JellyfishEntity;
+import net.mcskill.mobexpansion.entity.sea.LeviathanEntity;
+import net.mcskill.mobexpansion.entity.sea.MassiveSeaTurtleEntity;
+import net.mcskill.mobexpansion.entity.sea.SeaMineEntity;
+import net.mcskill.mobexpansion.entity.sea.SharkEntity;
+import net.mcskill.mobexpansion.entity.rats.RatArcherEntity;
+import net.mcskill.mobexpansion.entity.rats.RatOverlordEntity;
+import net.mcskill.mobexpansion.entity.rats.RatReaperEntity;
 import net.mcskill.mobexpansion.entity.effect.MobExEffectEntity;
 import net.mcskill.mobexpansion.entity.effect.MobExProjectileEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -107,6 +115,20 @@ public class MobExEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<QueenEverbloomEntity>> QUEEN_EVERBLOOM = register("queen_everbloom", QueenEverbloomEntity::new, 1.2F, 3.8F);
     public static final DeferredHolder<EntityType<?>, EntityType<ScarletQueenEverbloomEntity>> SCARLET_QUEEN_EVERBLOOM = register("scarlet_queen_everbloom", ScarletQueenEverbloomEntity::new, 1.2F, 3.8F);
 
+    // Морские глубины (паки Sea Depth и Sea Turtle)
+    public static final DeferredHolder<EntityType<?>, EntityType<LeviathanEntity>> LEVIATHAN = register("leviathan", LeviathanEntity::new, 8.0F, 8.0F);
+    public static final DeferredHolder<EntityType<?>, EntityType<SharkEntity>> SHARK = register("shark", SharkEntity::new, 1.6F, 1.3F);
+    public static final DeferredHolder<EntityType<?>, EntityType<SharkEntity>> HAMMERHEAD_SHARK = register("hammerhead_shark", SharkEntity::new, 1.6F, 1.3F);
+    public static final DeferredHolder<EntityType<?>, EntityType<JellyfishEntity>> JELLYFISH_PINK = register("jellyfish_pink", JellyfishEntity::new, 0.6F, 0.8F);
+    public static final DeferredHolder<EntityType<?>, EntityType<JellyfishEntity>> JELLYFISH_BLUE = register("jellyfish_blue", JellyfishEntity::new, 0.6F, 0.8F);
+    public static final DeferredHolder<EntityType<?>, EntityType<JellyfishEntity>> JELLYFISH_GREEN = register("jellyfish_green", JellyfishEntity::new, 0.6F, 0.8F);
+    public static final DeferredHolder<EntityType<?>, EntityType<SeaMineEntity>> SEA_MINE = register("sea_mine", SeaMineEntity::new, 1.4F, 1.4F);
+    public static final DeferredHolder<EntityType<?>, EntityType<MassiveSeaTurtleEntity>> MASSIVE_SEA_TURTLE = register("massive_sea_turtle", MassiveSeaTurtleEntity::new, 13.0F, 7.0F);
+    // Крысиный клан (пак Rats | Boss & Mobs)
+    public static final DeferredHolder<EntityType<?>, EntityType<RatReaperEntity>> RAT_REAPER = register("rat_reaper", RatReaperEntity::new, 1.0F, 2.1F);
+    public static final DeferredHolder<EntityType<?>, EntityType<RatArcherEntity>> RAT_ARCHER = register("rat_archer", RatArcherEntity::new, 1.0F, 2.2F);
+    public static final DeferredHolder<EntityType<?>, EntityType<RatOverlordEntity>> RAT_OVERLORD = register("rat_overlord", RatOverlordEntity::new, 2.2F, 3.9F);
+
     public static final DeferredHolder<EntityType<?>, EntityType<MobExProjectileEntity>> ABILITY_PROJECTILE = registerProjectile("ability_projectile", MobExProjectileEntity::new, 0.3F, 0.3F);
     public static final DeferredHolder<EntityType<?>, EntityType<MobExEffectEntity>> ABILITY_EFFECT = registerMisc("ability_effect", MobExEffectEntity::new, 0.5F, 0.5F);
 
@@ -151,6 +173,17 @@ public class MobExEntities {
         event.put(SERENITY_SENTINEL.get(), SerenitySentinelEntity.createAttributes().build());
         event.put(QUEEN_EVERBLOOM.get(), QueenEverbloomEntity.createAttributes().build());
         event.put(SCARLET_QUEEN_EVERBLOOM.get(), ScarletQueenEverbloomEntity.createAttributes().build());
+        event.put(LEVIATHAN.get(), LeviathanEntity.createAttributes().build());
+        event.put(SHARK.get(), SharkEntity.createAttributes().build());
+        event.put(HAMMERHEAD_SHARK.get(), SharkEntity.createAttributes().build());
+        event.put(JELLYFISH_PINK.get(), JellyfishEntity.createAttributes().build());
+        event.put(JELLYFISH_BLUE.get(), JellyfishEntity.createAttributes().build());
+        event.put(JELLYFISH_GREEN.get(), JellyfishEntity.createAttributes().build());
+        event.put(SEA_MINE.get(), SeaMineEntity.createAttributes().build());
+        event.put(MASSIVE_SEA_TURTLE.get(), MassiveSeaTurtleEntity.createAttributes().build());
+        event.put(RAT_REAPER.get(), RatReaperEntity.createAttributes().build());
+        event.put(RAT_ARCHER.get(), RatArcherEntity.createAttributes().build());
+        event.put(RAT_OVERLORD.get(), RatOverlordEntity.createAttributes().build());
     }
 
     private static <T extends Entity & GeoAnimatable & IModel> DeferredHolder<EntityType<?>, EntityType<T>> register(String name, EntityType.EntityFactory<T> factory, float width, float height) {

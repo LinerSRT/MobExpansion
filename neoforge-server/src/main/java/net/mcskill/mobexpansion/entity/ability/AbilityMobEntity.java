@@ -473,6 +473,14 @@ public abstract class AbilityMobEntity extends MobExGeckoEntity {
         controllers.add(controller);
     }
 
+    /** Имя анимации, которую сейчас играет контроллер "main" (имеет смысл только на клиенте), или null. */
+    @Nullable
+    public String playingAnimation() {
+        final AnimationController<?> controller = getAnimatableInstanceCache().getManagerForId(getId()).getAnimationControllers().get("main");
+        if (controller == null || controller.getCurrentAnimation() == null)
+            return null;
+        return controller.getCurrentAnimation().animation().name();
+    }
     protected PlayState handleAnimation(AnimationState<AbilityMobEntity> state) {
         if (isDeadOrDying())
             return state.setAndContinue(RawAnimation.begin().thenPlayAndHold(deathAnimation()));

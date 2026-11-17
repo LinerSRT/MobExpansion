@@ -39,6 +39,11 @@ public class MobExSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> APOCALYPSE_VOID_STORM = register("apocalypse.void_storm");
     public static final DeferredHolder<SoundEvent, SoundEvent> APOCALYPSE_WHITE_VOID = register("apocalypse.white_void");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> RATS_SWORD = register("rats.sword");
+    public static final DeferredHolder<SoundEvent, SoundEvent> RATS_CLOTH = register("rats.cloth");
+    public static final DeferredHolder<SoundEvent, SoundEvent> RATS_ACTIVE = register("rats.active");
+    public static final DeferredHolder<SoundEvent, SoundEvent> RATS_WOOSH = register("rats.woosh");
+
     private static DeferredHolder<SoundEvent, SoundEvent> register(ResourceLocation name, ResourceLocation location) {
         return SOUND_REGISTRY.register(name.getPath(), () -> SoundEvent.createVariableRangeEvent(location));
     }

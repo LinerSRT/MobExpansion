@@ -56,7 +56,18 @@ public final class SpawnerMobCatalog {
             MobExEntities.GLIMMERING_UNICORN.getId(),
             MobExEntities.SERENITY_SENTINEL.getId(),
             MobExEntities.QUEEN_EVERBLOOM.getId(),
-            MobExEntities.SCARLET_QUEEN_EVERBLOOM.getId()
+            MobExEntities.SCARLET_QUEEN_EVERBLOOM.getId(),
+            MobExEntities.LEVIATHAN.getId(),
+            MobExEntities.SHARK.getId(),
+            MobExEntities.HAMMERHEAD_SHARK.getId(),
+            MobExEntities.JELLYFISH_PINK.getId(),
+            MobExEntities.JELLYFISH_BLUE.getId(),
+            MobExEntities.JELLYFISH_GREEN.getId(),
+            MobExEntities.SEA_MINE.getId(),
+            MobExEntities.MASSIVE_SEA_TURTLE.getId(),
+            MobExEntities.RAT_REAPER.getId(),
+            MobExEntities.RAT_ARCHER.getId(),
+            MobExEntities.RAT_OVERLORD.getId()
     );
 
     private static volatile List<ResourceLocation> cachedIds;
