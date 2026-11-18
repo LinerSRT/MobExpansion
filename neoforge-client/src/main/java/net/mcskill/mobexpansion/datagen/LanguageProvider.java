@@ -91,6 +91,11 @@ public class LanguageProvider implements DataProvider {
         add(MobExEntities.RAT_REAPER.get(), "Rat Reaper", "Крыса-жнец");
         add(MobExEntities.RAT_ARCHER.get(), "Rat Archer", "Крыса-лучник");
         add(MobExEntities.RAT_OVERLORD.get(), "Rat Overlord", "Крысиный владыка");
+        add(MobExEntities.DEMON_KNIGHT.get(), "Demon Knight", "Рыцарь-демон");
+        add(MobExEntities.DEMON_EYE.get(), "Demon Eye", "Демонический глаз");
+        add(MobExEntities.AWAKENED_WARRIOR.get(), "Awakened Warrior", "Пробуждённый воин");
+        add(MobExEntities.BONE_COLOSSUS.get(), "Bone Colossus", "Костяной колосс");
+        add(MobExEntities.BONE_SERVANT.get(), "Bone Servant", "Костяной прислужник");
         add(MobExEntities.ABILITY_PROJECTILE.get(), "Projectile", "Снаряд");
         add(MobExEntities.ABILITY_EFFECT.get(), "Ability Effect", "Эффект способности");
         add(MobExEntities.SEWER_BOLT_PROJECTILE.get(), "Sewer Bolt", "Болт Короля крыс");
@@ -141,6 +146,11 @@ public class LanguageProvider implements DataProvider {
         add(MobExItems.RAT_REAPER_SPAWN_EGG.get(), "Rat Reaper spawn egg", "Яйцо призыва: Крыса-жнец");
         add(MobExItems.RAT_ARCHER_SPAWN_EGG.get(), "Rat Archer spawn egg", "Яйцо призыва: Крыса-лучник");
         add(MobExItems.RAT_OVERLORD_SPAWN_EGG.get(), "Rat Overlord spawn egg", "Яйцо призыва: Крысиный владыка");
+        add(MobExItems.DEMON_KNIGHT_SPAWN_EGG.get(), "Demon Knight spawn egg", "Яйцо призыва: Рыцарь-демон");
+        add(MobExItems.DEMON_EYE_SPAWN_EGG.get(), "Demon Eye spawn egg", "Яйцо призыва: Демонический глаз");
+        add(MobExItems.AWAKENED_WARRIOR_SPAWN_EGG.get(), "Awakened Warrior spawn egg", "Яйцо призыва: Пробуждённый воин");
+        add(MobExItems.BONE_COLOSSUS_SPAWN_EGG.get(), "Bone Colossus spawn egg", "Яйцо призыва: Костяной колосс");
+        add(MobExItems.BONE_SERVANT_SPAWN_EGG.get(), "Bone Servant spawn egg", "Яйцо призыва: Костяной прислужник");
         add(MobExBlocks.MOB_SPAWNER.get(), "Mob Spawner", "Спавнер мобов");
         add(MobExItems.DROP_CONFIGURATOR.get(), "Mob Configurator", "Настройка мобов");
         add(MobExItems.CAPRA_SKIN.get(), "Skin: Capra", "Скин: Capra");

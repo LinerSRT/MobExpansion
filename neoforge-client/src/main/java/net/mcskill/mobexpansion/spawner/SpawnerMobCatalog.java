@@ -67,7 +67,10 @@ public final class SpawnerMobCatalog {
             MobExEntities.MASSIVE_SEA_TURTLE.getId(),
             MobExEntities.RAT_REAPER.getId(),
             MobExEntities.RAT_ARCHER.getId(),
-            MobExEntities.RAT_OVERLORD.getId()
+            MobExEntities.RAT_OVERLORD.getId(),
+            MobExEntities.DEMON_KNIGHT.getId(),
+            MobExEntities.AWAKENED_WARRIOR.getId(),
+            MobExEntities.BONE_COLOSSUS.getId()
     );
 
     private static volatile List<ResourceLocation> cachedIds;

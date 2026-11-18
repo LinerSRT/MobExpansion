@@ -36,6 +36,11 @@ import net.mcskill.mobexpansion.entity.sculk.SoulBearerEntity;
 import net.mcskill.mobexpansion.entity.possessed.PossessedCinderArmorEntity;
 import net.mcskill.mobexpansion.entity.possessed.PossessedRuinArmorEntity;
 import net.mcskill.mobexpansion.entity.possessed.PossessedVikingArmorEntity;
+import net.mcskill.mobexpansion.entity.boss.AwakenedWarriorEntity;
+import net.mcskill.mobexpansion.entity.boss.BoneColossusEntity;
+import net.mcskill.mobexpansion.entity.boss.BoneServantEntity;
+import net.mcskill.mobexpansion.entity.boss.DemonEyeEntity;
+import net.mcskill.mobexpansion.entity.boss.DemonKnightEntity;
 import net.mcskill.mobexpansion.entity.apocalypse.ApocalypseTypeAEntity;
 import net.mcskill.mobexpansion.entity.meadows.BlossomDrakeEntity;
 import net.mcskill.mobexpansion.entity.meadows.FloralSerpentEntity;
@@ -128,6 +133,11 @@ public class MobExEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<RatReaperEntity>> RAT_REAPER = register("rat_reaper", RatReaperEntity::new, 1.0F, 2.1F);
     public static final DeferredHolder<EntityType<?>, EntityType<RatArcherEntity>> RAT_ARCHER = register("rat_archer", RatArcherEntity::new, 1.0F, 2.2F);
     public static final DeferredHolder<EntityType<?>, EntityType<RatOverlordEntity>> RAT_OVERLORD = register("rat_overlord", RatOverlordEntity::new, 2.2F, 3.9F);
+    public static final DeferredHolder<EntityType<?>, EntityType<DemonKnightEntity>> DEMON_KNIGHT = register("demon_knight", DemonKnightEntity::new, 1.5F, 3.6F);
+    public static final DeferredHolder<EntityType<?>, EntityType<DemonEyeEntity>> DEMON_EYE = register("demon_eye", DemonEyeEntity::new, 1.1F, 1.2F);
+    public static final DeferredHolder<EntityType<?>, EntityType<AwakenedWarriorEntity>> AWAKENED_WARRIOR = register("awakened_warrior", AwakenedWarriorEntity::new, 1.0F, 2.1F);
+    public static final DeferredHolder<EntityType<?>, EntityType<BoneColossusEntity>> BONE_COLOSSUS = register("bone_colossus", BoneColossusEntity::new, 2.8F, 4.5F);
+    public static final DeferredHolder<EntityType<?>, EntityType<BoneServantEntity>> BONE_SERVANT = register("bone_servant", BoneServantEntity::new, 0.9F, 1.9F);
 
     public static final DeferredHolder<EntityType<?>, EntityType<MobExProjectileEntity>> ABILITY_PROJECTILE = registerProjectile("ability_projectile", MobExProjectileEntity::new, 0.3F, 0.3F);
     public static final DeferredHolder<EntityType<?>, EntityType<MobExEffectEntity>> ABILITY_EFFECT = registerMisc("ability_effect", MobExEffectEntity::new, 0.5F, 0.5F);
@@ -184,6 +194,11 @@ public class MobExEntities {
         event.put(RAT_REAPER.get(), RatReaperEntity.createAttributes().build());
         event.put(RAT_ARCHER.get(), RatArcherEntity.createAttributes().build());
         event.put(RAT_OVERLORD.get(), RatOverlordEntity.createAttributes().build());
+        event.put(DEMON_KNIGHT.get(), DemonKnightEntity.createAttributes().build());
+        event.put(DEMON_EYE.get(), DemonEyeEntity.createAttributes().build());
+        event.put(AWAKENED_WARRIOR.get(), AwakenedWarriorEntity.createAttributes().build());
+        event.put(BONE_COLOSSUS.get(), BoneColossusEntity.createAttributes().build());
+        event.put(BONE_SERVANT.get(), BoneServantEntity.createAttributes().build());
     }
 
     private static <T extends Entity & GeoAnimatable & IModel> DeferredHolder<EntityType<?>, EntityType<T>> register(String name, EntityType.EntityFactory<T> factory, float width, float height) {

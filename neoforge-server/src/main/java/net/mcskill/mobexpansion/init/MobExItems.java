@@ -58,6 +58,11 @@ public class MobExItems {
     public static final ItemHolder<Item> RAT_REAPER_SPAWN_EGG = ITEM_REGISTRY.registerItem("rat_reaper_spawn_egg", properties -> new DeferredSpawnEggItem(MobExEntities.RAT_REAPER, 0x5A4A42, 0xC9A15A, properties));
     public static final ItemHolder<Item> RAT_ARCHER_SPAWN_EGG = ITEM_REGISTRY.registerItem("rat_archer_spawn_egg", properties -> new DeferredSpawnEggItem(MobExEntities.RAT_ARCHER, 0x6B5A4A, 0x8FB35A, properties));
     public static final ItemHolder<Item> RAT_OVERLORD_SPAWN_EGG = ITEM_REGISTRY.registerItem("rat_overlord_spawn_egg", properties -> new DeferredSpawnEggItem(MobExEntities.RAT_OVERLORD, 0x4B2D5E, 0xE5C14A, properties));
+    public static final ItemHolder<Item> DEMON_KNIGHT_SPAWN_EGG = ITEM_REGISTRY.registerItem("demon_knight_spawn_egg", properties -> new DeferredSpawnEggItem(MobExEntities.DEMON_KNIGHT, 0x1E1414, 0xF08A2E, properties));
+    public static final ItemHolder<Item> DEMON_EYE_SPAWN_EGG = ITEM_REGISTRY.registerItem("demon_eye_spawn_egg", properties -> new DeferredSpawnEggItem(MobExEntities.DEMON_EYE, 0x5A1A1A, 0xFFD34A, properties));
+    public static final ItemHolder<Item> AWAKENED_WARRIOR_SPAWN_EGG = ITEM_REGISTRY.registerItem("awakened_warrior_spawn_egg", properties -> new DeferredSpawnEggItem(MobExEntities.AWAKENED_WARRIOR, 0x3A3F47, 0xB3262E, properties));
+    public static final ItemHolder<Item> BONE_COLOSSUS_SPAWN_EGG = ITEM_REGISTRY.registerItem("bone_colossus_spawn_egg", properties -> new DeferredSpawnEggItem(MobExEntities.BONE_COLOSSUS, 0xE3DCC6, 0x4FB04A, properties));
+    public static final ItemHolder<Item> BONE_SERVANT_SPAWN_EGG = ITEM_REGISTRY.registerItem("bone_servant_spawn_egg", properties -> new DeferredSpawnEggItem(MobExEntities.BONE_SERVANT, 0xCFC7AF, 0x6B6555, properties));
     public static final ItemHolder<BlockItem> MOB_SPAWNER = ITEM_REGISTRY.registerBlockItem(MobExBlocks.MOB_SPAWNER);
     public static final ItemHolder<Item> DROP_CONFIGURATOR = ITEM_REGISTRY.registerItem("drop_configurator", DropConfiguratorItem::new, new Item.Properties().stacksTo(1));
     public static final ItemHolder<SkinItem> CAPRA_SKIN = ITEM_REGISTRY.registerItem("capra_skin", properties -> new SkinItem("capra", properties), new Item.Properties().stacksTo(1));

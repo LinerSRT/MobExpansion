@@ -39,6 +39,21 @@ public class MobExSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> APOCALYPSE_VOID_STORM = register("apocalypse.void_storm");
     public static final DeferredHolder<SoundEvent, SoundEvent> APOCALYPSE_WHITE_VOID = register("apocalypse.white_void");
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> AWAKENED_WARRIOR_SLASH1 = register("awakened_warrior.slash1");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AWAKENED_WARRIOR_SLASH2 = register("awakened_warrior.slash2");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AWAKENED_WARRIOR_PIERCE = register("awakened_warrior.pierce");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AWAKENED_WARRIOR_AIRDASH = register("awakened_warrior.airdash");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AWAKENED_WARRIOR_CHARGE = register("awakened_warrior.charge");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AWAKENED_WARRIOR_STOMP = register("awakened_warrior.stomp");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AWAKENED_WARRIOR_STOMP_CHARGE = register("awakened_warrior.stomp_charge");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AWAKENED_WARRIOR_STOMP_ULT = register("awakened_warrior.stomp_ult");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AWAKENED_WARRIOR_SPIN = register("awakened_warrior.spin");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AWAKENED_WARRIOR_IMPACT = register("awakened_warrior.impact");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AWAKENED_WARRIOR_RUPTURE = register("awakened_warrior.rupture");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AWAKENED_WARRIOR_ULT1 = register("awakened_warrior.ult1");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AWAKENED_WARRIOR_ULT2 = register("awakened_warrior.ult2");
+    public static final DeferredHolder<SoundEvent, SoundEvent> AWAKENED_WARRIOR_ULT3 = register("awakened_warrior.ult3");
+
     public static final DeferredHolder<SoundEvent, SoundEvent> RATS_SWORD = register("rats.sword");
     public static final DeferredHolder<SoundEvent, SoundEvent> RATS_CLOTH = register("rats.cloth");
     public static final DeferredHolder<SoundEvent, SoundEvent> RATS_ACTIVE = register("rats.active");

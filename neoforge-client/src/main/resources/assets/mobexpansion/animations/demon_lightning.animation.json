@@ -1,0 +1,94 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"spawn": {
+			"animation_length": 2.85,
+			"override_previous_animation": true,
+			"bones": {
+				"f1": {
+					"rotation": {
+						"vector": [
+							0,
+							0,
+							0
+						]
+					},
+					"position": {
+						"0.0": {
+							"vector": [
+								0,
+								40,
+								0
+							]
+						},
+						"0.1": {
+							"vector": [
+								0,
+								0,
+								0
+							]
+						}
+					},
+					"scale": {
+						"0.0": {
+							"vector": [
+								0.7,
+								1.35,
+								0.7
+							]
+						},
+						"0.1": {
+							"vector": [
+								1,
+								1,
+								1
+							]
+						}
+					}
+				},
+				"hexadecagon": {
+					"scale": {
+						"0.05": {
+							"pre": {
+								"vector": [
+									0,
+									0,
+									0
+								]
+							},
+							"post": {
+								"vector": [
+									0,
+									0,
+									0
+								]
+							},
+							"lerp_mode": "catmullrom"
+						},
+						"0.3": {
+							"post": {
+								"vector": [
+									4,
+									1,
+									4
+								]
+							},
+							"lerp_mode": "catmullrom"
+						},
+						"0.65": {
+							"post": {
+								"vector": [
+									6,
+									0,
+									6
+								]
+							},
+							"lerp_mode": "catmullrom"
+						}
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

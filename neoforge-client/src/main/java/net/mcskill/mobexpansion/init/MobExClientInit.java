@@ -83,6 +83,11 @@ public class MobExClientInit {
         event.registerEntityRenderer(MobExEntities.POSSESSED_CINDER_ARMOR.get(), AbilityMobRenderer.of(1.0F, 0.9F));
         event.registerEntityRenderer(MobExEntities.POSSESSED_RUIN_ARMOR.get(), AbilityMobRenderer.of(1.0F, 0.9F));
         event.registerEntityRenderer(MobExEntities.POSSESSED_VIKING_ARMOR.get(), AbilityMobRenderer.of(1.0F, 0.9F));
+        event.registerEntityRenderer(MobExEntities.DEMON_KNIGHT.get(), AbilityMobRenderer.of(1.0F, 1.2F));
+        event.registerEntityRenderer(MobExEntities.DEMON_EYE.get(), AbilityMobRenderer.of(1.0F, 0.5F));
+        event.registerEntityRenderer(MobExEntities.AWAKENED_WARRIOR.get(), AbilityMobRenderer.of(1.0F, 0.6F));
+        event.registerEntityRenderer(MobExEntities.BONE_COLOSSUS.get(), AbilityMobRenderer.of(1.0F, 1.6F));
+        event.registerEntityRenderer(MobExEntities.BONE_SERVANT.get(), AbilityMobRenderer.of(1.0F, 0.5F));
         event.registerEntityRenderer(MobExEntities.APOCALYPSE_TYPE_A.get(), AbilityMobRenderer.of(1.0F, 1.0F));
         event.registerEntityRenderer(MobExEntities.BLOSSOM_DRAKE.get(), AbilityMobRenderer.of(1.0F, 1.6F));
         event.registerEntityRenderer(MobExEntities.FLORAL_SERPENT.get(), AbilityMobRenderer.of(1.0F, 1.2F));

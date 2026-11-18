@@ -70,6 +70,11 @@ public class ItemsModelProvider extends ItemModelProvider {
         spawnEggItem(MobExItems.RAT_REAPER_SPAWN_EGG.asItem());
         spawnEggItem(MobExItems.RAT_ARCHER_SPAWN_EGG.asItem());
         spawnEggItem(MobExItems.RAT_OVERLORD_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.DEMON_KNIGHT_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.DEMON_EYE_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.AWAKENED_WARRIOR_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.BONE_COLOSSUS_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.BONE_SERVANT_SPAWN_EGG.asItem());
         skinItem(MobExItems.CAPRA_SKIN.asItem());
         skinItem(MobExItems.LILLITH_SKIN.asItem());
     }

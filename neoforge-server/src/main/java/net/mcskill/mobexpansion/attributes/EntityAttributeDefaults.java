@@ -68,6 +68,11 @@ public final class EntityAttributeDefaults {
         put(defaults, "rat_reaper", 50, 4, 0, 3, 0.3, 0.8, 40);
         put(defaults, "rat_archer", 50, 2, 0, 3, 0.28, 0.8, 40);
         put(defaults, "rat_overlord", 250, 8, 0, 4, 0.3, 1.0, 40);
+        put(defaults, "demon_knight", 900, 16, 4, 16, 0.26, 1.0, 48);
+        put(defaults, "demon_eye", 40, 2, 0, 5, 0.3, 0.2, 40);
+        put(defaults, "awakened_warrior", 650, 14, 2, 13, 0.3, 0.8, 40);
+        put(defaults, "bone_colossus", 1200, 12, 4, 18, 0.2, 1.0, 40);
+        put(defaults, "bone_servant", 30, 4, 0, 6, 0.25, 0.0, 32);
         DEFAULTS = Collections.unmodifiableMap(defaults);
     }
 

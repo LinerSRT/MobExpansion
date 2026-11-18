@@ -67,6 +67,11 @@ public final class MobClearance {
         put("rat_reaper", 2);
         put("rat_archer", 2);
         put("rat_overlord", 3);
+        put("demon_knight", 4);
+        put("demon_eye", 2);
+        put("awakened_warrior", 3);
+        put("bone_colossus", 4);
+        put("bone_servant", 1);
         REQUIRED.putAll(DEFAULTS);
     }
 

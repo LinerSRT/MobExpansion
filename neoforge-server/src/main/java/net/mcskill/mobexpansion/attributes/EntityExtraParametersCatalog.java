@@ -206,6 +206,11 @@ public final class EntityExtraParametersCatalog {
         map.put(id("rat_reaper"), abilityParameters("right_attack", 2, "left_attack", 2, "charge_attack", 2));
         map.put(id("rat_archer"), abilityParameters("shoot", 4, "right_attack", 2));
         map.put(id("rat_overlord"), abilityParameters("active", 0, "combo", 4, "combo2", 4, "combo3", 5, "claw", 4, "pierce", 5, "spin", 2));
+        map.put(id("demon_knight"), abilityParameters("combo_1", 1.6, "combo_2", 1.3, "magic", 1.2, "throw", 2, "execution", 3));
+        map.put(id("demon_eye"), abilityParameters("attack", 1));
+        map.put(id("awakened_warrior"), abilityParameters("brutal_combo", 1.1, "rising_combo", 1.4, "dash_front", 0.9, "berserker_leap", 1.5, "relentless_whirlwind", 1.3, "bloodbound_barrier", 1, "vicious_strike", 2.2, "strike_of_fury", 1.8));
+        map.put(id("bone_colossus"), abilityParameters("atk_rswipe", 1, "atk_lswipe", 1, "skl_rstomp", 1.2, "skl_lstomp", 1.2, "skl_poisonbreath", 0.25));
+        map.put(id("bone_servant"), abilityParameters("atk", 1));
         // общие параметры (радиус дома) идут первыми у каждого моба
         map.replaceAll((entityId, params) -> withCommon(params));
         PARAMS = Collections.unmodifiableMap(map);

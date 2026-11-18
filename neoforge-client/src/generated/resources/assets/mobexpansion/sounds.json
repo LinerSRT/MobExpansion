@@ -94,6 +94,76 @@
       "mobexpansion:apocalypse/white_void"
     ]
   },
+  "awakened_warrior.airdash": {
+    "sounds": [
+      "mobexpansion:awakened_warrior/airdash"
+    ]
+  },
+  "awakened_warrior.charge": {
+    "sounds": [
+      "mobexpansion:awakened_warrior/charge"
+    ]
+  },
+  "awakened_warrior.impact": {
+    "sounds": [
+      "mobexpansion:awakened_warrior/impact"
+    ]
+  },
+  "awakened_warrior.pierce": {
+    "sounds": [
+      "mobexpansion:awakened_warrior/pierce"
+    ]
+  },
+  "awakened_warrior.rupture": {
+    "sounds": [
+      "mobexpansion:awakened_warrior/rupture"
+    ]
+  },
+  "awakened_warrior.slash1": {
+    "sounds": [
+      "mobexpansion:awakened_warrior/slash1"
+    ]
+  },
+  "awakened_warrior.slash2": {
+    "sounds": [
+      "mobexpansion:awakened_warrior/slash2"
+    ]
+  },
+  "awakened_warrior.spin": {
+    "sounds": [
+      "mobexpansion:awakened_warrior/spin"
+    ]
+  },
+  "awakened_warrior.stomp": {
+    "sounds": [
+      "mobexpansion:awakened_warrior/stomp"
+    ]
+  },
+  "awakened_warrior.stomp_charge": {
+    "sounds": [
+      "mobexpansion:awakened_warrior/stomp_charge"
+    ]
+  },
+  "awakened_warrior.stomp_ult": {
+    "sounds": [
+      "mobexpansion:awakened_warrior/stomp_ult"
+    ]
+  },
+  "awakened_warrior.ult1": {
+    "sounds": [
+      "mobexpansion:awakened_warrior/ult1"
+    ]
+  },
+  "awakened_warrior.ult2": {
+    "sounds": [
+      "mobexpansion:awakened_warrior/ult2"
+    ]
+  },
+  "awakened_warrior.ult3": {
+    "sounds": [
+      "mobexpansion:awakened_warrior/ult3"
+    ]
+  },
   "rats.active": {
     "sounds": [
       "mobexpansion:rats/active"
