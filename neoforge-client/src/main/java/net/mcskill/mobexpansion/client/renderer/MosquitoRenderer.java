@@ -18,7 +18,7 @@ public class MosquitoRenderer extends MobExGeoRenderer<MosquitoEntity> {
     @Override
     public void preRender(PoseStack poseStack, MosquitoEntity animatable, BakedGeoModel model, @Nullable MultiBufferSource bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
         this.entityRenderTranslations = new Matrix4f(poseStack.last().pose());
+        // Модель стоит на хитбоксе (1,25 × 1,5 = кость hitbox модели × 0,8); прежний сдвиг на −0,5 уводил её наполовину под хитбокс.
         scaleModelForRender(0.8f, 0.8f, poseStack, animatable, model, isReRender, partialTick, packedLight, packedOverlay);
-        poseStack.translate(0, -0.5, 0);
     }
 }

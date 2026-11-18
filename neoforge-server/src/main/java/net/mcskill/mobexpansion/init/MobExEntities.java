@@ -78,24 +78,24 @@ import software.bernie.geckolib.animatable.GeoAnimatable;
 @EventBusSubscriber(modid = Core.MODID)
 public class MobExEntities {
     public static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, Core.MODID);
-    public static final DeferredHolder<EntityType<?>, EntityType<RegularSpiderEntity>> REGULAR_SPIDER = register("regular_spider", RegularSpiderEntity::new, 1.75F, 1.125F);
-    public static final DeferredHolder<EntityType<?>, EntityType<PoisonSpiderEntity>> POISON_SPIDER = register("poison_spider", PoisonSpiderEntity::new, 1.75F, 1.125F);
+    public static final DeferredHolder<EntityType<?>, EntityType<RegularSpiderEntity>> REGULAR_SPIDER = register("regular_spider", RegularSpiderEntity::new, 2.0F, 1.125F);
+    public static final DeferredHolder<EntityType<?>, EntityType<PoisonSpiderEntity>> POISON_SPIDER = register("poison_spider", PoisonSpiderEntity::new, 1.9F, 1.125F);
     public static final DeferredHolder<EntityType<?>, EntityType<SpiderSpawnerEntity>> SPIDER_SPAWN = register("spider_spawn", SpiderSpawnerEntity::new, 1.5F, 2.0F);
     public static final DeferredHolder<EntityType<?>, EntityType<PoisonProjectileEntity>> POISON_PROJECTILE = registerProjectile("poison_projectile", PoisonProjectileEntity::new, 0.4F, 0.4F);
 
-    public static final DeferredHolder<EntityType<?>, EntityType<RedstoneEngineerEntity>> REDSTONE_ENGINEER = register("redstone_engineer", RedstoneEngineerEntity::new, 0.6F, 1.95F);
+    public static final DeferredHolder<EntityType<?>, EntityType<RedstoneEngineerEntity>> REDSTONE_ENGINEER = register("redstone_engineer", RedstoneEngineerEntity::new, 0.8F, 2.15F);
     public static final DeferredHolder<EntityType<?>, EntityType<RedstoneAutomatonEntity>> REDSTONE_AUTOMATON = register("redstone_automaton", RedstoneAutomatonEntity::new, 0.9F, 2.2F);
-    public static final DeferredHolder<EntityType<?>, EntityType<RedstoneDroneEntity>> REDSTONE_DRONE = register("redstone_drone", RedstoneDroneEntity::new, 0.8F, 0.8F);
-    public static final DeferredHolder<EntityType<?>, EntityType<RedstoneTowerEntity>> REDSTONE_TOWER = register("redstone_tower", RedstoneTowerEntity::new, 1.1F, 2.8F);
+    public static final DeferredHolder<EntityType<?>, EntityType<RedstoneDroneEntity>> REDSTONE_DRONE = register("redstone_drone", RedstoneDroneEntity::new, 1.1F, 2.1F);
+    public static final DeferredHolder<EntityType<?>, EntityType<RedstoneTowerEntity>> REDSTONE_TOWER = register("redstone_tower", RedstoneTowerEntity::new, 1.8F, 3.2F);
     public static final DeferredHolder<EntityType<?>, EntityType<RedstoneProjectileEntity>> REDSTONE_PROJECTILE = registerProjectile("redstone_projectile", RedstoneProjectileEntity::new, 0.35F, 0.35F);
     public static final DeferredHolder<EntityType<?>, EntityType<WrenchProjectileEntity>> WRENCH_PROJECTILE = registerProjectile("wrench_projectile", WrenchProjectileEntity::new, 0.35F, 0.35F);
 
     public static final DeferredHolder<EntityType<?>, EntityType<SentinelStatueEntity>> SENTINEL_STATUE = register("sentinel_statue", SentinelStatueEntity::new, 1.2F, 2.9F);
     public static final DeferredHolder<EntityType<?>, EntityType<SentinelGolemEntity>> SENTINEL_GOLEM = register("sentinel_golem", SentinelGolemEntity::new, 1.2F, 2.9F);
 
-    public static final DeferredHolder<EntityType<?>, EntityType<RatEntity>> RAT = register("rat", RatEntity::new, 0.7F, 0.55F);
-    public static final DeferredHolder<EntityType<?>, EntityType<MosquitoEntity>> MOSQUITO = register("mosquito", MosquitoEntity::new, 0.7F, 0.7F);
-    public static final DeferredHolder<EntityType<?>, EntityType<LeechEntity>> LEECH = register("leech", LeechEntity::new, 0.8F, 0.4F);
+    public static final DeferredHolder<EntityType<?>, EntityType<RatEntity>> RAT = register("rat", RatEntity::new, 1.5F, 1.1F);
+    public static final DeferredHolder<EntityType<?>, EntityType<MosquitoEntity>> MOSQUITO = register("mosquito", MosquitoEntity::new, 1.25F, 1.5F);
+    public static final DeferredHolder<EntityType<?>, EntityType<LeechEntity>> LEECH = register("leech", LeechEntity::new, 0.9F, 1.0F);
     public static final DeferredHolder<EntityType<?>, EntityType<RatKingEntity>> RAT_KING = register("rat_king", RatKingEntity::new, 1.3F, 2.1F);
     public static final DeferredHolder<EntityType<?>, EntityType<SewerPotionProjectileEntity>> SEWER_POTION_PROJECTILE = registerProjectile("sewer_potion_projectile", SewerPotionProjectileEntity::new, 0.4F, 0.4F);
     public static final DeferredHolder<EntityType<?>, EntityType<SewerBoltProjectileEntity>> SEWER_BOLT_PROJECTILE = registerMisc("sewer_bolt_projectile", SewerBoltProjectileEntity::new, 0.35F, 0.35F);
