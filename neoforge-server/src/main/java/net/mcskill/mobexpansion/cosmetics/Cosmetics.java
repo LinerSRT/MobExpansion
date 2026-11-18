@@ -13,6 +13,8 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * GUI кастомизации персонажа, серверная часть: что игроку доступно и выбор карточек.
@@ -21,13 +23,35 @@ import java.util.List;
  * {@link CosmeticsStatePacket} и ветка в {@link #select}.
  */
 public final class Cosmetics {
+    /** Пакеты чаще — молча отбрасываются: состояние собирает каталог шлейфов MSEss по подсказкам команд. */
+    private static final int REQUEST_COOLDOWN_TICKS = 10;
+    private static final int SELECT_COOLDOWN_TICKS = 5;
+    /** Тик последнего принятого пакета; слабые ключи — запись уходит вместе с игроком. Только серверный поток. */
+    private static final Map<ServerPlayer, Integer> LAST_REQUEST = new WeakHashMap<>();
+    private static final Map<ServerPlayer, Integer> LAST_SELECT = new WeakHashMap<>();
+
     private Cosmetics() {
     }
 
     /** Подставляет серверные обработчики в пакеты GUI (вызывается при старте сервера). */
     public static void installHandlers() {
-        CosmeticsRequestPacket.serverHandler = Cosmetics::sendState;
-        CosmeticsSelectPacket.serverHandler = (player, packet) -> select(player, packet.category(), packet.id());
+        CosmeticsRequestPacket.serverHandler = player -> {
+            if (allowed(LAST_REQUEST, player, REQUEST_COOLDOWN_TICKS))
+                sendState(player);
+        };
+        CosmeticsSelectPacket.serverHandler = (player, packet) -> {
+            if (allowed(LAST_SELECT, player, SELECT_COOLDOWN_TICKS))
+                select(player, packet.category(), packet.id());
+        };
+    }
+
+    private static boolean allowed(Map<ServerPlayer, Integer> last, ServerPlayer player, int cooldown) {
+        final int now = player.server.getTickCount();
+        final Integer previous = last.get(player);
+        if (previous != null && now - previous < cooldown)
+            return false;
+        last.put(player, now);
+        return true;
     }
 
     /** /cosmetics — открыть GUI у игрока. */

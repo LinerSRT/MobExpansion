@@ -196,7 +196,7 @@ public class CosmeticsScreen extends Screen {
         if (focusRow == null) {
             guiGraphics.drawCenteredString(font, Component.translatable("gui.mobexpansion.cosmetics.preview_hint"), x + PREVIEW_W / 2, textY, COLOR_MUTED);
             guiGraphics.drawCenteredString(font, Component.translatable("gui.mobexpansion.cosmetics.key_hint",
-                    CosmeticsClient.OPEN_KEY.getTranslatedKeyMessage()), x + PREVIEW_W / 2, textY + 12, COLOR_MUTED);
+                    CosmeticsClient.openKey().getTranslatedKeyMessage()), x + PREVIEW_W / 2, textY + 12, COLOR_MUTED);
             return;
         }
         guiGraphics.drawCenteredString(font, focusRow.name(focus), x + PREVIEW_W / 2, textY, COLOR_TEXT);
@@ -474,7 +474,7 @@ public class CosmeticsScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (CosmeticsClient.OPEN_KEY.matches(keyCode, scanCode)) {
+        if (CosmeticsClient.openKey().matches(keyCode, scanCode)) {
             onClose();
             return true;
         }

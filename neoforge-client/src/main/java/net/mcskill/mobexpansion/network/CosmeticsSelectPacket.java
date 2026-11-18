@@ -17,6 +17,8 @@ import java.util.function.BiConsumer;
  */
 public record CosmeticsSelectPacket(Category category, String id) implements CustomPacketPayload {
     public static final Type<CosmeticsSelectPacket> TYPE = new Type<>(Core.loc("cosmetics_select"));
+    /** id скинов и шлейфов короткие; длиннее — пакет не читается. */
+    public static final int MAX_ID_LENGTH = 64;
 
     /** Строки GUI. Новые категории (скины предметов, питомцы) — добавлять в конец, порядок = номер в пакете. */
     public enum Category {
@@ -25,7 +27,7 @@ public record CosmeticsSelectPacket(Category category, String id) implements Cus
 
     public static final StreamCodec<RegistryFriendlyByteBuf, CosmeticsSelectPacket> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.idMapper(index -> Category.values()[index], Category::ordinal), CosmeticsSelectPacket::category,
-            ByteBufCodecs.STRING_UTF8, CosmeticsSelectPacket::id,
+            ByteBufCodecs.stringUtf8(MAX_ID_LENGTH), CosmeticsSelectPacket::id,
             CosmeticsSelectPacket::new
     );
 
