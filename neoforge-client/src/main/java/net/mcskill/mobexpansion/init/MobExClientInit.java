@@ -88,6 +88,10 @@ public class MobExClientInit {
         event.registerEntityRenderer(MobExEntities.AWAKENED_WARRIOR.get(), AbilityMobRenderer.of(1.0F, 0.6F));
         event.registerEntityRenderer(MobExEntities.BONE_COLOSSUS.get(), AbilityMobRenderer.of(1.0F, 1.6F));
         event.registerEntityRenderer(MobExEntities.BONE_SERVANT.get(), AbilityMobRenderer.of(1.0F, 0.5F));
+        event.registerEntityRenderer(MobExEntities.FURACAS.get(), AbilityMobRenderer.of(1.0F, 1.0F));
+        event.registerEntityRenderer(MobExEntities.ANCIENT_GUARDIAN.get(), AbilityMobRenderer.of(1.0F, 1.3F));
+        event.registerEntityRenderer(MobExEntities.CROW_KNIGHT.get(), AbilityMobRenderer.of(1.0F, 1.0F));
+        event.registerEntityRenderer(MobExEntities.CROW_REAPER.get(), AbilityMobRenderer.of(1.0F, 0.9F));
         event.registerEntityRenderer(MobExEntities.APOCALYPSE_TYPE_A.get(), AbilityMobRenderer.of(1.0F, 1.0F));
         event.registerEntityRenderer(MobExEntities.BLOSSOM_DRAKE.get(), AbilityMobRenderer.of(1.0F, 1.6F));
         event.registerEntityRenderer(MobExEntities.FLORAL_SERPENT.get(), AbilityMobRenderer.of(1.0F, 1.2F));

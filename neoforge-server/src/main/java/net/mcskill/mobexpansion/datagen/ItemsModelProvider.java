@@ -75,6 +75,10 @@ public class ItemsModelProvider extends ItemModelProvider {
         spawnEggItem(MobExItems.AWAKENED_WARRIOR_SPAWN_EGG.asItem());
         spawnEggItem(MobExItems.BONE_COLOSSUS_SPAWN_EGG.asItem());
         spawnEggItem(MobExItems.BONE_SERVANT_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.FURACAS_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.ANCIENT_GUARDIAN_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.CROW_KNIGHT_SPAWN_EGG.asItem());
+        spawnEggItem(MobExItems.CROW_REAPER_SPAWN_EGG.asItem());
         skinItem(MobExItems.CAPRA_SKIN.asItem());
         skinItem(MobExItems.LILLITH_SKIN.asItem());
     }

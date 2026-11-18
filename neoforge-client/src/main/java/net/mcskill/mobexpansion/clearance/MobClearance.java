@@ -72,6 +72,10 @@ public final class MobClearance {
         put("awakened_warrior", 3);
         put("bone_colossus", 4);
         put("bone_servant", 1);
+        put("furacas", 4);
+        put("ancient_guardian", 4);
+        put("crow_knight", 3);
+        put("crow_reaper", 3);
         REQUIRED.putAll(DEFAULTS);
     }
 

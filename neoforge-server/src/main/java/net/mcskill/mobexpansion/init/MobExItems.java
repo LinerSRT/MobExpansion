@@ -63,6 +63,10 @@ public class MobExItems {
     public static final ItemHolder<Item> AWAKENED_WARRIOR_SPAWN_EGG = ITEM_REGISTRY.registerItem("awakened_warrior_spawn_egg", properties -> new DeferredSpawnEggItem(MobExEntities.AWAKENED_WARRIOR, 0x3A3F47, 0xB3262E, properties));
     public static final ItemHolder<Item> BONE_COLOSSUS_SPAWN_EGG = ITEM_REGISTRY.registerItem("bone_colossus_spawn_egg", properties -> new DeferredSpawnEggItem(MobExEntities.BONE_COLOSSUS, 0xE3DCC6, 0x4FB04A, properties));
     public static final ItemHolder<Item> BONE_SERVANT_SPAWN_EGG = ITEM_REGISTRY.registerItem("bone_servant_spawn_egg", properties -> new DeferredSpawnEggItem(MobExEntities.BONE_SERVANT, 0xCFC7AF, 0x6B6555, properties));
+    public static final ItemHolder<Item> FURACAS_SPAWN_EGG = ITEM_REGISTRY.registerItem("furacas_spawn_egg", properties -> new DeferredSpawnEggItem(MobExEntities.FURACAS, 0x1F2A1B, 0xB6E07A, properties));
+    public static final ItemHolder<Item> ANCIENT_GUARDIAN_SPAWN_EGG = ITEM_REGISTRY.registerItem("ancient_guardian_spawn_egg", properties -> new DeferredSpawnEggItem(MobExEntities.ANCIENT_GUARDIAN, 0xD8CFB8, 0x2FB5A8, properties));
+    public static final ItemHolder<Item> CROW_KNIGHT_SPAWN_EGG = ITEM_REGISTRY.registerItem("crow_knight_spawn_egg", properties -> new DeferredSpawnEggItem(MobExEntities.CROW_KNIGHT, 0x1A1C24, 0x5A6A8C, properties));
+    public static final ItemHolder<Item> CROW_REAPER_SPAWN_EGG = ITEM_REGISTRY.registerItem("crow_reaper_spawn_egg", properties -> new DeferredSpawnEggItem(MobExEntities.CROW_REAPER, 0x15161C, 0x8C2A2A, properties));
     public static final ItemHolder<BlockItem> MOB_SPAWNER = ITEM_REGISTRY.registerBlockItem(MobExBlocks.MOB_SPAWNER);
     public static final ItemHolder<Item> DROP_CONFIGURATOR = ITEM_REGISTRY.registerItem("drop_configurator", DropConfiguratorItem::new, new Item.Properties().stacksTo(1));
     public static final ItemHolder<SkinItem> CAPRA_SKIN = ITEM_REGISTRY.registerItem("capra_skin", properties -> new SkinItem("capra", properties), new Item.Properties().stacksTo(1));

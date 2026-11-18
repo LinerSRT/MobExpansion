@@ -96,6 +96,10 @@ public class LanguageProvider implements DataProvider {
         add(MobExEntities.AWAKENED_WARRIOR.get(), "Awakened Warrior", "Пробуждённый воин");
         add(MobExEntities.BONE_COLOSSUS.get(), "Bone Colossus", "Костяной колосс");
         add(MobExEntities.BONE_SERVANT.get(), "Bone Servant", "Костяной прислужник");
+        add(MobExEntities.FURACAS.get(), "Furacas", "Фуракас");
+        add(MobExEntities.ANCIENT_GUARDIAN.get(), "Ancient Guardian", "Древний страж");
+        add(MobExEntities.CROW_KNIGHT.get(), "Crow Knight", "Вороний рыцарь");
+        add(MobExEntities.CROW_REAPER.get(), "Crow Reaper", "Вороний жнец");
         add(MobExEntities.ABILITY_PROJECTILE.get(), "Projectile", "Снаряд");
         add(MobExEntities.ABILITY_EFFECT.get(), "Ability Effect", "Эффект способности");
         add(MobExEntities.SEWER_BOLT_PROJECTILE.get(), "Sewer Bolt", "Болт Короля крыс");
@@ -151,6 +155,10 @@ public class LanguageProvider implements DataProvider {
         add(MobExItems.AWAKENED_WARRIOR_SPAWN_EGG.get(), "Awakened Warrior spawn egg", "Яйцо призыва: Пробуждённый воин");
         add(MobExItems.BONE_COLOSSUS_SPAWN_EGG.get(), "Bone Colossus spawn egg", "Яйцо призыва: Костяной колосс");
         add(MobExItems.BONE_SERVANT_SPAWN_EGG.get(), "Bone Servant spawn egg", "Яйцо призыва: Костяной прислужник");
+        add(MobExItems.FURACAS_SPAWN_EGG.get(), "Furacas spawn egg", "Яйцо призыва: Фуракас");
+        add(MobExItems.ANCIENT_GUARDIAN_SPAWN_EGG.get(), "Ancient Guardian spawn egg", "Яйцо призыва: Древний страж");
+        add(MobExItems.CROW_KNIGHT_SPAWN_EGG.get(), "Crow Knight spawn egg", "Яйцо призыва: Вороний рыцарь");
+        add(MobExItems.CROW_REAPER_SPAWN_EGG.get(), "Crow Reaper spawn egg", "Яйцо призыва: Вороний жнец");
         add(MobExBlocks.MOB_SPAWNER.get(), "Mob Spawner", "Спавнер мобов");
         add(MobExItems.DROP_CONFIGURATOR.get(), "Mob Configurator", "Настройка мобов");
         add(MobExItems.CAPRA_SKIN.get(), "Skin: Capra", "Скин: Capra");

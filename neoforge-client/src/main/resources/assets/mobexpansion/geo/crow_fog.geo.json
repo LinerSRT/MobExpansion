@@ -1,0 +1,1729 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.ced4fba0dbaa631d9f4d939148a349ee",
+				"texture_width": 32,
+				"texture_height": 32,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 3,
+				"visible_bounds_offset": [
+					0,
+					0.5,
+					0
+				]
+			},
+			"bones": [
+				{
+					"name": "dustparticles",
+					"pivot": [
+						-4,
+						0,
+						-18
+					]
+				},
+				{
+					"name": "dust",
+					"parent": "dustparticles",
+					"pivot": [
+						0,
+						5,
+						-16
+					],
+					"rotation": [
+						31.03795,
+						44.72566,
+						40.53458
+					],
+					"cubes": [
+						{
+							"origin": [
+								-4,
+								1,
+								-20
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						},
+						{
+							"origin": [
+								4.8,
+								9.8,
+								-11.2
+							],
+							"size": [
+								-9.6,
+								-9.6,
+								-9.6
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"east": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"south": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"west": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"up": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									],
+									"uv_rotation": 180
+								},
+								"down": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust2",
+					"parent": "dustparticles",
+					"pivot": [
+						12,
+						4,
+						-15
+					],
+					"rotation": [
+						-21.88023,
+						-23.39896,
+						9.06159
+					],
+					"cubes": [
+						{
+							"origin": [
+								8,
+								0,
+								-19
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						},
+						{
+							"origin": [
+								16.8,
+								8.8,
+								-10.2
+							],
+							"size": [
+								-9.6,
+								-9.6,
+								-9.6
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"east": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"south": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"west": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"up": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									],
+									"uv_rotation": 180
+								},
+								"down": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust3",
+					"parent": "dustparticles",
+					"pivot": [
+						16.7762,
+						10,
+						1.06035
+					],
+					"rotation": [
+						0,
+						-32.5,
+						0
+					],
+					"cubes": [
+						{
+							"origin": [
+								12.7762,
+								6,
+								-2.93965
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						},
+						{
+							"origin": [
+								21.5762,
+								14.8,
+								5.86035
+							],
+							"size": [
+								-9.6,
+								-9.6,
+								-9.6
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"east": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"south": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"west": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"up": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									],
+									"uv_rotation": 180
+								},
+								"down": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust10",
+					"parent": "dustparticles",
+					"pivot": [
+						3.7762,
+						10,
+						-5.93965
+					],
+					"rotation": [
+						-19.21793,
+						-6.43664,
+						35.14709
+					],
+					"cubes": [
+						{
+							"origin": [
+								-0.2238,
+								6,
+								-9.93965
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						},
+						{
+							"origin": [
+								8.5762,
+								14.8,
+								-1.13965
+							],
+							"size": [
+								-9.6,
+								-9.6,
+								-9.6
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"east": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"south": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"west": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"up": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									],
+									"uv_rotation": 180
+								},
+								"down": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust4",
+					"parent": "dustparticles",
+					"pivot": [
+						-6,
+						13,
+						3
+					],
+					"rotation": [
+						-28.84452,
+						45.97382,
+						-37.4519
+					],
+					"cubes": [
+						{
+							"origin": [
+								-10,
+								9,
+								-1
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						},
+						{
+							"origin": [
+								-1.2,
+								17.8,
+								7.8
+							],
+							"size": [
+								-9.6,
+								-9.6,
+								-9.6
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"east": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"south": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"west": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"up": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									],
+									"uv_rotation": 180
+								},
+								"down": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust5",
+					"parent": "dustparticles",
+					"pivot": [
+						-4,
+						5,
+						14
+					],
+					"rotation": [
+						0,
+						30,
+						0
+					],
+					"cubes": [
+						{
+							"origin": [
+								-8,
+								1,
+								10
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						},
+						{
+							"origin": [
+								0.8,
+								9.8,
+								18.8
+							],
+							"size": [
+								-9.6,
+								-9.6,
+								-9.6
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"east": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"south": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"west": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"up": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									],
+									"uv_rotation": 180
+								},
+								"down": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust6",
+					"parent": "dustparticles",
+					"pivot": [
+						12,
+						4,
+						10
+					],
+					"rotation": [
+						-15,
+						32.5,
+						0
+					],
+					"cubes": [
+						{
+							"origin": [
+								8,
+								0,
+								6
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						},
+						{
+							"origin": [
+								16.8,
+								8.8,
+								14.8
+							],
+							"size": [
+								-9.6,
+								-9.6,
+								-9.6
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"east": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"south": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"west": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"up": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									],
+									"uv_rotation": 180
+								},
+								"down": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust7",
+					"parent": "dustparticles",
+					"pivot": [
+						4,
+						3,
+						-4
+					],
+					"rotation": [
+						-29.0013,
+						13.46123,
+						3.65069
+					],
+					"cubes": [
+						{
+							"origin": [
+								0,
+								-1,
+								-8
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						},
+						{
+							"origin": [
+								8.8,
+								7.8,
+								0.8
+							],
+							"size": [
+								-9.6,
+								-9.6,
+								-9.6
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"east": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"south": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"west": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"up": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									],
+									"uv_rotation": 180
+								},
+								"down": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust8",
+					"parent": "dustparticles",
+					"pivot": [
+						-12,
+						8,
+						-8
+					],
+					"rotation": [
+						25,
+						0,
+						-20
+					],
+					"cubes": [
+						{
+							"origin": [
+								-16,
+								4,
+								-12
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						},
+						{
+							"origin": [
+								-7.2,
+								12.8,
+								-3.2
+							],
+							"size": [
+								-9.6,
+								-9.6,
+								-9.6
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"east": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"south": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"west": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"up": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									],
+									"uv_rotation": 180
+								},
+								"down": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "dust9",
+					"parent": "dustparticles",
+					"pivot": [
+						-6,
+						3,
+						2
+					],
+					"rotation": [
+						-12.43687,
+						15.89229,
+						-54.0624
+					],
+					"cubes": [
+						{
+							"origin": [
+								-10,
+								-1,
+								-2
+							],
+							"size": [
+								8,
+								8,
+								8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"south": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"west": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"up": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						},
+						{
+							"origin": [
+								-1.2,
+								7.8,
+								6.8
+							],
+							"size": [
+								-9.6,
+								-9.6,
+								-9.6
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										9,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"east": {
+									"uv": [
+										9,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"south": {
+									"uv": [
+										0,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"west": {
+									"uv": [
+										0,
+										9
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								},
+								"up": {
+									"uv": [
+										18,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									],
+									"uv_rotation": 180
+								},
+								"down": {
+									"uv": [
+										0,
+										18
+									],
+									"uv_size": [
+										8,
+										8
+									],
+									"uv_rotation": 180
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
