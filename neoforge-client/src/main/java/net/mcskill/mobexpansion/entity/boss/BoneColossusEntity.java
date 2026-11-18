@@ -42,7 +42,7 @@ public class BoneColossusEntity extends AbilityMobEntity {
 
     public static AttributeSupplier.Builder createAttributes() {
         return createBaseAttributes()
-                .add(Attributes.MAX_HEALTH, 1200.0D)
+                .add(Attributes.MAX_HEALTH, 1000.0D)
                 .add(Attributes.ATTACK_DAMAGE, 18.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.ARMOR, 12.0D)
