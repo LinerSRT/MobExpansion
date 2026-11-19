@@ -23,7 +23,6 @@ public abstract class ClientboundLevelChunkPacketDataMixin {
     @Final
     private List<?> blockEntitiesData;
 
-    @Unique
     @Inject(method = "<init>(Lnet/minecraft/world/level/chunk/LevelChunk;)V", at = @At("RETURN"))
     private void maskSpawner(LevelChunk chunk, CallbackInfo callbackInfo) {
         // в чанке нет замаскированных спавнеров (почти всегда) — ванильный буфер верный, не сериализуем чанк второй раз
