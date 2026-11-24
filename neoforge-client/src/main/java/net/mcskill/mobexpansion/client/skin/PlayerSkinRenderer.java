@@ -57,6 +57,16 @@ public class PlayerSkinRenderer extends GeoReplacedEntityRenderer<AbstractClient
     }
 
     /**
+     * Свой экземпляр анимации на каждый объект игрока, а не id сущности: id повторяются между мирами/серверами,
+     * и новый игрок подхватывал бы чужое состояние анимаций (см. {@link PlayerSkinAnimatable}).
+     */
+    @Override
+    public long getInstanceId(PlayerSkinAnimatable animatable) {
+        final AbstractClientPlayer player = getCurrentEntity();
+        return player != null ? PlayerSkinAnimatable.instanceId(player) : super.getInstanceId(animatable);
+    }
+
+    /**
      * Рисует игрока. {@code vanilla} — его обычный рендерер: его PlayerModel уже настроена под позу рук
      * (PlayerRenderer#setModelProperties вызывается до RenderPlayerEvent.Pre), остаётся посчитать setupAnim
      * так же, как LivingEntityRenderer#render, и перенести позу на кости скина.
@@ -118,7 +128,7 @@ public class PlayerSkinRenderer extends GeoReplacedEntityRenderer<AbstractClient
 
     /**
      * Цепочка костей руки для вида от первого лица — копия в позе покоя. Общие кости модели трогать нельзя: в остальных
-     * кадрах тика GeckoLib не пересчитывает позу игрока (время анимации скина меняется раз в тик, см.
+     * кадрах тика GeckoLib не пересчитывает анимацию игрока (время анимации скина меняется раз в тик, см.
      * PlayerSkinAnimatable#getTick), и рука других игроков в этом скине дёргалась бы в позу покоя.
      */
     @Nullable

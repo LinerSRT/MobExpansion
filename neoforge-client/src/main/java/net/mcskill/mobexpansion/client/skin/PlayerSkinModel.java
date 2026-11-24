@@ -42,11 +42,21 @@ public class PlayerSkinModel extends GeoModel<PlayerSkinAnimatable> {
     }
 
     /**
+     * GeckoLib пропускает расчёт, если тот же игрок рисуется повторно в том же тике (время анимации не изменилось), —
+     * вместе с ним пропускался бы и перенос ванильной позы: голова/руки обновлялись бы 20 раз в секунду, а превью
+     * в GUI (тот же игрок, другая поза) показывало бы позу из мира. Поэтому позу переносим всегда.
+     */
+    @Override
+    public void handleAnimations(PlayerSkinAnimatable animatable, long instanceId, AnimationState<PlayerSkinAnimatable> state, float partialTick) {
+        super.handleAnimations(animatable, instanceId, state, partialTick);
+        applyPose();
+    }
+
+    /**
      * Вызывается после анимаций GeckoLib: кости тела, головы, рук и ног повторяют ванильную модель. У ванильного
      * игрока голова/руки/ноги не дети тела, а в скине — дети, поэтому поворот тела из них вычитается.
      */
-    @Override
-    public void setCustomAnimations(PlayerSkinAnimatable animatable, long instanceId, AnimationState<PlayerSkinAnimatable> state) {
+    private void applyPose() {
         final PlayerModel<?> model = pose;
         if (model == null)
             return;

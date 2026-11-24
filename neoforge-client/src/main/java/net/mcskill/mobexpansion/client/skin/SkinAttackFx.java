@@ -155,6 +155,16 @@ public final class SkinAttackFx {
             buffers.endBatch(type);
     }
 
+    /**
+     * Смена мира или сервера сети (лобби → сервер): id сущностей и время мира там другие, старые удары — чужие.
+     * Иначе игрок с тем же id получал удар «из будущего» и крылья застывали во всплеске.
+     */
+    @SubscribeEvent
+    public static void onClone(ClientPlayerNetworkEvent.Clone event) {
+        EFFECTS.clear();
+        LAST_ATTACK.clear();
+    }
+
     @SubscribeEvent
     public static void onLoggingOut(ClientPlayerNetworkEvent.LoggingOut event) {
         EFFECTS.clear();
