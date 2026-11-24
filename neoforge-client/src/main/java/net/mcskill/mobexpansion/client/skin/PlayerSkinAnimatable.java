@@ -1,5 +1,6 @@
 package net.mcskill.mobexpansion.client.skin;
 
+import com.google.common.collect.MapMaker;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.Util;
@@ -17,7 +18,6 @@ import software.bernie.geckolib.constant.DataTickets;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 /**
  * Анимируемый объект скина. Один на скин, но состояние анимаций GeckoLib (контроллеры, снимки костей, время старта) —
@@ -60,9 +60,11 @@ public final class PlayerSkinAnimatable implements GeoAnimatable {
 
     /**
      * Состояние игрока, общее для всех скинов: id экземпляра для GeckoLib и когда он последний раз стоял на земле.
-     * Слабые ключи — объект игрока, ушедшего из мира, сборщик мусора уберёт сам. Только поток рендера.
+     * Слабые ключи (по ссылке) — объект игрока, ушедшего из мира, сборщик мусора уберёт сам. Только поток рендера.
      */
-    private static final Map<Player, PlayerState> PLAYERS = new WeakHashMap<>();
+    // MapMaker со слабыми ключами сравнивает по ссылке: Entity#equals сравнивает id сущности, а id повторяются
+    // после смены сервера/измерения — обычный WeakHashMap отдал бы новому объекту игрока старое состояние.
+    private static final Map<Player, PlayerState> PLAYERS = new MapMaker().weakKeys().makeMap();
     private static long nextInstanceId = 1;
 
     private final SkinDefinition definition;
