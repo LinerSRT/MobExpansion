@@ -37,6 +37,10 @@ import java.util.Map;
  * run (спринт), walk, idle. Плюс постоянные петли скина ({@link SkinDefinition#loops()}).
  * Выбор считается только по тому, что клиент знает о любом игроке (флаги, позиция, onGround): способность летать
  * ({@code abilities.flying}) с сервера приходит только своему игроку, у чужих она всегда false.
+ * <p>
+ * Неподвижная фигура (статуи топов MSEss — помечены тегом {@link #STATIC_POSE_TAG}) не анимируется вовсе: основной
+ * контроллер и петли стоят, а контроллер {@code static} держит первый кадр glide (крылья раскрыты) без перехода и
+ * с нулевой скоростью. Без этого фигура, которая никогда не касается земли, вечно махала бы крыльями (flap).
  */
 public final class PlayerSkinAnimatable implements GeoAnimatable {
     /** Сколько тиков после удара играет всплеск (flare). */
@@ -50,6 +54,12 @@ public final class PlayerSkinAnimatable implements GeoAnimatable {
     /** Менеджер анимаций игрока, которого столько не рисовали, удаляется. */
     private static final long IDLE_EXPIRE_MS = 30_000L;
     private static final long PURGE_EVERY_MS = 10_000L;
+    /**
+     * Метка неподвижной фигуры: тег сущности ({@code Entity#addTag}), который ставит мод фигуры (MSEss — статуи топов).
+     * Ванильный тег, а не класс — без зависимости от MSEss; у настоящих игроков на клиенте тегов нет.
+     * Та же строка — в MsBunker ({@code PlayerAnimations.STATIC_POSE_TAG}).
+     */
+    public static final String STATIC_POSE_TAG = "mcskill.static_pose";
 
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk");
@@ -88,14 +98,24 @@ public final class PlayerSkinAnimatable implements GeoAnimatable {
         controllers.add(new AnimationController<>(this, "main", 4, this::main));
         for (String loop : definition.loops()) {
             final RawAnimation animation = RawAnimation.begin().thenLoop(loop);
-            controllers.add(new AnimationController<>(this, loop, 0, state -> state.setAndContinue(animation)));
+            controllers.add(new AnimationController<>(this, loop, 0,
+                    state -> isStatic(state) ? PlayState.STOP : state.setAndContinue(animation)));
         }
+        // Фигуры: без перехода (сразу кадр) и с нулевой скоростью — время анимации всегда 0.
+        controllers.add(new AnimationController<>(this, "static", 0,
+                state -> isStatic(state) ? state.setAndContinue(GLIDE) : PlayState.STOP).setAnimationSpeed(0));
+    }
+
+    private static boolean isStatic(AnimationState<PlayerSkinAnimatable> state) {
+        return state.getData(DataTickets.ENTITY) instanceof Player player && player.getTags().contains(STATIC_POSE_TAG);
     }
 
     private PlayState main(AnimationState<PlayerSkinAnimatable> state) {
         final Entity entity = state.getData(DataTickets.ENTITY);
         if (!(entity instanceof Player player))
             return state.setAndContinue(IDLE);
+        if (player.getTags().contains(STATIC_POSE_TAG))
+            return PlayState.STOP;
         final PlayerState playerState = state(player);
         if (player.isFallFlying())
             return state.setAndContinue(GLIDE);
